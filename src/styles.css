@@ -1,0 +1,69 @@
+html,
+body {
+    overscroll-behavior: none;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+    font-family: var(--ui-font-body);
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    color: white;
+}
+
+/* 
+    screen-outer is used as a background layer, that 
+    encompasses the full (dynamic) device width and height
+    of the webview. This is then used to position the
+    screen inner, which serves as content space.
+*/
+.screen-outer {
+    display: flex;
+    flex-direction: column;
+
+    background: gray;
+    height: 100dvh;
+    width: 100dvw;
+
+    & .screen-inner {
+        background: rgba(0, 0, 0, 0.25);
+        display: flex;
+        flex-direction: column;
+
+        margin: 0.25rem;
+        flex-grow: 1;
+        padding-bottom: env(safe-area-inset-bottom, 0);
+        border-bottom-left-radius: env(safe-area-inset-left, 0);
+        border-bottom-right-radius: env(safe-area-inset-right, 0);
+    }
+}
+
+.background {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    inset: 0;
+    filter: saturate(0.7);
+
+    & img {
+        object-fit: cover;
+        height: 100%;
+    }
+}
+
+.content {
+    z-index: 1;
+}
+
+/* A content Divider is used to visually separate content */
+.content-divider {
+    width: 100%;
+    height: 0.125rem;
+    background: white;
+}

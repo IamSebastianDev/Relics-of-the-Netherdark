@@ -1,0 +1,36 @@
+/* Colors */
+
+html {
+    font-size: clamp(14px, 5vw, 18px);
+}
+
+:root {
+}
+
+/* Font Setup */
+
+:root {
+    /* --ui-font-heading: "Grandstander Variable", system-ui;
+    --ui-font-body: "Rubik Variable", sans-serif; */
+}
+
+/* Typography */
+
+/* Layout */
+
+.stack,
+.row {
+    display: flex;
+
+    &.center {
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.stack {
+    flex-direction: column;
+}
+.row {
+    flex-direction: row;
+}

@@ -1,0 +1,36 @@
+{
+  "name": "@iasd/react-jam-spring-2025",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "bun run lint && tsc && vite build",
+    "publish": "bun run build && npx rune@latest upload",
+    "lint": "bun biome lint --write",
+    "format": "bun biome format --write"
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.0.7",
+    "@react-three/fiber": "^9.1.2",
+    "@vayjs/vay": "^2.0.3",
+    "@vayjs/vay-react": "^2.0.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rune-sdk": "^4.25.5",
+    "three": "^0.176.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@commitlint/cli": "^19.8.0",
+    "@commitlint/config-conventional": "^19.8.0",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@vitejs/plugin-react": "^4.0.0",
+    "globals": "^15.8.0",
+    "lefthook": "^1.11.11",
+    "typescript": "^5.4.5",
+    "vite": "^5.2.11",
+    "vite-plugin-qrcode": "^0.2.2"
+  }
+}
