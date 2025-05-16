@@ -1,4 +1,4 @@
-type TileType = "gemstone_caverns" | "bonehoard";
+type TileType = 'gemstone_caverns' | 'bonehoard';
 
 export type Tile = {
     tileId: string;

@@ -1,12 +1,12 @@
-import { ContactShadows, useGLTF } from "@react-three/drei";
-import { Canvas, Vector3 } from "@react-three/fiber";
-import React, { useMemo } from "react";
-import { Camera } from "../components/renderer/camera";
-import { Screen } from "../components/ui/screen";
+import { ContactShadows, useGLTF } from '@react-three/drei';
+import { Canvas, Vector3 } from '@react-three/fiber';
+import React, { useMemo } from 'react';
+import { Camera } from '../components/renderer/camera';
+import { Screen } from '../components/ui/screen';
 
 const modelMap = {
-    "fungal-forest": "./models/fungal-forest.glb",
-    "gemstone-caverns": "./models/gemstone-caverns.glb",
+    'fungal-forest': './models/fungal-forest.glb',
+    'gemstone-caverns': './models/gemstone-caverns.glb',
 };
 
 const Tile = ({ model, ...props }: { position: Vector3; model: keyof typeof modelMap }) => {
