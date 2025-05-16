@@ -6,4 +6,5 @@ export type DungeonState = {};
 export type GameState = {
     allPlayerIds: PlayerId[];
     playerState: Record<PlayerId, PlayerState>;
+    currentActivePlayer: PlayerId;
 };

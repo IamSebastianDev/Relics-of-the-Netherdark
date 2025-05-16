@@ -12,11 +12,11 @@
   },
   "dependencies": {
     "@react-three/drei": "^10.0.7",
-    "@react-three/fiber": "^9.1.2",
+    "@react-three/fiber": "9",
     "@vayjs/vay": "^2.0.3",
     "@vayjs/vay-react": "^2.0.3",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
     "rune-sdk": "^4.25.5",
     "three": "^0.176.0"
   },
@@ -24,7 +24,7 @@
     "@biomejs/biome": "^1.9.4",
     "@commitlint/cli": "^19.8.0",
     "@commitlint/config-conventional": "^19.8.0",
-    "@types/react": "^18.0.28",
+    "@types/react": "19.1.4",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^4.0.0",
     "globals": "^15.8.0",

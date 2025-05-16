@@ -26,7 +26,6 @@ body {
     display: flex;
     flex-direction: column;
 
-    background: gray;
     height: 100dvh;
     width: 100dvw;
 
@@ -35,7 +34,6 @@ body {
         display: flex;
         flex-direction: column;
 
-        margin: 0.25rem;
         flex-grow: 1;
         padding-bottom: env(safe-area-inset-bottom, 0);
         border-bottom-left-radius: env(safe-area-inset-left, 0);

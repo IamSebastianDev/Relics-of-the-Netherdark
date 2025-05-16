@@ -6,9 +6,13 @@ import { initialPlayerState } from "./player/player-state";
 type SetupFn = Parameters<typeof Rune.initLogic>[0]["setup"];
 
 export const setup: SetupFn = (allPlayerIds) => {
+    if (allPlayerIds.length === 0) {
+        throw new RangeError(`Not enough players.`);
+    }
+
     return {
         allPlayerIds,
-        dungeonState: {},
+        currentActivePlayer: allPlayerIds[0],
         playerState: Object.fromEntries(
             allPlayerIds.map((id) => {
                 return [id, initialPlayerState()];
