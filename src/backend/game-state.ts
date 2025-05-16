@@ -1,5 +1,5 @@
-import { PlayerId } from "rune-sdk";
-import { PlayerState } from "./player/player-state";
+import { PlayerId } from 'rune-sdk';
+import { PlayerState } from './player/player-state';
 
 export type DungeonState = {};
 

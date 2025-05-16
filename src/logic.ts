@@ -1,8 +1,8 @@
-import type { RuneClient } from "rune-sdk";
-import { GameActions } from "./backend/game-actions";
-import { GameState } from "./backend/game-state";
-import { initialPlayerState } from "./backend/player/player-state";
-import { setup } from "./backend/setup";
+import type { RuneClient } from 'rune-sdk';
+import { GameActions } from './backend/game-actions';
+import { GameState } from './backend/game-state';
+import { initialPlayerState } from './backend/player/player-state';
+import { setup } from './backend/setup';
 
 declare global {
     const Rune: RuneClient<GameState, GameActions>;
