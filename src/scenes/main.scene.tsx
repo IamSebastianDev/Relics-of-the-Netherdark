@@ -1,7 +1,7 @@
-import { Canvas } from "@react-three/fiber";
-import React from "react";
-import { Camera } from "../components/renderer/camera";
-import { Screen } from "../components/ui/screen";
+import { Canvas } from '@react-three/fiber';
+import React from 'react';
+import { Camera } from '../components/renderer/camera';
+import { Screen } from '../components/ui/screen';
 
 export const Main = React.memo(() => {
     return (

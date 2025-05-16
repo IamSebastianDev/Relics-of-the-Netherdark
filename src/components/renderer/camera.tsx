@@ -1,6 +1,6 @@
-import { CameraControls, OrthographicCamera } from "@react-three/drei";
-import { useThree } from "@react-three/fiber";
-import { useRef } from "react";
+import { CameraControls, OrthographicCamera } from '@react-three/drei';
+import { useThree } from '@react-three/fiber';
+import { useRef } from 'react';
 
 const CAMERA_PROPS = {
     zoom: 65,
