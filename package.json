@@ -11,21 +11,21 @@
     "format": "bun biome format --write"
   },
   "dependencies": {
-    "@react-three/drei": "^10.0.7",
-    "@react-three/fiber": "9",
+    "@react-three/drei": "^10.0.4",
+    "@react-three/fiber": "9.0.4",
     "@vayjs/vay": "^2.0.3",
     "@vayjs/vay-react": "^2.0.3",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "rune-sdk": "^4.25.5",
-    "three": "^0.176.0"
+    "three": "^0.174.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@commitlint/cli": "^19.8.0",
     "@commitlint/config-conventional": "^19.8.0",
-    "@types/react": "19.1.4",
-    "@types/react-dom": "^18.0.11",
+    "@types/react": "19.0.10",
+    "@types/react-dom": "^19.0.10",
     "@vitejs/plugin-react": "^4.0.0",
     "globals": "^15.8.0",
     "lefthook": "^1.11.11",

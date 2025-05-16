@@ -9,7 +9,7 @@ pre-commit:
     parallel: false
     commands:
         format:
-            run: bun run format {staged_files}
+            run: bun biome format --write {staged_files}
         lint:ts:
             run: bun run lint {staged_files}
 commit-msg:
