@@ -1,9 +1,12 @@
-import React from "react";
-import { Screen } from "../components/ui/screen";
-import { useLanguage } from "../providers/language.provider";
+import React from 'react';
+import { Screen } from '../components/ui/screen';
+
+const handleOnClick = () => Rune.actions.drawMission();
 
 export const Game = React.memo(() => {
-    const { translate: t } = useLanguage();
-
-    return <Screen></Screen>;
+    return (
+        <Screen>
+            <button onClick={() => handleOnClick()}>Draw mission</button>
+        </Screen>
+    );
 });

@@ -1,5 +1,6 @@
 // As the Rune SDK does not expose the type of the
 
+import { missionDeck } from './missions/mission-deck';
 import { initialPlayerState } from './player/player-state';
 
 // setup fn, we can just go ahead and infer it.
@@ -18,5 +19,11 @@ export const setup: SetupFn = (allPlayerIds) => {
                 return [id, initialPlayerState()];
             })
         ),
+
+        // Game properties
+        missionDeck: Object.fromEntries(missionDeck),
+
+        // Board
+        board: {},
     };
 };

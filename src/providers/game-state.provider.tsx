@@ -1,8 +1,8 @@
-import { PropsWithChildren, createContext, useEffect, useState } from "react";
-import { PlayerId } from "rune-sdk";
-import type { GameState as RuneState } from "../backend/game-state";
-import { PlayerState } from "../backend/player/player-state";
-import { useSafeContext } from "../hooks/use-safe-context";
+import { PropsWithChildren, createContext, useEffect, useState } from 'react';
+import { PlayerId } from 'rune-sdk';
+import type { GameState as RuneState } from '../backend/game-state';
+import { PlayerState } from '../backend/player/player-state';
+import { useSafeContext } from '../hooks/use-safe-context';
 
 type GameState = RuneState & {
     localPlayerId: PlayerId | undefined;
@@ -26,7 +26,7 @@ export const GameStateProvider = ({ children }: PropsWithChildren) => {
                 setInvalidate((v) => v + 1);
                 if (yourPlayerId) {
                     setLocalPlayerId(yourPlayerId);
-                    setPlayerData(game.playerState[yourPlayerId] ?? game.persisted[yourPlayerId]);
+                    setPlayerData(game.playerState[yourPlayerId]);
                 }
             },
         });
