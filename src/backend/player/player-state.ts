@@ -1,11 +1,11 @@
-import { Mission } from "../missions/mission";
+import { Mission } from '../missions/mission';
 
 export type PlayerState = {
-    missions: Mission[]
+    missions: Mission[];
 };
 
 export const initialPlayerState = (): PlayerState => {
     return {
-        missions: []
+        missions: [],
     };
 };
