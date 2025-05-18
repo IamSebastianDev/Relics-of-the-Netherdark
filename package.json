@@ -15,6 +15,7 @@
     "@react-three/fiber": "9.0.4",
     "@vayjs/vay": "^2.0.3",
     "@vayjs/vay-react": "^2.0.3",
+    "honeycomb-grid": "^4.1.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "rune-sdk": "^4.25.5",

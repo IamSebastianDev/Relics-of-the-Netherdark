@@ -1,5 +1,5 @@
 import { PlayerId } from 'rune-sdk';
-import { Tile } from './board/tile';
+import { Board } from './board/board';
 import { Mission } from './missions/mission';
 import { PlayerState } from './player/player-state';
 
@@ -8,5 +8,5 @@ export type GameState = {
     playerState: Record<PlayerId, PlayerState>;
     currentActivePlayer: PlayerId;
     missionDeck: Record<string, Mission>;
-    board: Record<string, Tile>;
+    board: Board;
 };

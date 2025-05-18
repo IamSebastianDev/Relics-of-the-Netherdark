@@ -1,11 +1,27 @@
+import { HexCoordinates, defineHex } from 'honeycomb-grid';
 import { PlayerId } from 'rune-sdk';
 
-type TileType = 'gemstone_caverns' | 'bone-hoard';
+export type TileType = 'gemstone-caverns' | 'bone-hoard' | 'fungal-forest' | 'twisted-tunnels' | 'void';
 
-export type Tile = {
-    tileId: string;
-    playerId: PlayerId | null;
-    discovered: boolean;
-    type: TileType;
-    position: [x: number, y: number];
-};
+export class Tile extends defineHex({ dimensions: 1 }) {
+    id = crypto.randomUUID();
+    playerId: PlayerId | null = null;
+    discovered = false;
+    type!: TileType;
+
+    static create(coordinates: HexCoordinates, instance: Partial<Tile>) {
+        const { playerId, type, discovered } = instance;
+        const hex = new Tile(coordinates);
+
+        // We assign all the properties from the instance data
+        // to the instance. This allows recreating the hex from
+        // itself.
+        Object.assign(hex, {
+            type: type ?? 'void',
+            playerId: playerId ?? null,
+            discovered: discovered ?? false,
+        });
+
+        return hex;
+    }
+}
