@@ -1,4 +1,5 @@
 import { HexCoordinates } from 'honeycomb-grid';
+import { random } from '../utils/random';
 import { TileType } from './tile';
 
 // The predefined start coordinates for the 6 players, starting
@@ -37,6 +38,17 @@ export const getSource = (idx: number) => {
 export const getCoordinates = (source: Set<string>) => {
     return [...source.values()].map((position) => {
         const [q, r] = position.split(':');
+        return { q: parseInt(q), r: parseInt(r) };
+    });
+};
+
+export const getRandomCoordinates = (source: Set<string>, amount: number): { q: number; r: number }[] => {
+    const pool = new Set(source);
+    return Array.from({ length: amount }, () => {
+        const entries = [...pool.keys()];
+        const entry = random(entries);
+        pool.delete(entry);
+        const [q, r] = entry.split(':');
         return { q: parseInt(q), r: parseInt(r) };
     });
 };

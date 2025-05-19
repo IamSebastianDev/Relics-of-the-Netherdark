@@ -11,6 +11,9 @@ models.set('twisted-tunnels', './models/twisted-tunnels.glb');
 models.set('miners-enclaves', './models/miners-enclaves.glb');
 models.set('entrance', './models/entrance.glb');
 models.set('undiscovered', './models/undiscovered.glb');
+models.set('ancient-shrines', './models/ancient-shrines.glb');
+models.set('wizards-towers', './models/wizards-towers.glb');
+models.set('the-mouth', './models/the-mouth.glb');
 
 export const useModel = (type: Tile['type']) => {
     const { scene } = useGLTF(models.get(type)!);

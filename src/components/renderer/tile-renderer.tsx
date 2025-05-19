@@ -5,6 +5,7 @@ import { useRandomRotation } from '../../scenes/use-random-rotation';
 type TileRendererProps = Pick<Tile, 'x' | 'y' | 'type' | 'discovered' | 'playerId' | 'id'>;
 export const TileRenderer = ({ type, ...props }: TileRendererProps) => {
     const model = useModel(props.discovered ? type : 'undiscovered');
+    // const model = useModel(type);
 
     // Randomized but deterministic rotation (based on tile ID hash)
     // which gives the board a more random board game like look.
