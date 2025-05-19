@@ -1,3 +1,4 @@
+import { ThreeEvent } from '@react-three/fiber';
 import { Tile } from '../../backend/board/tile';
 import { useModel } from '../../hooks/use-model';
 import { useRandomRotation } from '../../scenes/use-random-rotation';
@@ -13,8 +14,13 @@ export const TileRenderer = ({ type, ...props }: TileRendererProps) => {
         return null;
     }
 
+    const handleClick = (ev: ThreeEvent<MouseEvent>) => {
+        ev.stopPropagation();
+        console.log({ type, ...props });
+    };
+
     return (
-        <group onClick={() => console.log({ props, type })}>
+        <group onClick={handleClick}>
             <primitive object={model} position={[props.x, 0, props.y]} rotation={[0, rotationY, 0]} />
         </group>
     );
