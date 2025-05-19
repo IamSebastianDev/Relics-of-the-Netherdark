@@ -1,4 +1,6 @@
-import { Grid, GridAsJSON, Hex, spiral } from 'honeycomb-grid';
+import { Grid, GridAsJSON } from 'honeycomb-grid';
+import { PlayerId } from 'rune-sdk';
+import { getCoordinates, getSource } from './constants';
 import { Tile } from './tile';
 import { TilePool } from './tile-pool';
 
@@ -67,13 +69,19 @@ const centerTilePoolSource: Tile['type'][] = [
 ];
 
 export type Board = GridAsJSON<Tile>;
-export const createCenterTiles = (): Board => {
+export const createCenterTiles = () => {
     const pool = new TilePool(centerTilePoolSource);
-    const coordinates = new Grid(Hex, spiral({ radius: 4 }));
-    const hexes = coordinates.toArray().map((hex) => Tile.create(hex, { type: pool.next() }));
-    return new Grid(Tile, hexes).toJSON();
+    const hexes = getCoordinates(getSource(0)).map((hex) => Tile.create(hex, { type: pool.next() }));
+    console.log({ numberOfCenterTiles: hexes.length });
+    return new Grid(Tile, hexes);
 };
 
-// export const createPlayerTiles = (playerId: PlayerId, placement: number) => {
-//     return {} as Board;
-// };
+export const createPlayerTiles = (playerId: PlayerId, playerIdx: number) => {
+    const pool = new TilePool(centerTilePoolSource);
+    const hexes = getCoordinates(getSource(playerIdx)).map((hex) =>
+        Tile.create(hex, { type: pool.next(), playerId: playerId })
+    );
+    console.log({ numberOfPlayerTiles: hexes.length });
+
+    return new Grid(Tile, hexes);
+};

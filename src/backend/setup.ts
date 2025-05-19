@@ -1,6 +1,6 @@
 // As the Rune SDK does not expose the type of the
 
-import { createCenterTiles } from './board/board';
+import { createCenterTiles, createPlayerTiles } from './board/board';
 import { missionDeck } from './missions/mission-deck';
 import { initialPlayerState } from './player/player-state';
 
@@ -13,10 +13,9 @@ export const setup: SetupFn = (allPlayerIds) => {
     }
 
     const board = createCenterTiles();
-    console.log({ board });
-    // for (const [playerId, idx] of allPlayerIds.map((v, i) => [v, i] as const)) {
-    //     Object.assign(board, createPlayerTiles(playerId, idx + 1));
-    // }
+    for (const [playerId, playerNumber] of allPlayerIds.map((v, i) => [v, i + 1] as const)) {
+        board.setHexes(createPlayerTiles(playerId, playerNumber));
+    }
 
     return {
         allPlayerIds,
@@ -33,6 +32,6 @@ export const setup: SetupFn = (allPlayerIds) => {
         missionDeck: Object.fromEntries(missionDeck),
 
         // Board
-        board: board,
+        board: board.toJSON(),
     };
 };
