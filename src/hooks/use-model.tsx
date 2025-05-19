@@ -9,6 +9,8 @@ models.set('fungal-fields', './models/fungal-fields.glb');
 models.set('gemstone-caverns', './models/gemstone-caverns.glb');
 models.set('twisted-tunnels', './models/twisted-tunnels.glb');
 models.set('miners-enclaves', './models/miners-enclaves.glb');
+models.set('entrance', './models/entrance.glb');
+models.set('undiscovered', './models/undiscovered.glb');
 
 export const useModel = (type: Tile['type']) => {
     const { scene } = useGLTF(models.get(type)!);

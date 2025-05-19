@@ -10,6 +10,8 @@ export type TileType =
     | 'wizards-towers'
     | 'ancient-shrines'
     | 'the-mouth'
+    | 'entrance'
+    | 'undiscovered'
     | 'void';
 
 export class Tile extends defineHex({ dimensions: 1 }) {
