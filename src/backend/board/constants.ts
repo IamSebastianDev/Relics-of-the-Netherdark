@@ -1,4 +1,5 @@
 import { HexCoordinates } from 'honeycomb-grid';
+import { TileType } from './tile';
 
 // The predefined start coordinates for the 6 players, starting
 // from the first. There can't be more then 6 players, so 6
@@ -37,11 +38,24 @@ export const getCoordinates = (source: Set<string>) => {
     });
 };
 
-export const tileSources = {
+export const tileSources: Record<string, TileType[]> = {
     // The center board has 61 tiles to distribute. There is a even
     // distribution of 55 standard tiles (11 each) and 6 void tiles.
     // There are then 2 Relic Tiles, 2 Wizards towers, and the 'mouth',
     // that replace random tiles in the board.
-    center: [...Array.from({ length: 11 }, () => 'gemstone-caverns')],
-    player: [],
+    center: [
+        ...Array.from({ length: 11 }, () => 'gemstone-caverns' as const),
+        ...Array.from({ length: 11 }, () => 'twisted-tunnels' as const),
+        ...Array.from({ length: 11 }, () => 'fungal-fields' as const),
+        ...Array.from({ length: 11 }, () => 'miners-enclaves' as const),
+        ...Array.from({ length: 11 }, () => 'bone-hoards' as const),
+        ...Array.from({ length: 6 }, () => 'void' as const),
+    ],
+    player: [
+        ...Array.from({ length: 11 }, () => 'gemstone-caverns' as const),
+        ...Array.from({ length: 11 }, () => 'twisted-tunnels' as const),
+        ...Array.from({ length: 11 }, () => 'fungal-fields' as const),
+        ...Array.from({ length: 11 }, () => 'miners-enclaves' as const),
+        ...Array.from({ length: 11 }, () => 'bone-hoards' as const),
+    ],
 };

@@ -1,7 +1,16 @@
 import { HexCoordinates, defineHex } from 'honeycomb-grid';
 import { PlayerId } from 'rune-sdk';
 
-export type TileType = 'gemstone-caverns' | 'bone-hoard' | 'fungal-forest' | 'twisted-tunnels' | 'void';
+export type TileType =
+    | 'gemstone-caverns'
+    | 'bone-hoards'
+    | 'fungal-fields'
+    | 'twisted-tunnels'
+    | 'miners-enclaves'
+    | 'wizards-towers'
+    | 'ancient-shrines'
+    | 'the-mouth'
+    | 'void';
 
 export class Tile extends defineHex({ dimensions: 1 }) {
     id = crypto.randomUUID();
