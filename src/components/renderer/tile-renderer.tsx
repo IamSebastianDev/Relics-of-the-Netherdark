@@ -7,14 +7,14 @@ import { useModel } from '../../hooks/use-model';
 import { usePulse } from '../../hooks/use-pulse';
 import { useRandomRotation } from '../../scenes/use-random-rotation';
 
-export const HexTopOutline = ({ radius = 1, color = 'white' }) => {
-    const points = useHexPoints({ radius });
+export const HexTopOutline = () => {
+    const points = useHexPoints({ radius: 1 });
     const pulse = usePulse();
 
     return (
         <group {...pulse} rotation={[0, degToRad(30), 0]} position={[0, 0.275, 0]} scale={0.8}>
             <Line points={points} transparent opacity={0.15} depthWrite={false} color={'white'} lineWidth={8} />
-            <Line points={points} color={color} lineWidth={2} />
+            <Line points={points} color={'white'} lineWidth={2} />
         </group>
     );
 };
