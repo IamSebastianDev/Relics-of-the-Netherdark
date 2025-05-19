@@ -1,5 +1,6 @@
 import { HexCoordinates, defineHex } from 'honeycomb-grid';
 import { PlayerId } from 'rune-sdk';
+import { cuid } from '../utils/cuid';
 
 export type TileType =
     | 'gemstone-caverns'
@@ -15,7 +16,7 @@ export type TileType =
     | 'void';
 
 export class Tile extends defineHex({ dimensions: 1 }) {
-    id = crypto.randomUUID();
+    id = cuid();
     playerId: PlayerId | null = null;
     discovered = false;
     type!: TileType;
