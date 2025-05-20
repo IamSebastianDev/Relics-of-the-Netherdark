@@ -10,8 +10,10 @@ import { usePlayerColor } from '../../hooks/use-player-color';
 import { usePulse } from '../../hooks/use-pulse';
 import { useRandomRotation } from '../../scenes/use-random-rotation';
 import { useTileControllerStore } from '../../stores/tile-controller.store';
+import { useTileOverviewStore } from '../../stores/tile-overview.store';
 import { useTileSelectorStore } from '../../stores/tile-selector.store';
 
+/** @todo -> Make better (And probably rather a circle) */
 export const HexTopOutline = ({ color = 'white' }) => {
     const points = useHexPoints({ radius: 1 });
     const pulse = usePulse();
@@ -34,6 +36,7 @@ export const TileRenderer = React.memo((tile: TileData) => {
     const isInteractive = useIsInteractive(tile);
     const { selectTile, selectedTile } = useTileSelectorStore();
     const { focusTile } = useTileControllerStore();
+    const { showOverview } = useTileOverviewStore();
     const playerColor = usePlayerColor(props.playerId);
 
     // Randomized but deterministic rotation (based on tile ID hash)
@@ -43,12 +46,12 @@ export const TileRenderer = React.memo((tile: TileData) => {
     const handleClick = (ev: ThreeEvent<MouseEvent>) => {
         ev.stopPropagation();
 
-        // Bail early if the tile is not interactive
-        if (!isInteractive) return;
-
-        // Otherwise, we just select the tile.
-        // This will open the context menu and allow
-        // for actions to be taken
+        // On click, we select and focus the tile. We can
+        // delegate all further actions to the corresponding
+        // tile action rendered for the selected tile.
+        // This enables us to show info for every tile, not just
+        // tiles the player can interact with.
+        showOverview(false);
         selectTile(tile);
         focusTile(tile);
     };
@@ -60,9 +63,8 @@ export const TileRenderer = React.memo((tile: TileData) => {
     return (
         <group onClick={handleClick} position={[position.x, 0, position.y]}>
             <primitive object={model} rotation={[0, pulseY, 0]} />
-            {isInteractive && (
-                <HexTopOutline color={isSelected(selectedTile?.id ?? null, props.id) ? 'red' : 'white'} />
-            )}
+            {isSelected(selectedTile?.id ?? null, props.id) && <HexTopOutline color={'white'} />}
+            {isInteractive && <HexTopOutline color="green" />}
             {playerColor && (
                 <mesh position={[0, 0.25, 0]}>
                     <cylinderGeometry args={[0.1, 0.1, 1.5, 20, 1]} />

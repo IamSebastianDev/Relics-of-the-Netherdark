@@ -4,7 +4,14 @@ import { useTileSelectorStore } from '../../stores/tile-selector.store';
 
 export const ContextQuickAction = ({ action, disabled, icon }: TileAction) => {
     return (
-        <button onClick={action} disabled={disabled} className="context-action">
+        <button
+            onClick={(event) => {
+                event.stopPropagation();
+                action();
+            }}
+            disabled={disabled}
+            className="context-action"
+        >
             <img src={icon} />
         </button>
     );

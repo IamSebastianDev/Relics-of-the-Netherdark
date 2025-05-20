@@ -124,6 +124,11 @@ body {
         padding: 0;
         display: flex;
         translate: 0 -32px;
+
+        &[disabled] {
+            pointer-events: none;
+            filter: brightness(0.5);
+        }
     }
 }
 
