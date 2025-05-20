@@ -22,13 +22,14 @@ export class Tile extends defineHex({ dimensions: 1 }) {
     type!: TileType;
 
     static create(coordinates: HexCoordinates, instance: Partial<Tile>) {
-        const { playerId, type, discovered } = instance;
+        const { playerId, type, discovered, id } = instance;
         const hex = new Tile(coordinates);
 
         // We assign all the properties from the instance data
         // to the instance. This allows recreating the hex from
         // itself.
         Object.assign(hex, {
+            id: id ?? hex.id,
             type: type ?? 'void',
             playerId: playerId ?? null,
             discovered: discovered ?? false,

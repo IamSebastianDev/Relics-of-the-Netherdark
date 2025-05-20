@@ -1,4 +1,4 @@
 export type GameActions = {
-    tileAction: () => void;
+    claimTile: (payload: [tileId: string, position: { q: number; r: number }]) => void;
     drawMission: () => void;
 };

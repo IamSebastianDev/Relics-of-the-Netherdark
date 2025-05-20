@@ -17,7 +17,7 @@ export const ContextAction = ({ action, disabled, icon }: Action) => {
 };
 
 const ContextMenu = () => {
-    const { selectedTile, tileData } = useTileStore();
+    const { selectedTile, tileData, selectTile } = useTileStore();
 
     if (!selectedTile || !tileData) return null;
 
@@ -33,7 +33,8 @@ const ContextMenu = () => {
         {
             id: 'claim',
             action: () => {
-                console.log('Claim', selectedTile);
+                Rune.actions.claimTile([tileData.id, tileData.position]);
+                selectTile(null);
             },
             disabled: false,
             icon: claim,

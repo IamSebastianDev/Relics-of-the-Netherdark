@@ -15,6 +15,12 @@ models.set('ancient-shrines', './models/ancient-shrines.glb');
 models.set('wizards-towers', './models/wizards-towers.glb');
 models.set('the-mouth', './models/the-mouth.glb');
 
+// Preload all models, to avoid random jumps
+// later on, when tiles are discovered.
+for (const entry of models.values()) {
+    useGLTF.preload(entry);
+}
+
 export const useModel = (type: Tile['type']) => {
     const { scene } = useGLTF(models.get(type)!);
     return useMemo(() => scene.clone(), [scene]);
