@@ -41,7 +41,7 @@ const ContextMenu = () => {
     ];
 
     return (
-        <Html pointerEvents={'none'} position={[tileData.position.x, 1.5, tileData.position.y]}>
+        <Html pointerEvents={'none'} position={[tileData.position.x, 0, tileData.position.y]}>
             <div className="context-shell">
                 {actions.map((action) => (
                     <ContextAction key={action.id} {...action} />
@@ -54,7 +54,6 @@ const ContextMenu = () => {
 export const Grid = () => {
     const grid = useGrid();
     const tiles = useMemo(() => grid.toArray(), [grid]);
-    console.log({ position: tiles.map((tile) => [tile.position.x, tile.position.y]) });
 
     return (
         <>
