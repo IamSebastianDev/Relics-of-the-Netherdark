@@ -7,6 +7,8 @@ html {
 :root {
     --color-avatar-bg: white;
     --color-avatar-active: red;
+
+    --color-context-background: gray;
 }
 
 /* Font Setup */

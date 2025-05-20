@@ -13,6 +13,9 @@ Rune.initLogic({
     maxPlayers: 6,
     setup: setup,
     actions: {
+        tileAction: (payload: unknown, { playerId, game }) => {
+            console.log({ payload, playerId, game });
+        },
         drawMission: (_, { playerId, game }) => {
             const [mission, deck] = drawFromDeck(game.missionDeck);
             game.playerState[playerId].missions.push(mission);

@@ -75,6 +75,8 @@ body {
     padding: 0.5rem;
 }
 
+/* Avatar group */
+
 .avatar-group {
     display: flex;
     flex-direction: column;
@@ -103,5 +105,32 @@ body {
             height: 100%;
             aspect-ratio: 1 / 1;
         }
+    }
+}
+
+/* Context Menu */
+.context-shell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.2rem;
+    animation: fade-in 200ms;
+    position: absolute;
+    bottom: -20px;
+    right: -60px;
+
+    & .context-action {
+        background: none;
+        border: none;
+        padding: 0;
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }

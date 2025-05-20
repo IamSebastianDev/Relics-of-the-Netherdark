@@ -24,9 +24,7 @@ export const createCenterTiles = () => {
 
 export const createPlayerTiles = (playerId: PlayerId, playerIdx: number) => {
     const pool = new TilePool(tileSources.player);
-    const hexes = getCoordinates(getSource(playerIdx)).map((hex) =>
-        Tile.create(hex, { type: pool.next(), playerId: playerId })
-    );
+    const hexes = getCoordinates(getSource(playerIdx)).map((hex) => Tile.create(hex, { type: pool.next() }));
 
     const grid = new Grid(Tile, hexes);
 

@@ -1,4 +1,4 @@
-import { HexCoordinates, defineHex } from 'honeycomb-grid';
+import { Hex, HexCoordinates, defineHex } from 'honeycomb-grid';
 import { PlayerId } from 'rune-sdk';
 import { cuid } from '../utils/cuid';
 
@@ -36,4 +36,10 @@ export class Tile extends defineHex({ dimensions: 1 }) {
 
         return hex;
     }
+
+    get position() {
+        return { q: this.q, r: this.r, x: this.x, y: this.y };
+    }
 }
+
+export type TileInfo = Omit<Tile, keyof Hex>;

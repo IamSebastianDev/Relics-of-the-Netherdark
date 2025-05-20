@@ -1,21 +1,29 @@
 import { CameraControls, OrthographicCamera } from '@react-three/drei';
 import { useThree } from '@react-three/fiber';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { degToRad } from 'three/src/math/MathUtils.js';
+import { useTileStore } from '../../stores/tile.store';
 
 const CAMERA_PROPS = {
     zoom: 65,
-    near: 0.1,
-    far: 3000,
+    near: 1,
+    far: 100,
 };
 
 export const Camera = () => {
     const controllerRef = useRef<CameraControls | null>(null);
     const { camera } = useThree();
+    const { selectedTile, tileData } = useTileStore();
+
+    useEffect(() => {
+        if (selectedTile && tileData) {
+            controllerRef.current?.moveTo(tileData.position.x, 0, tileData.position.y, true);
+        }
+    }, [selectedTile, tileData]);
 
     return (
         <>
-            <OrthographicCamera makeDefault position={[10, 10, 10]} {...CAMERA_PROPS} />
+            <OrthographicCamera makeDefault position={[0, 50, 10]} {...CAMERA_PROPS} />
             <CameraControls
                 ref={controllerRef}
                 camera={camera}
@@ -24,6 +32,7 @@ export const Camera = () => {
                 azimuthRotateSpeed={0}
                 polarRotateSpeed={0}
                 polarAngle={degToRad(60)}
+                azimuthAngle={degToRad(45)}
             />
         </>
     );
