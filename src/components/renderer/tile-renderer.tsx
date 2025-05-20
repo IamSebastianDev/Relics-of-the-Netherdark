@@ -1,17 +1,42 @@
 import { Line } from '@react-three/drei';
 import { ThreeEvent } from '@react-three/fiber';
 import React from 'react';
+import { PlayerId } from 'rune-sdk';
+import * as THREE from 'three';
 import { degToRad } from 'three/src/math/MathUtils.js';
 import { TileData } from '../../backend/board/tile';
 import { useHexPoints } from '../../hooks/use-hex-points';
 import { useIsInteractive } from '../../hooks/use-is-interactive';
 import { useModel } from '../../hooks/use-model';
-import { usePlayerColor } from '../../hooks/use-player-color';
+import { usePlayerMarker } from '../../hooks/use-player-marker';
 import { usePulse } from '../../hooks/use-pulse';
 import { useRandomRotation } from '../../scenes/use-random-rotation';
 import { useTileControllerStore } from '../../stores/tile-controller.store';
 import { useTileOverviewStore } from '../../stores/tile-overview.store';
 import { useTileSelectorStore } from '../../stores/tile-selector.store';
+
+export const PlayerMarker = ({ playerId }: { playerId: PlayerId }) => {
+    const { texture, color } = usePlayerMarker(playerId);
+
+    return (
+        <group position={[0, 0.25, 0]}>
+            <mesh>
+                <cylinderGeometry args={[0.35, 0.35, 0.1, 32]} />
+                <meshStandardMaterial color="#333" roughness={0.8} metalness={0.5} />
+            </mesh>
+
+            <mesh position={[0, 0.05, 0]}>
+                <cylinderGeometry args={[0.3, 0.3, 0.02, 32]} />
+                <meshStandardMaterial color={color} roughness={0.8} />
+            </mesh>
+
+            <mesh position={[0, 0.075, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={1.75}>
+                <planeGeometry args={[0.3, 0.3]} />
+                <meshBasicMaterial map={texture} transparent color="white" depthWrite={false} side={THREE.DoubleSide} />
+            </mesh>
+        </group>
+    );
+};
 
 /** @todo -> Make better (And probably rather a circle) */
 export const HexTopOutline = ({ color = 'white' }) => {
@@ -37,7 +62,6 @@ export const TileRenderer = React.memo((tile: TileData) => {
     const { selectTile, selectedTile } = useTileSelectorStore();
     const { focusTile } = useTileControllerStore();
     const { showOverview } = useTileOverviewStore();
-    const playerColor = usePlayerColor(props.playerId);
 
     // Randomized but deterministic rotation (based on tile ID hash)
     // which gives the board a more random board game like look.
@@ -65,12 +89,7 @@ export const TileRenderer = React.memo((tile: TileData) => {
             <primitive object={model} rotation={[0, pulseY, 0]} />
             {isSelected(selectedTile?.id ?? null, props.id) && <HexTopOutline color={'white'} />}
             {isInteractive && <HexTopOutline color="green" />}
-            {playerColor && (
-                <mesh position={[0, 0.25, 0]}>
-                    <cylinderGeometry args={[0.1, 0.1, 1.5, 20, 1]} />
-                    <meshStandardMaterial color={playerColor} />
-                </mesh>
-            )}
+            {tile.playerId && <PlayerMarker playerId={tile.playerId} />}
         </group>
     );
 });

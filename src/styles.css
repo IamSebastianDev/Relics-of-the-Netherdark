@@ -140,10 +140,9 @@ body {
     inset-inline: 0;
     background: white;
     color: black;
-    font: var(--ui-font-heading);
     padding: 1.25rem 1.5rem;
-    margin: 0.75rem;
-    border-radius: 0.75rem;
+    margin: 0.5rem;
+    border-radius: 1.75rem;
 
     & .tile-title {
         font-family: var(--ui-font-heading);

@@ -1,5 +1,6 @@
 import { PlayerId } from 'rune-sdk';
 import { TileData } from '../../backend/board/tile';
+import { usePlayerProfile } from '../../hooks/use-player-profile';
 import { useGameState } from '../../providers/game-state.provider';
 import { useLanguage } from '../../providers/language.provider';
 import { useTileOverviewStore } from '../../stores/tile-overview.store';
@@ -33,6 +34,7 @@ const TileOverview = () => {
     const { selectedTile } = useTileSelectorStore();
     const { overviewEnabled } = useTileOverviewStore();
     const { translate: t } = useLanguage();
+    const playerData = usePlayerProfile(selectedTile?.playerId ?? null);
 
     if (!selectedTile || !overviewEnabled) {
         return null;
@@ -44,7 +46,7 @@ const TileOverview = () => {
                 <div className="tile-title">{t(selectedTile.translationConfig.title)}</div>
                 <div className="tile-coordinates">{formatPosition(selectedTile.position)}</div>
             </div>
-            <div className="tile-claimant">Claimed by: {selectedTile.playerId ?? 'no one'}</div>
+            <div className="tile-claimant">Claimed by: {playerData?.displayName ?? 'no one'}</div>
             <div>{t(selectedTile.translationConfig.description)}</div>
         </div>
     );

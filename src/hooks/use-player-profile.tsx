@@ -1,6 +1,5 @@
-import { useGameState } from "../providers/game-state.provider";
+import { PlayerId } from 'rune-sdk';
 
-export const usePlayerProfile = () => {
-    const data = useGameState();
-    return data.localPlayerId ? Rune.getPlayerInfo(data.localPlayerId) : null;
+export const usePlayerProfile = (playerId: PlayerId | null) => {
+    return playerId ? Rune.getPlayerInfo(playerId) : null;
 };
