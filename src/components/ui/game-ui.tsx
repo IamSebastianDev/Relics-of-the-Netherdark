@@ -1,5 +1,9 @@
 import { PlayerId } from 'rune-sdk';
+import { TileData } from '../../backend/board/tile';
 import { useGameState } from '../../providers/game-state.provider';
+import { useLanguage } from '../../providers/language.provider';
+import { useTileOverviewStore } from '../../stores/tile-overview.store';
+import { useTileSelectorStore } from '../../stores/tile-selector.store';
 
 const PlayerAvatar = ({ playerId, active }: { playerId: PlayerId; active: boolean }) => {
     const data = Rune.getPlayerInfo(playerId);
@@ -21,9 +25,35 @@ const PlayerAvatarGroup = () => {
     );
 };
 
+const formatPosition = (position: TileData['position']) => {
+    return `${position.q}:${position.r}`;
+};
+
+const TileOverview = () => {
+    const { selectedTile } = useTileSelectorStore();
+    const { overviewEnabled } = useTileOverviewStore();
+    const { translate: t } = useLanguage();
+
+    if (!selectedTile || !overviewEnabled) {
+        return null;
+    }
+
+    return (
+        <div className="tile-panel">
+            <div className="row center between">
+                <div className="tile-title">{t(selectedTile.translationConfig.title)}</div>
+                <div className="tile-coordinates">{formatPosition(selectedTile.position)}</div>
+            </div>
+            <div className="tile-claimant">Claimed by: {selectedTile.playerId ?? 'no one'}</div>
+            <div>{t(selectedTile.translationConfig.description)}</div>
+        </div>
+    );
+};
+
 export const GameUi = () => {
     return (
         <div className="overlay">
+            <TileOverview />
             <PlayerAvatarGroup />
         </div>
     );

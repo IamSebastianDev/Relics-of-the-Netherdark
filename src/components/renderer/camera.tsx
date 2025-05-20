@@ -2,7 +2,7 @@ import { CameraControls, OrthographicCamera } from '@react-three/drei';
 import { useThree } from '@react-three/fiber';
 import { useEffect, useRef } from 'react';
 import { degToRad } from 'three/src/math/MathUtils.js';
-import { useTileStore } from '../../stores/tile.store';
+import { useTileControllerStore } from '../../stores/tile-controller.store';
 
 const CAMERA_PROPS = {
     zoom: 65,
@@ -13,13 +13,13 @@ const CAMERA_PROPS = {
 export const Camera = () => {
     const controllerRef = useRef<CameraControls | null>(null);
     const { camera } = useThree();
-    const { selectedTile, tileData } = useTileStore();
+    const { focusedTile } = useTileControllerStore();
 
     useEffect(() => {
-        if (selectedTile && tileData) {
-            controllerRef.current?.moveTo(tileData.position.x, 0, tileData.position.y, true);
+        if (focusedTile) {
+            controllerRef.current?.moveTo(focusedTile.position.x, 0, focusedTile.position.y, true);
         }
-    }, [selectedTile, tileData]);
+    }, [focusedTile]);
 
     return (
         <>

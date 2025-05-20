@@ -2,14 +2,15 @@ import { Line } from '@react-three/drei';
 import { ThreeEvent } from '@react-three/fiber';
 import React from 'react';
 import { degToRad } from 'three/src/math/MathUtils.js';
-import { TileInfo } from '../../backend/board/tile';
+import { TileData } from '../../backend/board/tile';
 import { useHexPoints } from '../../hooks/use-hex-points';
 import { useIsInteractive } from '../../hooks/use-is-interactive';
 import { useModel } from '../../hooks/use-model';
 import { usePlayerColor } from '../../hooks/use-player-color';
 import { usePulse } from '../../hooks/use-pulse';
 import { useRandomRotation } from '../../scenes/use-random-rotation';
-import { useTileStore } from '../../stores/tile.store';
+import { useTileControllerStore } from '../../stores/tile-controller.store';
+import { useTileSelectorStore } from '../../stores/tile-selector.store';
 
 export const HexTopOutline = ({ color = 'white' }) => {
     const points = useHexPoints({ radius: 1 });
@@ -27,10 +28,12 @@ const isSelected = (key: string | null, id: string) => {
     return key === id;
 };
 
-export const TileRenderer = React.memo(({ type, position, ...props }: TileInfo) => {
-    const model = useModel(props.discovered ? type : 'undiscovered');
-    const isInteractive = useIsInteractive({ type, ...props });
-    const { selectedTile, selectTile } = useTileStore();
+export const TileRenderer = React.memo((tile: TileData) => {
+    const { type, position, discovered, ...props } = tile;
+    const model = useModel(discovered ? type : 'undiscovered');
+    const isInteractive = useIsInteractive(tile);
+    const { selectTile, selectedTile } = useTileSelectorStore();
+    const { focusTile } = useTileControllerStore();
     const playerColor = usePlayerColor(props.playerId);
 
     // Randomized but deterministic rotation (based on tile ID hash)
@@ -46,7 +49,8 @@ export const TileRenderer = React.memo(({ type, position, ...props }: TileInfo) 
         // Otherwise, we just select the tile.
         // This will open the context menu and allow
         // for actions to be taken
-        selectTile({ ...props, position, type });
+        selectTile(tile);
+        focusTile(tile);
     };
 
     if (type === 'void') {
@@ -56,7 +60,9 @@ export const TileRenderer = React.memo(({ type, position, ...props }: TileInfo) 
     return (
         <group onClick={handleClick} position={[position.x, 0, position.y]}>
             <primitive object={model} rotation={[0, pulseY, 0]} />
-            {isInteractive && <HexTopOutline color={isSelected(selectedTile, props.id) ? 'red' : 'white'} />}
+            {isInteractive && (
+                <HexTopOutline color={isSelected(selectedTile?.id ?? null, props.id) ? 'red' : 'white'} />
+            )}
             {playerColor && (
                 <mesh position={[0, 0.25, 0]}>
                     <cylinderGeometry args={[0.1, 0.1, 1.5, 20, 1]} />

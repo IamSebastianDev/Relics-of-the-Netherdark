@@ -4,6 +4,7 @@
     "": {
       "name": "@iasd/react-jam-spring-2025",
       "dependencies": {
+        "@fontsource/im-fell-dw-pica": "^5.2.5",
         "@react-three/drei": "^10.0.4",
         "@react-three/fiber": "9.0.4",
         "@vayjs/vay": "^2.0.3",
@@ -176,6 +177,8 @@
     "@eslint/eslintrc": ["@eslint/eslintrc@3.3.1", "", { "dependencies": { "ajv": "^6.12.4", "debug": "^4.3.2", "espree": "^10.0.1", "globals": "^14.0.0", "ignore": "^5.2.0", "import-fresh": "^3.2.1", "js-yaml": "^4.1.0", "minimatch": "^3.1.2", "strip-json-comments": "^3.1.1" } }, "sha512-gtF186CXhIl1p4pJNGZw8Yc6RlshoePRvE0X91oPGb3vZ8pM3qOS9W9NGPat9LziaBV7XrJWGylNQXkGcnM3IQ=="],
 
     "@eslint/js": ["@eslint/js@9.26.0", "", {}, "sha512-I9XlJawFdSMvWjDt6wksMCrgns5ggLNfFwFvnShsleWruvXM514Qxk8V246efTw+eo9JABvVz+u3q2RiAowKxQ=="],
+
+    "@fontsource/im-fell-dw-pica": ["@fontsource/im-fell-dw-pica@5.2.5", "", {}, "sha512-T1WJRFXRuaaXdVkrKv3u1L4NaAf+2OEZiJR9ulSlZyPLXkDYY8WO5KbXEp5w5xIdcuygivvWYW4ShOEfv5jTbA=="],
 
     "@graphql-typed-document-node/core": ["@graphql-typed-document-node/core@3.2.0", "", { "peerDependencies": { "graphql": "^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0" } }, "sha512-mB9oAsNCm9aM3/SOv4YtBMqZbYj10R7dkq8byBqxGY/ncFwhf2oQzMV+LCRlWoDSEBJ3COiR1yeDvMtsoOsuFQ=="],
 

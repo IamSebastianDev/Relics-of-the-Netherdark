@@ -14,8 +14,8 @@ html {
 /* Font Setup */
 
 :root {
-    /* --ui-font-heading: "Grandstander Variable", system-ui;
-    --ui-font-body: "Rubik Variable", sans-serif; */
+    --ui-font-heading: "IM Fell DW Pica", serif;
+    /* --ui-font-body: "Rubik Variable", sans-serif; */
 }
 
 /* Typography */
@@ -29,6 +29,10 @@ html {
     &.center {
         justify-content: center;
         align-items: center;
+    }
+
+    &.between {
+        justify-content: space-between;
     }
 }
 

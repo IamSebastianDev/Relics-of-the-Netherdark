@@ -70,7 +70,7 @@ body {
 .overlay {
     position: fixed;
     inset: 0;
-    z-index: 1;
+    z-index: 10000000000;
     pointer-events: none;
     padding: 0.5rem;
 }
@@ -126,6 +126,32 @@ body {
         translate: 0 -32px;
     }
 }
+
+/* Tile Overview */
+
+.tile-panel {
+    position: fixed;
+    bottom: 0;
+    inset-inline: 0;
+    background: white;
+    color: black;
+    font: var(--ui-font-heading);
+    padding: 1.25rem 1.5rem;
+    margin: 0.75rem;
+    border-radius: 0.75rem;
+
+    & .tile-title {
+        font-family: var(--ui-font-heading);
+        font-size: 1.6rem;
+    }
+
+    & .tile-coordinates {
+        font-family: var(--ui-font-heading);
+        font-size: 1.2rem;
+    }
+}
+
+/* Animations */
 
 @keyframes fade-in {
     from {

@@ -56,9 +56,8 @@ Rune.initLogic({
         },
         playerLeft: (playerId, { game }) => {
             game.allPlayerIds = game.allPlayerIds.filter((id) => id !== playerId);
-            // We might want to implement the player left, however we
-            // would need to manipulate game state for that, so well have
-            // to see if we actually can
+            // @todo -> figure out if want to remove player tiles, or if we keep them,
+            // because then we could also enable player's resyncing to their game state
             delete game.playerState[playerId];
         },
     },

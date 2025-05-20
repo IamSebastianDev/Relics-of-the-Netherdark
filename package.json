@@ -11,6 +11,7 @@
     "format": "bun biome format --write"
   },
   "dependencies": {
+    "@fontsource/im-fell-dw-pica": "^5.2.5",
     "@react-three/drei": "^10.0.4",
     "@react-three/fiber": "9.0.4",
     "@vayjs/vay": "^2.0.3",

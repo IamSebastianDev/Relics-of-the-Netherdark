@@ -1,7 +1,7 @@
-import { Tile } from '../backend/board/tile';
+import { TileData } from '../backend/board/tile';
 import { useGameState } from '../providers/game-state.provider';
 
-export const useIsInteractive = (tile: Partial<Tile>) => {
+export const useIsInteractive = (tile: TileData) => {
     const { currentActivePlayer, localPlayerId } = useGameState();
     // If the player is not defined or the player is not the currentPlayer
     // we can directly return false, as we do not show interactivity for tiles
