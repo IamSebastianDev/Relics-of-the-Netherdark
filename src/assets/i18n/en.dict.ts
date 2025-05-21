@@ -27,10 +27,10 @@ export default defineDictionary('en', {
             description:
                 'Forgotten outposts of brave souls who dug too deep. Some walls still echo with picks and whispers.',
         },
-        wizardsTowers: {
-            title: 'Wizards Towers',
+        hollowHenge: {
+            title: 'Hollow Henge',
             description:
-                'Impossible spires filled with arcane residue. No one knows who built them, only that they endure.',
+                'A circle of ancient monoliths, slowly reawakening. Each stone hums with forgotten pacts and shared purpose, waiting for the chosen to claim their place.',
         },
         ancientShrines: {
             title: 'Ancient Shrines',

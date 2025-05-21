@@ -15,7 +15,7 @@ export const useIsInteractive = (tile: TileData) => {
     switch (tile.type) {
         // Wizards towers tiles have special rules for interactivity
         // as they are community tiles, meaning they can be shared between players
-        case 'wizards-towers':
+        case 'hollow-henge':
             return false;
 
         // All other tiles follow the same simple rules:

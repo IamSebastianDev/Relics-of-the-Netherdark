@@ -13,7 +13,7 @@ export const createCenterTiles = () => {
 
     // We need to generate two ancient shrines and two wizard towers
     const coordinates = getRandomCoordinates(getSource(0), 4);
-    const specialTiles = new TilePool(['ancient-shrines', 'ancient-shrines', 'wizards-towers', 'wizards-towers']);
+    const specialTiles = new TilePool(['ancient-shrines', 'ancient-shrines', 'hollow-henge', 'hollow-henge']);
     for (const { q, r } of coordinates) {
         const tile = grid.getHex({ q, r });
         grid.setHexes([Tile.create({ q, r }, { ...tile, type: specialTiles.next() })]);
@@ -41,7 +41,7 @@ export const createPlayerTiles = (playerId: PlayerId, playerIdx: number) => {
 
     // We need to generate two ancient shrines and two wizard towers
     const coordinates = getRandomCoordinates(getSource(playerIdx), 2);
-    const specialTiles = new TilePool(['ancient-shrines', 'wizards-towers']);
+    const specialTiles = new TilePool(['ancient-shrines', 'hollow-henge']);
     for (const { q, r } of coordinates) {
         const tile = grid.getHex({ q, r });
         grid.setHexes([Tile.create({ q, r }, { ...tile, type: specialTiles.next() })]);
@@ -65,7 +65,7 @@ export const discoverTiles = (grid: Grid<Tile>, start: { q: number; r: number })
 export const checkMissionTowers = (grid: Grid<Tile>, start: { q: number; r: number }, playerId: PlayerId) => {
     const neighbors = grid.traverse(spiral({ radius: 1, start }));
     const missionTowers = neighbors.toArray().filter((tile) => {
-        return tile.type === 'wizards-towers' && !tile.shared.includes(playerId);
+        return tile.type === 'hollow-henge' && !tile.shared.includes(playerId);
     });
 
     // If there are no mission towers,

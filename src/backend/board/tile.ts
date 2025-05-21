@@ -9,9 +9,8 @@ export type TileType =
     | 'fungal-fields'
     | 'twisted-tunnels'
     | 'miners-enclaves'
-    | 'wizards-towers'
+    | 'hollow-henge'
     | 'ancient-shrines'
-    | 'the-mouth'
     | 'entrance'
     | 'undiscovered'
     | 'void';
@@ -22,9 +21,8 @@ const translations: Record<TileType, { title: TranslationKey; description: Trans
     'fungal-fields': { title: 'tiles.fungalFields.title', description: 'tiles.fungalFields.description' },
     'twisted-tunnels': { title: 'tiles.twistedTunnels.title', description: 'tiles.twistedTunnels.description' },
     'miners-enclaves': { title: 'tiles.minersEnclaves.title', description: 'tiles.minersEnclaves.description' },
-    'wizards-towers': { title: 'tiles.wizardsTowers.title', description: 'tiles.wizardsTowers.description' },
+    'hollow-henge': { title: 'tiles.hollowHenge.title', description: 'tiles.hollowHenge.description' },
     'ancient-shrines': { title: 'tiles.ancientShrines.title', description: 'tiles.ancientShrines.description' },
-    'the-mouth': { title: 'tiles.theMouth.title', description: 'tiles.theMouth.description' },
     entrance: { title: 'tiles.entrance.title', description: 'tiles.entrance.description' },
     undiscovered: { title: 'tiles.undiscovered.title', description: 'tiles.undiscovered.description' },
     void: { title: 'tiles.void.title', description: 'tiles.void.description' },
