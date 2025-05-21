@@ -1,6 +1,6 @@
 import { Line } from '@react-three/drei';
 import { ThreeEvent } from '@react-three/fiber';
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { PlayerId } from 'rune-sdk';
 import * as THREE from 'three';
 import { degToRad } from 'three/src/math/MathUtils.js';
@@ -14,6 +14,55 @@ import { useRandomRotation } from '../../scenes/use-random-rotation';
 import { useTileControllerStore } from '../../stores/tile-controller.store';
 import { useTileOverviewStore } from '../../stores/tile-overview.store';
 import { useTileSelectorStore } from '../../stores/tile-selector.store';
+
+const TowerSegment = ({ playerId, y }: { playerId: PlayerId; y: number }) => {
+    const towerSegment = useModel('tower-segment');
+    const segment = useMemo(() => towerSegment.clone(true), [towerSegment]);
+
+    const playerAttribute = usePlayerMarker(playerId);
+
+    useEffect(() => {
+        segment.traverse((child) => {
+            if ((child as THREE.Mesh).isMesh) {
+                const mesh = child as THREE.Mesh;
+                if (mesh.material && 'color' in mesh.material) {
+                    mesh.material = (mesh.material as THREE.Material).clone();
+                    const mat = mesh.material as THREE.MeshStandardMaterial;
+                    mat.color.set('#ffffff');
+                    mat.color.multiply(new THREE.Color(playerAttribute.color));
+                    mat.emissive = new THREE.Color(playerAttribute.color);
+                    mat.emissiveIntensity = 0.2;
+                    mat.needsUpdate = true;
+                }
+            }
+        });
+    }, [segment, playerAttribute.color]);
+
+    return (
+        <group position={[0, 0.5 + y * 0.4, 0]} scale={[1, 0.4, 1]}>
+            <primitive object={segment} />
+        </group>
+    );
+};
+
+const WizardTower = ({ sharedPlayers = [] }: { sharedPlayers: PlayerId[] }) => {
+    const towerBase = useModel('tower-base');
+    const towerTop = useModel('tower-top');
+
+    return (
+        <group scale={0.4}>
+            <group position={[0, 0.5, 0]} scale={1.2}>
+                <primitive object={towerBase} />
+            </group>
+            {sharedPlayers.map((player, idx) => {
+                return <TowerSegment key={player} playerId={player} y={0.5 + 0.25 + idx} />;
+            })}
+            <group position={[0, 0.5 + 0.25 + sharedPlayers.length * 0.4, 0]} scale={[1.1, 0.7, 1.1]}>
+                <primitive object={towerTop} />
+            </group>
+        </group>
+    );
+};
 
 export const PlayerMarker = ({ playerId }: { playerId: PlayerId }) => {
     const { texture, color } = usePlayerMarker(playerId);
@@ -55,17 +104,65 @@ const isSelected = (key: string | null, id: string) => {
     return key === id;
 };
 
-export const TileRenderer = React.memo((tile: TileData) => {
+type TileProps = {
+    tile: TileData;
+    onClick: (ev: ThreeEvent<MouseEvent>) => void;
+    model: THREE.Group<THREE.Object3DEventMap>;
+};
+
+const MissionTowerTile = ({ tile, onClick, model }: TileProps) => {
+    const { selectedTile } = useTileSelectorStore();
     const { type, position, discovered, ...props } = tile;
-    const model = useModel(discovered ? type : 'undiscovered');
+    const orientation = useRandomRotation(props.id);
+
+    return (
+        <group onClick={onClick} position={[position.x, 0, position.y]}>
+            <primitive object={model} rotation={[0, orientation, 0]} />
+            {isSelected(selectedTile?.id ?? null, props.id) && <HexTopOutline color={'white'} />}
+            {tile.shared?.length > 0 && <WizardTower sharedPlayers={tile.shared} />}
+        </group>
+    );
+};
+
+const AncientShrineTile = ({ tile, onClick, model }: TileProps) => {
+    const { selectedTile } = useTileSelectorStore();
+    const { type, position, discovered, ...props } = tile;
+    const orientation = useRandomRotation(props.id);
+
+    return (
+        <group onClick={onClick} position={[position.x, 0, position.y]}>
+            <primitive object={model} rotation={[0, orientation, 0]} />
+            {isSelected(selectedTile?.id ?? null, props.id) && <HexTopOutline color={'white'} />}
+        </group>
+    );
+};
+
+const StandardTile = ({ tile, onClick, model }: TileProps) => {
     const isInteractive = useIsInteractive(tile);
-    const { selectTile, selectedTile } = useTileSelectorStore();
+    const { selectedTile } = useTileSelectorStore();
+    const { type, position, discovered, ...props } = tile;
+    const orientation = useRandomRotation(props.id);
+
+    return (
+        <group onClick={onClick} position={[position.x, 0, position.y]}>
+            <primitive object={model} rotation={[0, orientation, 0]} />
+            {isSelected(selectedTile?.id ?? null, props.id) && <HexTopOutline color={'white'} />}
+            {isInteractive && <HexTopOutline color="green" />}
+            {tile.playerId && <PlayerMarker playerId={tile.playerId} />}
+        </group>
+    );
+};
+
+export const TileRenderer = React.memo((tile: TileData) => {
+    const { type, discovered } = tile;
+    const model = useModel(discovered ? type : 'undiscovered');
+
+    const { selectTile } = useTileSelectorStore();
     const { focusTile } = useTileControllerStore();
     const { showOverview } = useTileOverviewStore();
 
     // Randomized but deterministic rotation (based on tile ID hash)
     // which gives the board a more random board game like look.
-    const pulseY = useRandomRotation(props.id);
 
     const handleClick = (ev: ThreeEvent<MouseEvent>) => {
         ev.stopPropagation();
@@ -84,12 +181,15 @@ export const TileRenderer = React.memo((tile: TileData) => {
         return null;
     }
 
-    return (
-        <group onClick={handleClick} position={[position.x, 0, position.y]}>
-            <primitive object={model} rotation={[0, pulseY, 0]} />
-            {isSelected(selectedTile?.id ?? null, props.id) && <HexTopOutline color={'white'} />}
-            {isInteractive && <HexTopOutline color="green" />}
-            {tile.playerId && <PlayerMarker playerId={tile.playerId} />}
-        </group>
-    );
+    switch (tile.type) {
+        // Void tiles are not rendered at all
+        case 'void':
+            return null;
+        case 'wizards-towers':
+            return <MissionTowerTile tile={tile} onClick={handleClick} model={model} />;
+        case 'ancient-shrines':
+            return <AncientShrineTile tile={tile} onClick={handleClick} model={model} />;
+        default:
+            return <StandardTile tile={tile} onClick={handleClick} model={model} />;
+    }
 });

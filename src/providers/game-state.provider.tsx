@@ -32,6 +32,8 @@ export const GameStateProvider = ({ children }: PropsWithChildren) => {
         });
     }, []);
 
+    console.log({ playerData });
+
     // Rune only shows the game after an onChange(), so we return null
     // while the game has not initialized.
     if (!game) {

@@ -37,8 +37,7 @@ export const createPlayerTiles = (playerId: PlayerId, playerIdx: number) => {
 
     // Get all neighbors of the entrance hex, and
     // set them as discovered @todo -> put into utility function
-    const neighbors = grid.traverse(spiral({ radius: 1, start: { q, r } }));
-    grid.setHexes(neighbors.map((tile) => Tile.create({ q: tile.q, r: tile.r }, { ...tile, discovered: true })));
+    discoverTiles(grid, { q, r });
 
     // We need to generate two ancient shrines and two wizard towers
     const coordinates = getRandomCoordinates(getSource(playerIdx), 2);
@@ -49,4 +48,46 @@ export const createPlayerTiles = (playerId: PlayerId, playerIdx: number) => {
     }
 
     return grid;
+};
+
+export const discoverTiles = (grid: Grid<Tile>, start: { q: number; r: number }) => {
+    const neighbors = grid.traverse(spiral({ radius: 1, start }));
+    grid.setHexes(neighbors.map((tile) => Tile.create({ q: tile.q, r: tile.r }, { ...tile, discovered: true })));
+};
+
+// I assume for now, that we only need to check a tile around the radius
+// of the current interacted tile, because there should be no way to update the
+// tile without it triggering a mission check tower.
+// This might be a wrong assumption we need to challenge later
+// Edge cases we need to handle: Two wizards towers next to each other, or at least in
+// range of the current active tile. We cannot assume only one mission can be drawn at
+//  any time
+export const checkMissionTowers = (grid: Grid<Tile>, start: { q: number; r: number }, playerId: PlayerId) => {
+    const neighbors = grid.traverse(spiral({ radius: 1, start }));
+    const missionTowers = neighbors.toArray().filter((tile) => {
+        return tile.type === 'wizards-towers' && !tile.shared.includes(playerId);
+    });
+
+    // If there are no mission towers,
+    // we simply return here and bail early, as no
+    // further processing needs to be done.
+    if (missionTowers.length === 0) {
+        return 0;
+    }
+
+    // We then want to modify the grid, and add the
+    // player to the peoples array here.
+    grid.setHexes(
+        missionTowers.map((tile) =>
+            Tile.create(
+                { q: tile.q, r: tile.r },
+                {
+                    ...tile,
+                    shared: [...tile.shared, playerId],
+                }
+            )
+        )
+    );
+
+    return missionTowers.length;
 };

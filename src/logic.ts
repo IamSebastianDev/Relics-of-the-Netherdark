@@ -1,6 +1,6 @@
 import { Grid, spiral } from 'honeycomb-grid';
 import type { RuneClient } from 'rune-sdk';
-import { createPlayerTiles } from './backend/board/board';
+import { checkMissionTowers, createPlayerTiles } from './backend/board/board';
 import { Tile } from './backend/board/tile';
 import { GameActions } from './backend/game-actions';
 import { GameState } from './backend/game-state';
@@ -22,8 +22,8 @@ Rune.initLogic({
             const grid = Grid.fromJSON(game.board, ({ q, r, ...ctor }) => Tile.create({ q, r }, ctor));
             const tile = grid.getHex({ q, r });
 
-            // Simple claim. If belongs to no one,
-            // claim for player. Otherwise do nothing.
+            // Claiming is simple, we just set the tiles playerId if it
+            // current id is null, and discover all the neighbors.
             if (tile?.playerId === null) {
                 grid.setHexes([{ q, r }, Tile.create({ q, r }, { ...tile, playerId: playerId })]);
                 // also discover all neighbors
@@ -33,8 +33,15 @@ Rune.initLogic({
                 );
             }
 
-            game.board = new Grid(grid).toJSON();
+            // After that we check wizards towers, to prompt the user to
+            // draw a mission and also set participation on the tile.
+            // The fn returns the number of missions the player should be getting
+            // and mutates the grid directly (because runes proxy.)
+            const numberOfMissions = checkMissionTowers(grid, { q, r }, playerId);
 
+            // Commit the updated board to the
+            game.board = new Grid(grid).toJSON();
+            game.playerState[playerId].drawMissions += numberOfMissions;
             // Update to the next player
             game.currentActivePlayer = nextPlayer(game.allPlayerIds, game.currentActivePlayer);
         },
