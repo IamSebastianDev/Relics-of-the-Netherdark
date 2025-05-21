@@ -14,6 +14,7 @@ import { useTileOverviewStore } from '../../stores/tile-overview.store';
 import { useTileSelectorStore } from '../../stores/tile-selector.store';
 import { HengeStones } from './game-pieces/henge-stones';
 import { PlayerMarker } from './game-pieces/player-marker';
+import { Shrine } from './game-pieces/shrine';
 
 /** @todo -> Make better (And probably rather a circle) */
 export const HexTopOutline = ({ color = 'white' }) => {
@@ -61,6 +62,7 @@ const AncientShrineTile = ({ tile, onClick, model }: TileProps) => {
         <group onClick={onClick} position={[position.x, 0, position.y]}>
             <primitive object={model} rotation={[0, orientation, 0]} />
             {isSelected(selectedTile?.id ?? null, props.id) && <HexTopOutline color={'white'} />}
+            {tile.playerId && <Shrine playerId={tile.playerId} />}
         </group>
     );
 };

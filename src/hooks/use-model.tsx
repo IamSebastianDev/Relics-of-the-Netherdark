@@ -16,6 +16,7 @@ models.set('undiscovered', './models/undiscovered.glb');
 models.set('ancient-shrines', './models/ancient-shrines.glb');
 models.set('hollow-henge', './models/hollow-henge.glb');
 models.set('henge-stone', './models/henge-stone.glb');
+models.set('shrine', './models/shrine.glb');
 
 // Preload all models, to avoid random jumps
 // later on, when tiles are discovered.
