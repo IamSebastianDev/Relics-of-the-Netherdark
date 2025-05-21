@@ -5,6 +5,23 @@ import { Lights } from '../components/renderer/lights';
 import { Grid } from '../components/renderer/tile-system';
 import { GameUi } from '../components/ui/game-ui';
 import { Screen } from '../components/ui/screen';
+import { useTileSelectorStore } from '../stores/tile-selector.store';
+
+/** @todo -> refactor, maybe integrate actual background texture */
+const BackgroundPlane = () => {
+    const { selectTile } = useTileSelectorStore();
+
+    return (
+        <mesh
+            position={[0, 0, 0]} // Behind your tiles in Y
+            rotation={[-Math.PI / 2, 0, 0]} // Flat horizontal
+            onClick={(ev) => ev.intersections.length === 1 && selectTile(null)}
+        >
+            <planeGeometry args={[100, 100]} />
+            <meshBasicMaterial transparent opacity={0} />
+        </mesh>
+    );
+};
 
 export const Game = React.memo(() => {
     return (
@@ -14,6 +31,7 @@ export const Game = React.memo(() => {
                 <Camera />
                 <Lights />
                 <Grid />
+                <BackgroundPlane />
             </Canvas>
         </Screen>
     );

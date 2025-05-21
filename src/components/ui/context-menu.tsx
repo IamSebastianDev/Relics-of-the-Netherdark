@@ -22,7 +22,7 @@ export const ContextMenu = () => {
 
     const actions = useTileActions(selectedTile);
 
-    if (!selectedTile) return null;
+    if (!selectedTile || actions.length === 0) return null;
 
     return (
         <Html pointerEvents={'none'} position={[selectedTile.position.x, 0, selectedTile.position.y]}>
