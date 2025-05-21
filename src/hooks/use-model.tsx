@@ -25,7 +25,6 @@ for (const entry of models.values()) {
 }
 
 export const useModel = (type: Tile['type'] | Markers) => {
-    console.log({ type });
     const { scene } = useGLTF(models.get(type)!);
     return useMemo(() => scene.clone(true), [scene]);
 };

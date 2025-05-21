@@ -8,6 +8,7 @@ import { usePlayerMarker } from '../../../hooks/use-player-marker';
 export const Shrine = ({ playerId }: { playerId: PlayerId }) => {
     const { color } = usePlayerMarker(playerId);
     const shrine = useModel('shrine');
+    console.log({ playerId });
 
     useEffect(() => {
         shrine.traverse((child) => {

@@ -1,6 +1,6 @@
 import { Grid, spiral } from 'honeycomb-grid';
 import type { RuneClient } from 'rune-sdk';
-import { checkMissionTowers, createPlayerTiles } from './backend/board/board';
+import { checkMissionTiles, checkShrineTiles, createPlayerTiles } from './backend/board/board';
 import { Tile } from './backend/board/tile';
 import { GameActions } from './backend/game-actions';
 import { GameState } from './backend/game-state';
@@ -37,7 +37,10 @@ Rune.initLogic({
             // draw a mission and also set participation on the tile.
             // The fn returns the number of missions the player should be getting
             // and mutates the grid directly (because runes proxy.)
-            const numberOfMissions = checkMissionTowers(grid, { q, r }, playerId);
+            const numberOfMissions = checkMissionTiles(grid, { q, r }, playerId);
+
+            // We also need to check the board for changed possession of shrines
+            checkShrineTiles(grid, { q, r });
 
             // Commit the updated board to the
             game.board = new Grid(grid).toJSON();

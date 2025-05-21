@@ -62,23 +62,23 @@ export const discoverTiles = (grid: Grid<Tile>, start: { q: number; r: number })
 // Edge cases we need to handle: Two wizards towers next to each other, or at least in
 // range of the current active tile. We cannot assume only one mission can be drawn at
 //  any time
-export const checkMissionTowers = (grid: Grid<Tile>, start: { q: number; r: number }, playerId: PlayerId) => {
+export const checkMissionTiles = (grid: Grid<Tile>, start: { q: number; r: number }, playerId: PlayerId) => {
     const neighbors = grid.traverse(spiral({ radius: 1, start }));
-    const missionTowers = neighbors.toArray().filter((tile) => {
+    const missionTiles = neighbors.toArray().filter((tile) => {
         return tile.type === 'hollow-henge' && !tile.shared.includes(playerId);
     });
 
     // If there are no mission towers,
     // we simply return here and bail early, as no
     // further processing needs to be done.
-    if (missionTowers.length === 0) {
+    if (missionTiles.length === 0) {
         return 0;
     }
 
     // We then want to modify the grid, and add the
     // player to the peoples array here.
     grid.setHexes(
-        missionTowers.map((tile) =>
+        missionTiles.map((tile) =>
             Tile.create(
                 { q: tile.q, r: tile.r },
                 {
@@ -89,5 +89,49 @@ export const checkMissionTowers = (grid: Grid<Tile>, start: { q: number; r: numb
         )
     );
 
-    return missionTowers.length;
+    return missionTiles.length;
+};
+
+export const checkShrineTiles = (grid: Grid<Tile>, start: { q: number; r: number }) => {
+    // We want to check the placed tile for neighboring tiles that are shrines. If we find a shrine, we need
+    // to update it's possession state, or at least recalculate it.
+    const neighbors = grid.traverse(spiral({ radius: 1, start }));
+    const shrineTiles = neighbors.toArray().filter((tile) => tile.type === 'ancient-shrines');
+
+    for (const tile of shrineTiles) {
+        const adjacent = grid.traverse(spiral({ radius: 1, start: tile }));
+        const claims = adjacent.toArray().filter((tile) => tile.playerId && tile.type !== 'ancient-shrines');
+
+        // get the playerId that has the most controlled tiles around,
+        // break tie in favor of the shrines controller
+        const claimants = new Map<PlayerId, number>();
+        for (const { playerId } of claims) {
+            claimants.set(playerId!, (claimants.get(playerId!) || 0) + 1);
+        }
+
+        // Find the highest score a player has
+        let currentHighestScore = -1;
+        let candidates: PlayerId[] = [];
+        for (const [claimantId, score] of claimants.entries()) {
+            // If the score is equal to the currentHighScore
+            // we push to the candidates
+            if (score === currentHighestScore) {
+                candidates.push(claimantId);
+            }
+
+            // If the score is higher, we update the current High score,
+            // and set the candidate to just the player.
+            if (score > currentHighestScore) {
+                currentHighestScore = score;
+                candidates = [claimantId];
+            }
+        }
+
+        // If there is a winner, we update the tile. If there is a tie, we do nothing,
+        // the tile stays in control of the current controller.
+        if (candidates.length === 1) {
+            const [winner] = candidates;
+            grid.setHexes([Tile.create({ q: tile.q, r: tile.r }, { ...tile, playerId: winner })]);
+        }
+    }
 };
