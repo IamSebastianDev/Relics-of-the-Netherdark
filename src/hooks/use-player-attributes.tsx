@@ -33,7 +33,7 @@ for (const { texture } of playerAttributes) {
     useTexture.preload(texture);
 }
 
-export const usePlayerMarker = (playerId: PlayerId) => {
+export const usePlayerAttributes = (playerId: PlayerId) => {
     const { allPlayerIds } = useGameState();
     const idx = allPlayerIds.findIndex((id) => playerId === id);
     const attributes = playerAttributes[idx];

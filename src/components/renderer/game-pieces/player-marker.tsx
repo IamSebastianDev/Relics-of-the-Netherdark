@@ -1,8 +1,8 @@
 import { PlayerId } from 'rune-sdk';
 import * as THREE from 'three';
-import { usePlayerMarker } from '../../../hooks/use-player-marker';
+import { usePlayerAttributes } from '../../../hooks/use-player-attributes';
 export const PlayerMarker = ({ playerId }: { playerId: PlayerId }) => {
-    const { texture, color } = usePlayerMarker(playerId);
+    const { texture, color } = usePlayerAttributes(playerId);
 
     return (
         <group position={[0, 0.25, 0]}>

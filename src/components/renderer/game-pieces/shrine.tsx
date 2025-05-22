@@ -3,10 +3,10 @@ import { PlayerId } from 'rune-sdk';
 import * as THREE from 'three';
 
 import { useModel } from '../../../hooks/use-model';
-import { usePlayerMarker } from '../../../hooks/use-player-marker';
+import { usePlayerAttributes } from '../../../hooks/use-player-attributes';
 
 export const Shrine = ({ playerId }: { playerId: PlayerId }) => {
-    const { color } = usePlayerMarker(playerId);
+    const { color } = usePlayerAttributes(playerId);
     const shrine = useModel('shrine');
     console.log({ playerId });
 
