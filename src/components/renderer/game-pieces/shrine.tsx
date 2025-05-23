@@ -8,7 +8,6 @@ import { usePlayerAttributes } from '../../../hooks/use-player-attributes';
 export const Shrine = ({ playerId }: { playerId: PlayerId }) => {
     const { color } = usePlayerAttributes(playerId);
     const shrine = useModel('shrine');
-    console.log({ playerId });
 
     useEffect(() => {
         shrine.traverse((child) => {

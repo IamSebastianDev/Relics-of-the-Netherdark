@@ -51,11 +51,14 @@ Rune.initLogic({
             game.currentActivePlayer = nextPlayer(game.allPlayerIds, game.currentActivePlayer);
         },
         drawMission: (type, { playerId, game }) => {
-            console.log({ type });
-            const [mission, deck] = drawFromDeck(game.missionDeck);
+            const [mission, deck] = drawFromDeck(game.missionDeck, type);
             game.playerState[playerId].missions.push(mission);
             game.playerState[playerId].drawMissions -= 1;
             game.missionDeck = deck;
+
+            if (type === 'diplomatic') {
+                game.diplomaticMissionsLeft -= 1;
+            }
         },
     },
     events: {

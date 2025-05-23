@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import claim from '../assets/icons/claim-icon.png';
-import details from '../assets/icons/details-icon.png';
+import claim from '../assets/icons/claim.png';
+import details from '../assets/icons/details.png';
 import { TileData } from '../backend/board/tile';
 import { useGameState } from '../providers/game-state.provider';
 import { useTileOverviewStore } from '../stores/tile-overview.store';

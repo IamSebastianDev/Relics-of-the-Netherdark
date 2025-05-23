@@ -13,7 +13,7 @@ const MissionCard = ({ type }: { type: 'solo' | 'diplomatic' }) => {
 };
 
 export const MissionOverlay = () => {
-    const { playerState, localPlayerId } = useGameState();
+    const { playerState, localPlayerId, diplomaticMissionsLeft } = useGameState();
     if (!localPlayerId) return null;
 
     const { drawMissions } = playerState[localPlayerId];
@@ -27,7 +27,7 @@ export const MissionOverlay = () => {
             </div>
             <div className="stack mission-cards">
                 <MissionCard type="solo" />
-                <MissionCard type="diplomatic" />
+                {diplomaticMissionsLeft > 0 && <MissionCard type="diplomatic" />}
             </div>
         </div>
     );

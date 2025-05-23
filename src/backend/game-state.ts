@@ -11,6 +11,7 @@ export type GameState = {
     playerState: Record<PlayerId, PlayerState>;
     currentActivePlayer: PlayerId;
     missionDeck: Record<string, Mission>;
+    diplomaticMissionsLeft: number;
     board: Board;
 };
 
@@ -36,12 +37,12 @@ const calculatePlayerPoints = (game: GameState, grid: Grid<Tile>) => {
         players: Object.fromEntries(
             game.allPlayerIds.map((playerId) => {
                 const missionPoints = game.playerState[playerId].missions.reduce((score, mission) => {
-                    return score + (getMissionReward(game, mission, playerId) ? mission.reward : 0);
+                    return score + (getMissionReward(game, grid, mission, playerId) ? mission.reward : 0);
                 }, 0);
 
                 const tilePoints = grid
                     .toArray()
-                    .filter((tile) => tile.playerId !== playerId)
+                    .filter((tile) => tile.playerId === playerId)
                     .reduce((score, tile) => score + getTileReward(tile), 0);
 
                 return [playerId, missionPoints + tilePoints];
@@ -57,7 +58,7 @@ export const checkGameState = (game: GameState, grid: Grid<Tile>) => {
 
     const complete = !shrines
         .flatMap((shrine) => grid.traverse(spiral({ radius: 1, start: shrine })).toArray())
-        .some((tile) => tile.type !== 'hollow-henge' && tile.playerId === null);
+        .some((tile) => tile.type !== 'hollow-henge' && tile.type !== 'void' && tile.playerId === null);
 
     if (complete) {
         Rune.gameOver({

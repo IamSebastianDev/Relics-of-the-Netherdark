@@ -1,39 +1,51 @@
+import { Grid } from 'honeycomb-grid';
 import { PlayerId } from 'rune-sdk';
+import { Tile } from '../board/tile';
 import { GameState } from '../game-state';
 import { Mission } from './mission';
 import { MissionKey } from './mission-deck';
 
-type MissionResolver = (game: GameState, playerId: PlayerId) => boolean;
+type MissionResolver = (game: GameState, grid: Grid<Tile>, playerId: PlayerId) => boolean;
 
 const missionResolvers = new Map<MissionKey, MissionResolver>([
     [
         'collect-gemstone-caverns-1',
-        (game, playerId) => {
+        (_, grid, playerId) => {
             return (
-                Object.values(game.board).filter((tile) => {
-                    return tile.playerId === playerId && tile.type === 'bone-hoard';
-                }).length >= 5
+                grid.toArray().filter((tile) => {
+                    return tile.playerId === playerId && tile.type === 'gemstone-caverns';
+                }).length >= 4
             );
         },
     ],
     [
-        'collect-bone-hoard-1',
-        (game, playerId) => {
+        'collect-gemstone-caverns-2',
+        (_, grid, playerId) => {
             return (
-                Object.values(game.board).filter((tile) => {
-                    return tile.playerId === playerId && tile.type === 'bone-hoard';
-                }).length >= 6
+                grid.toArray().filter((tile) => {
+                    return tile.playerId === playerId && tile.type === 'gemstone-caverns';
+                }).length >= 4
+            );
+        },
+    ],
+    [
+        'collect-gemstone-caverns-3',
+        (_, grid, playerId) => {
+            return (
+                grid.toArray().filter((tile) => {
+                    return tile.playerId === playerId && tile.type === 'gemstone-caverns';
+                }).length >= 4
             );
         },
     ],
 ]);
 
-export const getMissionReward = (game: GameState, mission: Mission, playerId: PlayerId) => {
+export const getMissionReward = (game: GameState, grid: Grid<Tile>, mission: Mission, playerId: PlayerId) => {
     const resolver = missionResolvers.get(mission.id as MissionKey);
 
     if (!resolver) {
         throw new ReferenceError(`Unrecoverable Error: No resolver defined for Mission id ${mission.id}`);
     }
 
-    return resolver(game, playerId);
+    return resolver(game, grid, playerId);
 };

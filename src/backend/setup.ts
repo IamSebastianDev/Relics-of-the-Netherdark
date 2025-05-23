@@ -30,6 +30,7 @@ export const setup: SetupFn = (allPlayerIds) => {
 
         // Game properties
         missionDeck: Object.fromEntries(missionDeck),
+        diplomaticMissionsLeft: [...missionDeck.values()].filter(({ rarity }) => rarity === 'diplomatic').length,
 
         // Board
         board: board.toJSON(),

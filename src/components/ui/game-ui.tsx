@@ -53,12 +53,44 @@ const TileOverview = () => {
     );
 };
 
+import map from '../../assets/icons/map.png';
+import missions from '../../assets/icons/missions.png';
+import settings from '../../assets/icons/settings.png';
+import { useScene } from '../../providers/scene.provider';
+
+const Navigation = () => {
+    const scenes = useScene();
+
+    return (
+        <nav className="screen-navigation">
+            <ul>
+                <li>
+                    <button>
+                        <img src={map} />
+                    </button>
+                </li>
+                <li>
+                    <button>
+                        <img src={missions} />
+                    </button>
+                </li>
+                <li>
+                    <button onClick={() => scenes.next('settings')}>
+                        <img src={settings} />
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    );
+};
+
 export const GameUi = () => {
     return (
         <div className="overlay">
             <TileOverview />
             <PlayerAvatarGroup />
             <MissionOverlay />
+            <Navigation />
         </div>
     );
 };

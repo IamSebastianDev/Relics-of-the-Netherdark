@@ -75,6 +75,48 @@ body {
     padding: 0.5rem;
 }
 
+/* Screen navigation */
+.screen-navigation {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 1rem;
+
+    & ul {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0;
+        margin: 0;
+
+        & li {
+            display: flex;
+            list-style-type: none;
+        }
+    }
+
+    & button {
+        pointer-events: all;
+        background: none;
+        width: 48px;
+        height: 48px;
+        padding: 0;
+        border: none;
+        transition: transform 0.1s ease;
+        touch-action: manipulation;
+
+        &:active {
+            transform: scale(0.9);
+        }
+
+        & img {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
 /* Avatar group */
 
 .avatar-group {
@@ -159,6 +201,8 @@ body {
     gap: 0.5rem;
     color: #f6ead8;
 
+    z-index: 100;
+
     & > .row {
         align-items: start;
     }
@@ -201,6 +245,7 @@ body {
     background-size: cover;
     background-position: center;
     font: var(--ui-font-body);
+    z-index: 100;
 
     /* Thicker, deeper 3D inset look */
     border: 6px solid #3b2f26;
