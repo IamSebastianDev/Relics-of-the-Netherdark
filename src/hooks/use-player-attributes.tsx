@@ -27,6 +27,12 @@ const playerAttributes = [
         texture: './textures/gilded-sworn.png',
         color: 'gray',
     },
+    // Placeholder texture and color, indicating a
+    // player that left the game.
+    {
+        texture: './textures/placeholder.png',
+        color: 'black',
+    },
 ];
 
 for (const { texture } of playerAttributes) {
@@ -37,7 +43,7 @@ export const usePlayerAttributes = (playerId: PlayerId) => {
     const { allPlayerIds } = useGameState();
     const idx = allPlayerIds.findIndex((id) => playerId === id);
     // @todo -> update fallback texture
-    const attributes = playerAttributes[idx] ?? { texture: './textures/gilded-sworn.png', color: 'black' };
+    const attributes = playerAttributes[idx] ?? playerAttributes.at(-1);
     const texture = useTexture(attributes.texture);
 
     return {
