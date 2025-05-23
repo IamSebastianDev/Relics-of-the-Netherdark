@@ -92,12 +92,13 @@ body {
         border: 2px solid var(--color-avatar-bg);
         border-radius: 100%;
         transition: 0.25s ease-in-out;
-        box-shadow: 0px 0px 4px 4px rgba(0, 0, 0, 0.5);
+        border: 2px solid #3a2f26;
 
         &[data-is-active="true"] {
             width: clamp(2.5rem, 15vw, 3.5rem);
             height: clamp(2.5rem, 15vw, 3.5rem);
-            border-color: var(--color-avatar-active);
+            border-color: white;
+            box-shadow: 0px 0px 2px 4px rgba(120, 42, 0, 0.5);
         }
 
         & img {
@@ -206,6 +207,7 @@ body {
     box-shadow: inset 0 6px 12px rgba(0, 0, 0, 0.45), inset 0 -4px 8px rgba(255, 255, 255, 0.06), 0 4px 10px
         rgba(0, 0, 0, 0.6);
     text-shadow: 0px 0px 1px black;
+    animation: scale-in 400ms forwards;
 
     & em {
         color: indianred;
@@ -283,5 +285,16 @@ body {
     }
     to {
         opacity: 1;
+    }
+}
+
+@keyframes scale-in {
+    from {
+        opacity: 0;
+        scale: 0.25;
+    }
+    to {
+        opacity: 1;
+        scale: 1;
     }
 }
