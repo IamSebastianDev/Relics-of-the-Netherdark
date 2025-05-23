@@ -5,6 +5,7 @@ import { useGameState } from '../../providers/game-state.provider';
 import { useLanguage } from '../../providers/language.provider';
 import { useTileOverviewStore } from '../../stores/tile-overview.store';
 import { useTileSelectorStore } from '../../stores/tile-selector.store';
+import { MissionOverlay } from './mission-overlay';
 
 const PlayerAvatar = ({ playerId, active }: { playerId: PlayerId; active: boolean }) => {
     const data = Rune.getPlayerInfo(playerId);
@@ -57,6 +58,7 @@ export const GameUi = () => {
         <div className="overlay">
             <TileOverview />
             <PlayerAvatarGroup />
+            <MissionOverlay />
         </div>
     );
 };

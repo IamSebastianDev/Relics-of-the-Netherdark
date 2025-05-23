@@ -73,5 +73,4 @@ export const missionDeck = new Map([
 ]);
 
 type KeyOfMap<T> = T extends Map<infer K, unknown> ? K : never;
-
 export type MissionKey = KeyOfMap<typeof missionDeck>;

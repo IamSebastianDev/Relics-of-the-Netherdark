@@ -36,7 +36,8 @@ for (const { texture } of playerAttributes) {
 export const usePlayerAttributes = (playerId: PlayerId) => {
     const { allPlayerIds } = useGameState();
     const idx = allPlayerIds.findIndex((id) => playerId === id);
-    const attributes = playerAttributes[idx];
+    // @todo -> update fallback texture
+    const attributes = playerAttributes[idx] ?? { texture: './textures/gilded-sworn.png', color: 'black' };
     const texture = useTexture(attributes.texture);
 
     return {

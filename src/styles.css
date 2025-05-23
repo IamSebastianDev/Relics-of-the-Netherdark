@@ -155,6 +155,97 @@ body {
     }
 }
 
+/* Mission Overlay */
+.mission-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 1.5rem;
+    margin: 0.5rem;
+    padding: 1.75rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.0rem;
+    pointer-events: all;
+    background-image: url("./textures/background.png");
+    background-size: cover;
+    background-position: center;
+    font: var(--ui-font-body);
+
+    /* Thicker, deeper 3D inset look */
+    border: 6px solid #3b2f26;
+    box-shadow: inset 0 6px 12px rgba(0, 0, 0, 0.45), inset 0 -4px 8px rgba(255, 255, 255, 0.06), 0 4px 10px
+        rgba(0, 0, 0, 0.6);
+    text-shadow: 0px 0px 1px black;
+
+    & em {
+        color: indianred;
+    }
+
+    & .title {
+        font-size: 8vw;
+        text-align: center;
+    }
+
+    & .instruction {
+        text-align: center;
+        font-size: 6vw;
+    }
+
+    & .mission-cards {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    & .mission-card {
+        background-color: #1e1a16;
+        border: 4px solid #3a3228;
+        border-radius: 1rem;
+        padding: 1rem 1.25rem;
+        font: var(--ui-font-body);
+        color: #e2dacd;
+        text-align: left;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6), /* ambient drop shadow */ 0 0 8px rgba(242, 231, 213, 0.08), /* soft glow */
+            0 0 16px rgba(242, 231, 213, 0.05); /* outer ethereal aura */
+        transition: transform 0.1s ease;
+        touch-action: manipulation;
+
+        &:active {
+            transform: scale(0.97);
+            background-color: #191612;
+        }
+
+        &[data-mission-type="solo"] {
+            border-color: #5e4633;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6), 0 0 8px rgba(94, 70, 51, 0.15), 0 0 16px rgba(94, 70, 51, 0.08);
+        }
+
+        &[data-mission-type="diplomatic"] {
+            border-color: #42334e;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6), 0 0 8px rgba(66, 51, 78, 0.15), 0 0 16px rgba(66, 51, 78, 0.08);
+        }
+
+        & .title {
+            font-weight: 700;
+            font-size: 7vw;
+            color: white;
+            text-shadow: 0 1px 0 #000;
+        }
+
+        & .description {
+            font-size: 4.4vw;
+            line-height: 1.4;
+            color: #b8aea1;
+            opacity: 0.95;
+            text-shadow: 0 1px 0 #000;
+        }
+    }
+}
+
 /* Animations */
 
 @keyframes fade-in {

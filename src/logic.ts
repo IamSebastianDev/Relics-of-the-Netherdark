@@ -48,9 +48,11 @@ Rune.initLogic({
             // Update to the next player
             game.currentActivePlayer = nextPlayer(game.allPlayerIds, game.currentActivePlayer);
         },
-        drawMission: (_, { playerId, game }) => {
+        drawMission: (type, { playerId, game }) => {
+            console.log({ type });
             const [mission, deck] = drawFromDeck(game.missionDeck);
             game.playerState[playerId].missions.push(mission);
+            game.playerState[playerId].drawMissions -= 1;
             game.missionDeck = deck;
         },
     },
