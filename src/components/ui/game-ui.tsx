@@ -5,7 +5,7 @@ import { useGameState } from '../../providers/game-state.provider';
 import { useLanguage } from '../../providers/language.provider';
 import { useTileOverviewStore } from '../../stores/tile-overview.store';
 import { useTileSelectorStore } from '../../stores/tile-selector.store';
-import { MissionOverlay } from './mission-overlay';
+import { Journal, MissionOverlay } from './mission-overlay';
 
 const PlayerAvatar = ({ playerId, active }: { playerId: PlayerId; active: boolean }) => {
     const data = Rune.getPlayerInfo(playerId);
@@ -57,9 +57,11 @@ import map from '../../assets/icons/map.png';
 import missions from '../../assets/icons/missions.png';
 import settings from '../../assets/icons/settings.png';
 import { useScene } from '../../providers/scene.provider';
+import { useJournalStore } from '../../stores/journal.store';
 
 const Navigation = () => {
     const scenes = useScene();
+    const { toggle: toggleJournal } = useJournalStore();
 
     return (
         <nav className="screen-navigation">
@@ -70,7 +72,7 @@ const Navigation = () => {
                     </button>
                 </li>
                 <li>
-                    <button>
+                    <button onClick={() => toggleJournal(true)}>
                         <img src={missions} />
                     </button>
                 </li>
@@ -90,6 +92,7 @@ export const GameUi = () => {
             <TileOverview />
             <PlayerAvatarGroup />
             <MissionOverlay />
+            <Journal />
             <Navigation />
         </div>
     );

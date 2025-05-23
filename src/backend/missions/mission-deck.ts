@@ -1,4 +1,4 @@
-import { commonMission } from './mission';
+import { commonMission, diplomaticMission, rareMission, uncommonMission } from './mission';
 
 export const missionDeck = new Map([
     // Common gemstone cavern collect missions
@@ -13,6 +13,18 @@ export const missionDeck = new Map([
     commonMission('collect-gemstone-caverns-3', {
         name: 'missions.common.gemstoneCaverns.collect.label',
         description: 'missions.common.gemstoneCaverns.collect.description',
+    }),
+    uncommonMission('collect-gemstone-caverns-4', {
+        name: 'missions.common.boneHoard.collect.label',
+        description: 'missions.common.boneHoard.collect.description',
+    }),
+    rareMission('collect-gemstone-caverns-5', {
+        name: 'missions.common.boneHoard.collect.label',
+        description: 'missions.common.boneHoard.collect.description',
+    }),
+    diplomaticMission('collect-gemstone-caverns-6', {
+        name: 'missions.common.boneHoard.collect.label',
+        description: 'missions.common.boneHoard.collect.description',
     }),
 
     // // Common bone hoard collect missions,
