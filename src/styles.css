@@ -185,7 +185,7 @@ body {
     border-radius: 1.5rem;
 
     background-color: #181511ee; /* dark semi-transparent parchment tone */
-    background-image: url("./textures/background.png");
+    background-image: url("/textures/background.png");
     background-size: cover;
     background-position: center;
 
@@ -241,7 +241,7 @@ body {
     flex-direction: column;
     gap: 1.0rem;
     pointer-events: all;
-    background-image: url("./textures/background.png");
+    background-image: url("/textures/background.png");
     background-size: cover;
     background-position: center;
     font: var(--ui-font-body);
@@ -258,7 +258,7 @@ body {
         position: absolute;
         top: -12px;
         right: -12px;
-        background-image: url("./textures/background.png");
+        background-image: url("/textures/background.png");
         width: 32px;
         height: 32px;
         display: flex;
@@ -306,7 +306,7 @@ body {
         &[data-rarity="diplomatic"] {
             &:after {
                 content: "";
-                background: url("./textures/diplomatic.png");
+                background: url("/textures/diplomatic.png");
                 background-size: cover;
                 filter: brightness(0.7) opacity(0.5);
                 rotate: 51deg;
@@ -317,7 +317,7 @@ body {
         &[data-rarity="common"] {
             &:after {
                 content: "";
-                background: url("./textures/common.png");
+                background: url("/textures/common.png");
                 background-size: cover;
                 filter: brightness(0.7) opacity(0.5);
                 rotate: 14deg;
@@ -328,7 +328,7 @@ body {
         &[data-rarity="uncommon"] {
             &:after {
                 content: "";
-                background: url("./textures/uncommon.png");
+                background: url("/textures/uncommon.png");
                 background-size: cover;
                 filter: brightness(0.7) opacity(0.5);
                 rotate: 36deg;
@@ -339,7 +339,7 @@ body {
         &[data-rarity="rare"] {
             &:after {
                 content: "";
-                background: url("./textures/rare.png");
+                background: url("/textures/rare.png");
                 background-size: cover;
                 filter: brightness(0.7) opacity(0.5);
                 rotate: 21deg;
