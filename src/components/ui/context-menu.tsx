@@ -25,7 +25,7 @@ export const ContextMenu = () => {
     if (!selectedTile || actions.length === 0) return null;
 
     return (
-        <Html pointerEvents={'none'} position={[selectedTile.position.x, 0, selectedTile.position.y]}>
+        <Html pointerEvents={'none'} position={[selectedTile.x, 0, selectedTile.y]}>
             <div className="context-shell">
                 {actions.map((action) => (
                     <ContextQuickAction key={action.id} {...action} />

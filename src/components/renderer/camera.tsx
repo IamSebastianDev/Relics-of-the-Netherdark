@@ -17,7 +17,7 @@ export const Camera = () => {
 
     useEffect(() => {
         if (focusedTile) {
-            controllerRef.current?.moveTo(focusedTile.position.x, 0, focusedTile.position.y, true);
+            controllerRef.current?.moveTo(focusedTile.x, 0, focusedTile.y, true);
         }
     }, [focusedTile]);
 

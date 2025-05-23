@@ -1,18 +1,17 @@
-import { Grid } from 'honeycomb-grid';
 import { PlayerId } from 'rune-sdk';
-import { Tile } from '../board/tile';
+import { Grid } from '../board/grid-shim';
 import { GameState } from '../game-state';
 import { Mission } from './mission';
 import { MissionKey } from './mission-deck';
 
-type MissionResolver = (game: GameState, grid: Grid<Tile>, playerId: PlayerId) => boolean;
+type MissionResolver = (game: GameState, grid: Grid, playerId: PlayerId) => boolean;
 
 const missionResolvers = new Map<MissionKey, MissionResolver>([
     [
         'collect-gemstone-caverns-1',
         (_, grid, playerId) => {
             return (
-                grid.toArray().filter((tile) => {
+                [...grid.values()].filter((tile) => {
                     return tile.playerId === playerId && tile.type === 'gemstone-caverns';
                 }).length >= 4
             );
@@ -22,7 +21,7 @@ const missionResolvers = new Map<MissionKey, MissionResolver>([
         'collect-gemstone-caverns-2',
         (_, grid, playerId) => {
             return (
-                grid.toArray().filter((tile) => {
+                [...grid.values()].filter((tile) => {
                     return tile.playerId === playerId && tile.type === 'gemstone-caverns';
                 }).length >= 4
             );
@@ -32,7 +31,7 @@ const missionResolvers = new Map<MissionKey, MissionResolver>([
         'collect-gemstone-caverns-3',
         (_, grid, playerId) => {
             return (
-                grid.toArray().filter((tile) => {
+                [...grid.values()].filter((tile) => {
                     return tile.playerId === playerId && tile.type === 'gemstone-caverns';
                 }).length >= 4
             );
@@ -40,7 +39,7 @@ const missionResolvers = new Map<MissionKey, MissionResolver>([
     ],
 ]);
 
-export const getMissionReward = (game: GameState, grid: Grid<Tile>, mission: Mission, playerId: PlayerId) => {
+export const getMissionReward = (game: GameState, grid: Grid, mission: Mission, playerId: PlayerId) => {
     const resolver = missionResolvers.get(mission.id as MissionKey);
 
     if (!resolver) {

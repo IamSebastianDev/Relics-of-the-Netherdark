@@ -1,6 +1,7 @@
 // As the Rune SDK does not expose the type of the
 
 import { createCenterTiles, createPlayerTiles } from './board/board';
+import { gridToJson } from './board/grid-shim';
 import { missionDeck } from './missions/mission-deck';
 import { initialPlayerState } from './player/player-state';
 
@@ -14,7 +15,10 @@ export const setup: SetupFn = (allPlayerIds) => {
 
     const board = createCenterTiles();
     for (const [playerId, playerNumber] of allPlayerIds.map((v, i) => [v, i + 1] as const)) {
-        board.setHexes(createPlayerTiles(playerId, playerNumber));
+        const tiles = createPlayerTiles(playerId, playerNumber);
+        for (const [key, tile] of tiles.entries()) {
+            board.set(key, tile);
+        }
     }
 
     return {
@@ -33,6 +37,6 @@ export const setup: SetupFn = (allPlayerIds) => {
         diplomaticMissionsLeft: [...missionDeck.values()].filter(({ rarity }) => rarity === 'diplomatic').length,
 
         // Board
-        board: board.toJSON(),
+        board: gridToJson(board),
     };
 };

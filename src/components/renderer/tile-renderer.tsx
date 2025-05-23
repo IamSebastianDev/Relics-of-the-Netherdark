@@ -39,13 +39,13 @@ type TileProps = {
     model: THREE.Group<THREE.Object3DEventMap>;
 };
 
-const MissionGiverTile = ({ tile, onClick, model }: TileProps) => {
+const MissionGiverTile = ({ tile, onClick, model, x, y }: TileProps & { x: number; y: number }) => {
     const { selectedTile } = useTileSelectorStore();
-    const { type, position, discovered, ...props } = tile;
+    const { type, discovered, ...props } = tile;
     const orientation = useRandomRotation(props.id);
 
     return (
-        <group onClick={onClick} position={[position.x, 0, position.y]}>
+        <group onClick={onClick} position={[x, 0, y]}>
             <primitive object={model} rotation={[0, orientation, 0]} />
             {isSelected(selectedTile?.id ?? null, props.id) && <HexTopOutline color={'white'} />}
             {tile.shared.length > 0 && <HengeStones tile={tile} />}
@@ -53,13 +53,13 @@ const MissionGiverTile = ({ tile, onClick, model }: TileProps) => {
     );
 };
 
-const AncientShrineTile = ({ tile, onClick, model }: TileProps) => {
+const AncientShrineTile = ({ tile, onClick, model, x, y }: TileProps & { x: number; y: number }) => {
     const { selectedTile } = useTileSelectorStore();
-    const { type, position, discovered, ...props } = tile;
+    const { type, discovered, ...props } = tile;
     const orientation = useRandomRotation(props.id);
 
     return (
-        <group onClick={onClick} position={[position.x, 0, position.y]}>
+        <group onClick={onClick} position={[x, 0, y]}>
             <primitive object={model} rotation={[0, orientation, 0]} />
             {isSelected(selectedTile?.id ?? null, props.id) && <HexTopOutline color={'white'} />}
             {tile.playerId && <Shrine playerId={tile.playerId} />}
@@ -67,14 +67,14 @@ const AncientShrineTile = ({ tile, onClick, model }: TileProps) => {
     );
 };
 
-const StandardTile = ({ tile, onClick, model }: TileProps) => {
+const StandardTile = ({ tile, onClick, model, x, y }: TileProps & { x: number; y: number }) => {
     const isInteractive = useIsInteractive(tile);
     const { selectedTile } = useTileSelectorStore();
-    const { type, position, discovered, ...props } = tile;
+    const { type, discovered, ...props } = tile;
     const orientation = useRandomRotation(props.id);
 
     return (
-        <group onClick={onClick} position={[position.x, 0, position.y]}>
+        <group onClick={onClick} position={[x, 0, y]}>
             <primitive object={model} rotation={[0, orientation, 0]} />
             {isSelected(selectedTile?.id ?? null, props.id) && <HexTopOutline color={'white'} />}
             {isInteractive && <HexTopOutline color="green" />}
@@ -83,16 +83,13 @@ const StandardTile = ({ tile, onClick, model }: TileProps) => {
     );
 };
 
-export const TileRenderer = React.memo((tile: TileData) => {
-    const { type, discovered } = tile;
+export const TileRenderer = React.memo((tile: TileData & { x: number; y: number }) => {
+    const { type, discovered, x, y } = tile;
     const model = useModel(discovered ? type : 'undiscovered');
 
     const { selectTile } = useTileSelectorStore();
     const { focusTile } = useTileControllerStore();
     const { showOverview } = useTileOverviewStore();
-
-    // Randomized but deterministic rotation (based on tile ID hash)
-    // which gives the board a more random board game like look.
 
     const handleClick = (ev: ThreeEvent<MouseEvent>) => {
         ev.stopPropagation();
@@ -107,19 +104,15 @@ export const TileRenderer = React.memo((tile: TileData) => {
         focusTile(tile);
     };
 
-    if (type === 'void') {
-        return null;
-    }
-
     switch (tile.type) {
         // Void tiles are not rendered at all
         case 'void':
             return null;
         case 'hollow-henge':
-            return <MissionGiverTile tile={tile} onClick={handleClick} model={model} />;
+            return <MissionGiverTile tile={tile} onClick={handleClick} model={model} x={x} y={y} />;
         case 'ancient-shrines':
-            return <AncientShrineTile tile={tile} onClick={handleClick} model={model} />;
+            return <AncientShrineTile tile={tile} onClick={handleClick} model={model} x={x} y={y} />;
         default:
-            return <StandardTile tile={tile} onClick={handleClick} model={model} />;
+            return <StandardTile tile={tile} onClick={handleClick} model={model} x={x} y={y} />;
     }
 });

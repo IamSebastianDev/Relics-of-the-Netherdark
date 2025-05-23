@@ -54,7 +54,7 @@ export class Tile extends defineHex({ dimensions: 1 }) {
     }
 
     get position() {
-        return { q: this.q, r: this.r, x: this.x, y: this.y };
+        return { q: this.q, r: this.r };
     }
 
     get translationConfig() {
@@ -63,3 +63,20 @@ export class Tile extends defineHex({ dimensions: 1 }) {
 }
 
 export type TileData = Omit<Tile, keyof Hex>;
+
+export const createTile = (pos: { q: number; r: number }, tile: Partial<TileData> = {}): TileData => {
+    return {
+        id: cuid(),
+        playerId: null,
+        shared: [],
+        discovered: false,
+        type: 'void',
+        get position() {
+            return { q: pos.q, r: pos.r };
+        },
+        get translationConfig() {
+            return translations[this.type];
+        },
+        ...tile,
+    };
+};

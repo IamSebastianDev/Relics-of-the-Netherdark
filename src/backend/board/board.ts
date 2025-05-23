@@ -1,39 +1,42 @@
-import { Grid, GridAsJSON, spiral } from 'honeycomb-grid';
 import { PlayerId } from 'rune-sdk';
 import { getCoordinates, getRandomCoordinates, getSource, playerStartPositions, tileSources } from './constants';
-import { Tile } from './tile';
+import { Grid, SerializedGrid, fromAxial, getNeighbors } from './grid-shim';
+import { TileData, createTile } from './tile';
 import { TilePool } from './tile-pool';
 
-export type Board = GridAsJSON<Tile>;
+export type Board = SerializedGrid;
+
 export const createCenterTiles = () => {
     const pool = new TilePool(tileSources.center);
-    const hexes = getCoordinates(getSource(0)).map((hex) => Tile.create(hex, { type: pool.next() }));
+    const hexes = getCoordinates(getSource(0)).map(
+        (pos) => [fromAxial(pos), { ...createTile({ ...pos }, { type: pool.next() }) }] as const
+    );
 
-    const grid = new Grid(Tile, hexes);
-
-    // We need to generate two ancient shrines and two wizard towers
+    const grid = new Map<string, TileData>(hexes);
     const coordinates = getRandomCoordinates(getSource(0), 4);
     const specialTiles = new TilePool(['ancient-shrines', 'ancient-shrines', 'hollow-henge', 'hollow-henge']);
     for (const { q, r } of coordinates) {
-        const tile = grid.getHex({ q, r });
-        grid.setHexes([Tile.create({ q, r }, { ...tile, type: specialTiles.next() })]);
+        const tile = grid.get(fromAxial({ q, r }))!;
+        grid.set(fromAxial({ q, r }), { ...tile, type: specialTiles.next() });
     }
 
     return grid;
 };
 
 export const createPlayerTiles = (playerId: PlayerId, playerIdx: number) => {
-    const pool = new TilePool(tileSources.player);
-    const hexes = getCoordinates(getSource(playerIdx)).map((hex) => Tile.create(hex, { type: pool.next() }));
+    const pool = new TilePool(tileSources.center);
+    const hexes = getCoordinates(getSource(playerIdx)).map(
+        (pos) => [fromAxial(pos), { ...createTile({ ...pos }, { type: pool.next() }) }] as const
+    );
 
-    const grid = new Grid(Tile, hexes);
+    const grid = new Map<string, TileData>(hexes);
 
     // We need the start position for the player, where to place the
     // entrance tile, and then which tiles to mark as discovered.
     const [q, r] = playerStartPositions[playerIdx];
 
     // Set the entrance hex
-    grid.setHexes([Tile.create({ q, r }, { type: 'entrance', playerId: playerId, discovered: true })]);
+    grid.set(fromAxial({ q, r }), createTile({ q, r }, { type: 'entrance', playerId, discovered: true }));
 
     // Get all neighbors of the entrance hex, and
     // set them as discovered @todo -> put into utility function
@@ -43,16 +46,22 @@ export const createPlayerTiles = (playerId: PlayerId, playerIdx: number) => {
     const coordinates = getRandomCoordinates(getSource(playerIdx), 2);
     const specialTiles = new TilePool(['ancient-shrines', 'hollow-henge']);
     for (const { q, r } of coordinates) {
-        const tile = grid.getHex({ q, r });
-        grid.setHexes([Tile.create({ q, r }, { ...tile, type: specialTiles.next() })]);
+        const tile = grid.get(fromAxial({ q, r }))!;
+        grid.set(fromAxial({ q, r }), { ...tile, type: specialTiles.next() });
     }
 
     return grid;
 };
 
-export const discoverTiles = (grid: Grid<Tile>, start: { q: number; r: number }) => {
-    const neighbors = grid.traverse(spiral({ radius: 1, start }));
-    grid.setHexes(neighbors.map((tile) => Tile.create({ q: tile.q, r: tile.r }, { ...tile, discovered: true })));
+export const discoverTiles = (grid: Grid, start: { q: number; r: number }) => {
+    const neighbors = getNeighbors(grid, start);
+    for (const neighbor of neighbors) {
+        grid.set(fromAxial({ q: neighbor.position.q, r: neighbor.position.r }), {
+            ...neighbor,
+            position: neighbor.position,
+            discovered: true,
+        });
+    }
 };
 
 // I assume for now, that we only need to check a tile around the radius
@@ -62,9 +71,9 @@ export const discoverTiles = (grid: Grid<Tile>, start: { q: number; r: number })
 // Edge cases we need to handle: Two wizards towers next to each other, or at least in
 // range of the current active tile. We cannot assume only one mission can be drawn at
 //  any time
-export const checkMissionTiles = (grid: Grid<Tile>, start: { q: number; r: number }, playerId: PlayerId) => {
-    const neighbors = grid.traverse(spiral({ radius: 1, start }));
-    const missionTiles = neighbors.toArray().filter((tile) => {
+export const checkMissionTiles = (grid: Grid, start: { q: number; r: number }, playerId: PlayerId) => {
+    const neighbors = getNeighbors(grid, start);
+    const missionTiles = neighbors.filter((tile) => {
         return tile.type === 'hollow-henge' && !tile.shared.includes(playerId);
     });
 
@@ -77,30 +86,25 @@ export const checkMissionTiles = (grid: Grid<Tile>, start: { q: number; r: numbe
 
     // We then want to modify the grid, and add the
     // player to the peoples array here.
-    grid.setHexes(
-        missionTiles.map((tile) =>
-            Tile.create(
-                { q: tile.q, r: tile.r },
-                {
-                    ...tile,
-                    shared: [...tile.shared, playerId],
-                }
-            )
-        )
-    );
+    for (const missionTile of missionTiles) {
+        grid.set(fromAxial({ q: missionTile.position.q, r: missionTile.position.r }), {
+            ...missionTile,
+            shared: [...missionTile.shared, playerId],
+        });
+    }
 
     return missionTiles.length;
 };
 
-export const checkShrineTiles = (grid: Grid<Tile>, start: { q: number; r: number }) => {
+export const checkShrineTiles = (grid: Grid, start: { q: number; r: number }) => {
     // We want to check the placed tile for neighboring tiles that are shrines. If we find a shrine, we need
     // to update it's possession state, or at least recalculate it.
-    const neighbors = grid.traverse(spiral({ radius: 1, start }));
-    const shrineTiles = neighbors.toArray().filter((tile) => tile.type === 'ancient-shrines');
+    const neighbors = getNeighbors(grid, start);
+    const shrineTiles = neighbors.filter((tile) => tile.type === 'ancient-shrines');
 
     for (const tile of shrineTiles) {
-        const adjacent = grid.traverse(spiral({ radius: 1, start: tile }));
-        const claims = adjacent.toArray().filter((tile) => tile.playerId && tile.type !== 'ancient-shrines');
+        const adjacent = getNeighbors(grid, start);
+        const claims = adjacent.filter((tile) => tile.playerId && tile.type !== 'ancient-shrines');
 
         // get the playerId that has the most controlled tiles around,
         // break tie in favor of the shrines controller
@@ -131,7 +135,7 @@ export const checkShrineTiles = (grid: Grid<Tile>, start: { q: number; r: number
         // the tile stays in control of the current controller.
         if (candidates.length === 1) {
             const [winner] = candidates;
-            grid.setHexes([Tile.create({ q: tile.q, r: tile.r }, { ...tile, playerId: winner })]);
+            grid.set(fromAxial({ q: tile.position.q, r: tile.position.r }), { ...tile, playerId: winner });
         }
     }
 };

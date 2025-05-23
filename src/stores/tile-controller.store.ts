@@ -1,14 +1,13 @@
 import { create } from 'zustand';
-import { TileData } from '../backend/board/tile';
 
 type TileControllerState = {
-    focusedTile: TileData | null;
-    focusTile: (tile: TileData | null) => void;
+    focusedTile: { x: number; y: number } | null;
+    focusTile: (tile: { x: number; y: number } | null) => void;
 };
 
 export const useTileControllerStore = create<TileControllerState>()((set) => {
     return {
         focusedTile: null,
-        focusTile: (tile: TileData | null) => set({ focusedTile: tile }),
+        focusTile: (tile: { x: number; y: number } | null) => set({ focusedTile: tile }),
     };
 });

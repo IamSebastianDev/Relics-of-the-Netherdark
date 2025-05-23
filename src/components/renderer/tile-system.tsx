@@ -28,9 +28,11 @@ export const Grid = () => {
                         // Explicitly call the getters, to extract the
                         // data from the class instance and pass it as
                         // props to the renderer.
-                        position: tile.position,
                         translationConfig: tile.translationConfig,
+                        position: tile.position,
                     }}
+                    x={tile.x}
+                    y={tile.y}
                 />
             ))}
         </>

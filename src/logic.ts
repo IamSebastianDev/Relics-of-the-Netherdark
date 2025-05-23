@@ -1,7 +1,6 @@
-import { Grid, spiral } from 'honeycomb-grid';
 import type { RuneClient } from 'rune-sdk';
-import { checkMissionTiles, checkShrineTiles, createPlayerTiles } from './backend/board/board';
-import { Tile } from './backend/board/tile';
+import { checkMissionTiles, checkShrineTiles, createPlayerTiles, discoverTiles } from './backend/board/board';
+import { fromAxial, gridFromJson, gridToJson } from './backend/board/grid-shim';
 import { GameActions } from './backend/game-actions';
 import { GameState, checkGameState } from './backend/game-state';
 import { drawFromDeck } from './backend/missions/draw-from-deck';
@@ -19,18 +18,16 @@ Rune.initLogic({
     setup: setup,
     actions: {
         claimTile: ([_, { q, r }], { playerId, game }) => {
-            const grid = Grid.fromJSON(game.board, ({ q, r, ...ctor }) => Tile.create({ q, r }, ctor));
-            const tile = grid.getHex({ q, r });
+            const grid = gridFromJson(game.board);
+            const tile = grid.get(fromAxial({ q, r }));
 
             // Claiming is simple, we just set the tiles playerId if it
             // current id is null, and discover all the neighbors.
             if (tile?.playerId === null) {
-                grid.setHexes([{ q, r }, Tile.create({ q, r }, { ...tile, playerId: playerId })]);
+                grid.set(fromAxial({ q, r }), { ...tile, playerId: playerId });
+
                 // also discover all neighbors
-                const neighbors = grid.traverse(spiral({ radius: 1, start: { q, r } }));
-                grid.setHexes(
-                    neighbors.map((tile) => Tile.create({ q: tile.q, r: tile.r }, { ...tile, discovered: true }))
-                );
+                discoverTiles(grid, { q, r });
             }
 
             // After that we check wizards towers, to prompt the user to
@@ -45,7 +42,7 @@ Rune.initLogic({
             checkGameState(game, grid);
 
             // Commit the updated board to the
-            game.board = new Grid(grid).toJSON();
+            game.board = gridToJson(grid);
             game.playerState[playerId].drawMissions += numberOfMissions;
             // Update to the next player
             game.currentActivePlayer = nextPlayer(game.allPlayerIds, game.currentActivePlayer);
@@ -66,10 +63,12 @@ Rune.initLogic({
             game.playerState[playerId] = initialPlayerState();
             game.allPlayerIds.push(playerId);
 
-            const grid = Grid.fromJSON(game.board, ({ q, r, ...ctor }) => Tile.create({ q, r }, { ...ctor }));
-            grid.setHexes(createPlayerTiles(playerId, game.allPlayerIds.length));
+            const grid = gridFromJson(game.board);
+            for (const [position, tile] of createPlayerTiles(playerId, game.allPlayerIds.length)) {
+                grid.set(position, tile);
+            }
 
-            game.board = grid.toJSON();
+            game.board = gridToJson(grid);
         },
         playerLeft: (playerId, { game }) => {
             game.allPlayerIds = game.allPlayerIds.filter((id) => id !== playerId);
