@@ -1,6 +1,7 @@
 import { Grid, GridAsJSON } from 'honeycomb-grid';
 import { useMemo } from 'react';
-import { Tile } from '../backend/board/tile';
+
+import { Tile } from '../components/renderer/tile';
 import { useGameState } from '../providers/game-state.provider';
 
 export const useGrid = () => {

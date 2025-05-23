@@ -3,7 +3,6 @@ import { ThreeEvent } from '@react-three/fiber';
 import React from 'react';
 import * as THREE from 'three';
 import { degToRad } from 'three/src/math/MathUtils.js';
-import { TileData } from '../../backend/board/tile';
 import { useHexPoints } from '../../hooks/use-hex-points';
 import { useIsInteractive } from '../../hooks/use-is-interactive';
 import { useModel } from '../../hooks/use-model';
@@ -15,6 +14,7 @@ import { useTileSelectorStore } from '../../stores/tile-selector.store';
 import { HengeStones } from './game-pieces/henge-stones';
 import { PlayerMarker } from './game-pieces/player-marker';
 import { Shrine } from './game-pieces/shrine';
+import { TileCtor } from './tile';
 
 /** @todo -> Make better (And probably rather a circle) */
 export const HexTopOutline = ({ color = 'white' }) => {
@@ -34,7 +34,7 @@ const isSelected = (key: string | null, id: string) => {
 };
 
 type TileProps = {
-    tile: TileData;
+    tile: TileCtor;
     onClick: (ev: ThreeEvent<MouseEvent>) => void;
     model: THREE.Group<THREE.Object3DEventMap>;
 };
@@ -83,7 +83,7 @@ const StandardTile = ({ tile, onClick, model, x, y }: TileProps & { x: number; y
     );
 };
 
-export const TileRenderer = React.memo((tile: TileData & { x: number; y: number }) => {
+export const TileRenderer = React.memo((tile: TileCtor & { x: number; y: number }) => {
     const { type, discovered, x, y } = tile;
     const model = useModel(discovered ? type : 'undiscovered');
 

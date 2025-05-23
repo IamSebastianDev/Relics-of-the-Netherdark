@@ -1,14 +1,14 @@
 import { create } from 'zustand';
-import { TileData } from '../backend/board/tile';
+import { TileCtor } from '../components/renderer/tile';
 
 type TileSelectorState = {
-    selectedTile: (TileData & { x: number; y: number }) | null;
-    selectTile: (tile: (TileData & { x: number; y: number }) | null) => void;
+    selectedTile: TileCtor | null;
+    selectTile: (tile: TileCtor | null) => void;
 };
 
 export const useTileSelectorStore = create<TileSelectorState>()((set) => {
     return {
         selectedTile: null,
-        selectTile: (tile: (TileData & { x: number; y: number }) | null) => set({ selectedTile: tile }),
+        selectTile: (tile: TileCtor | null) => set({ selectedTile: tile }),
     };
 });

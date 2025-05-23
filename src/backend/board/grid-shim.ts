@@ -17,7 +17,7 @@ export const grid = new Map<string, TileData>();
 export type Grid = Map<string, TileData>;
 export const gridToJson = (grid: Grid) => {
     return {
-        coordinates: [...grid.entries().map(([key, tile]) => ({ ...calculateAxialCoordinate(toAxial(key)), ...tile }))],
+        coordinates: [...grid.entries()].map(([key, tile]) => ({ ...calculateAxialCoordinate(toAxial(key)), ...tile })),
         hexSettings: {
             dimensions: { xRadius: 1, yRadius: 1 },
             orientation: 'POINTY',

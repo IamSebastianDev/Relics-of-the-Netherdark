@@ -2,19 +2,19 @@ import { PlayerId } from 'rune-sdk';
 import { getCoordinates, getRandomCoordinates, getSource, playerStartPositions, tileSources } from './constants';
 import { Grid, SerializedGrid, fromAxial, getNeighbors } from './grid-shim';
 import { TileData, createTile } from './tile';
-import { TilePool } from './tile-pool';
+import { createTilePool } from './tile-pool';
 
 export type Board = SerializedGrid;
 
 export const createCenterTiles = () => {
-    const pool = new TilePool(tileSources.center);
+    const pool = createTilePool(tileSources.center);
     const hexes = getCoordinates(getSource(0)).map(
         (pos) => [fromAxial(pos), { ...createTile({ ...pos }, { type: pool.next() }) }] as const
     );
 
     const grid = new Map<string, TileData>(hexes);
     const coordinates = getRandomCoordinates(getSource(0), 4);
-    const specialTiles = new TilePool(['ancient-shrines', 'ancient-shrines', 'hollow-henge', 'hollow-henge']);
+    const specialTiles = createTilePool(['ancient-shrines', 'ancient-shrines', 'hollow-henge', 'hollow-henge']);
     for (const { q, r } of coordinates) {
         const tile = grid.get(fromAxial({ q, r }))!;
         grid.set(fromAxial({ q, r }), { ...tile, type: specialTiles.next() });
@@ -24,7 +24,7 @@ export const createCenterTiles = () => {
 };
 
 export const createPlayerTiles = (playerId: PlayerId, playerIdx: number) => {
-    const pool = new TilePool(tileSources.center);
+    const pool = createTilePool(tileSources.center);
     const hexes = getCoordinates(getSource(playerIdx)).map(
         (pos) => [fromAxial(pos), { ...createTile({ ...pos }, { type: pool.next() }) }] as const
     );
@@ -44,7 +44,7 @@ export const createPlayerTiles = (playerId: PlayerId, playerIdx: number) => {
 
     // We need to generate two ancient shrines and two wizard towers
     const coordinates = getRandomCoordinates(getSource(playerIdx), 2);
-    const specialTiles = new TilePool(['ancient-shrines', 'hollow-henge']);
+    const specialTiles = createTilePool(['ancient-shrines', 'hollow-henge']);
     for (const { q, r } of coordinates) {
         const tile = grid.get(fromAxial({ q, r }))!;
         grid.set(fromAxial({ q, r }), { ...tile, type: specialTiles.next() });

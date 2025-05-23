@@ -16,7 +16,7 @@ export const setup: SetupFn = (allPlayerIds) => {
     const board = createCenterTiles();
     for (const [playerId, playerNumber] of allPlayerIds.map((v, i) => [v, i + 1] as const)) {
         const tiles = createPlayerTiles(playerId, playerNumber);
-        for (const [key, tile] of tiles.entries()) {
+        for (const [key, tile] of [...tiles.entries()]) {
             board.set(key, tile);
         }
     }

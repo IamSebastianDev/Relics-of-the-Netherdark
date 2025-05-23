@@ -1,6 +1,6 @@
 import { useGLTF } from '@react-three/drei';
 import { useMemo } from 'react';
-import { Tile } from '../backend/board/tile';
+import { Tile } from '../components/renderer/tile';
 
 type Markers = 'shrine' | 'henge-stone';
 
