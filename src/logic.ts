@@ -3,7 +3,7 @@ import type { RuneClient } from 'rune-sdk';
 import { checkMissionTiles, checkShrineTiles, createPlayerTiles } from './backend/board/board';
 import { Tile } from './backend/board/tile';
 import { GameActions } from './backend/game-actions';
-import { GameState } from './backend/game-state';
+import { GameState, checkGameState } from './backend/game-state';
 import { drawFromDeck } from './backend/missions/draw-from-deck';
 import { nextPlayer } from './backend/player/next-player';
 import { initialPlayerState } from './backend/player/player-state';
@@ -41,6 +41,8 @@ Rune.initLogic({
 
             // We also need to check the board for changed possession of shrines
             checkShrineTiles(grid, { q, r });
+            // Check for game end
+            checkGameState(game, grid);
 
             // Commit the updated board to the
             game.board = new Grid(grid).toJSON();
