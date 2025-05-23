@@ -48,7 +48,7 @@ const TileOverview = () => {
                 <div className="tile-coordinates">{formatPosition(selectedTile.position)}</div>
             </div>
             <div className="tile-claimant">Claimed by: {playerData?.displayName ?? 'no one'}</div>
-            <div>{t(selectedTile.translationConfig.description)}</div>
+            <div className="tile-description">{t(selectedTile.translationConfig.description)}</div>
         </div>
     );
 };

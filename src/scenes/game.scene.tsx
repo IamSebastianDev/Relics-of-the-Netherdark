@@ -18,7 +18,7 @@ const BackgroundPlane = () => {
             onClick={(ev) => ev.intersections.length === 1 && selectTile(null)}
         >
             <planeGeometry args={[100, 100]} />
-            <meshBasicMaterial transparent opacity={0} />
+            <meshBasicMaterial transparent color="black" />
         </mesh>
     );
 };
