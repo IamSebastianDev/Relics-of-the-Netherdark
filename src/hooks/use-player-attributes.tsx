@@ -1,4 +1,5 @@
 import { useTexture } from '@react-three/drei';
+import { useMemo } from 'react';
 import { PlayerId } from 'rune-sdk';
 import { useGameState } from '../providers/game-state.provider';
 
@@ -38,6 +39,15 @@ const playerAttributes = [
 for (const { texture } of playerAttributes) {
     useTexture.preload(texture);
 }
+
+export const usePlayerColor = (playerId: PlayerId) => {
+    const { allPlayerIds } = useGameState();
+    return useMemo(() => {
+        const idx = allPlayerIds.findIndex((id) => playerId === id);
+        const { color } = playerAttributes[idx] ?? playerAttributes.at(-1);
+        return { color };
+    }, [playerId, allPlayerIds]);
+};
 
 export const usePlayerAttributes = (playerId: PlayerId) => {
     const { allPlayerIds } = useGameState();

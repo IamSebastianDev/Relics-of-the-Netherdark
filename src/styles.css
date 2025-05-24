@@ -35,7 +35,6 @@ body {
         flex-direction: column;
 
         flex-grow: 1;
-        padding-bottom: 1rem;
     }
 }
 
@@ -67,23 +66,21 @@ body {
 /* Game Ui Overlay */
 .overlay {
     position: fixed;
-    inset: 0;
+    inset: var(--size-100) var(--size-100) var(--size-400) var(--size-100);
     z-index: 10000000000;
     pointer-events: none;
-    padding: 0.5rem;
 }
 
 /* Screen navigation */
 .screen-navigation {
-    position: fixed;
+    position: absolute;
     bottom: 0;
     right: 0;
-    margin: 1rem;
 
     & ul {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: var(--size-100);
         padding: 0;
         margin: 0;
 
@@ -96,8 +93,8 @@ body {
     & button {
         pointer-events: all;
         background: none;
-        width: 3rem;
-        height: 3rem;
+        width: var(--size-700);
+        height: var(--size-700);
         padding: 0;
         border: none;
         transition: transform 0.1s ease;
@@ -126,19 +123,18 @@ body {
     width: 0;
 
     & .player-avatar {
-        width: clamp(1.5rem, 10vw, 3.5rem);
-        height: clamp(1.5rem, 10vw, 3.5rem);
+        width: var(--size-450);
+        height: var(--size-450);
         background: var(--color-avatar-bg);
-        border: 0.125rem solid var(--color-avatar-bg);
         border-radius: 100%;
         transition: 0.25s ease-in-out;
-        border: 0.125rem solid #3a2f26;
+        border: var(--size-50) solid var(--player-color);
+        opacity: 0.65;
 
         &[data-is-active="true"] {
-            width: clamp(2.5rem, 15vw, 4.5rem);
-            height: clamp(2.5rem, 15vw, 4.5rem);
-            border-color: white;
-            box-shadow: 0px 0px 2px 4px rgba(120, 42, 0, 0.5);
+            width: var(--size-600);
+            height: var(--size-600);
+            opacity: 1;
         }
 
         & img {
@@ -155,7 +151,7 @@ body {
     justify-content: center;
     align-items: center;
     animation: fade-in 200ms;
-    gap: 0.2rem;
+    gap: var(--size-50);
     width: 0;
     height: 0;
 
@@ -164,7 +160,7 @@ body {
         border: none;
         padding: 0;
         display: flex;
-        translate: 0 -2rem;
+        translate: 0 calc(var(--size-400) * -1);
 
         &[disabled] {
             pointer-events: none;
@@ -175,12 +171,12 @@ body {
 
 /* Tile Overview */
 .tile-panel {
-    position: fixed;
+    position: absolute;
     bottom: 0;
     inset-inline: 0;
-    margin: 0.5rem;
-    padding: 1.25rem 1.5rem;
-    border-radius: 1.5rem;
+    margin: var(--size-100);
+    padding: var(--size-250) var(--size-250);
+    border-radius: var(--size-250);
 
     background-color: #181511ee; /* dark semi-transparent parchment tone */
     background-image: url("/textures/background.png");
@@ -208,7 +204,7 @@ body {
     & .tile-title {
         font-family: var(--ui-font-heading);
         font-size: 7vw;
-        text-shadow: 0px 0px 2px #f6ead8, 0px 0px 3px black;
+        text-shadow: 0px 0px 3px black;
     }
 
     & .tile-coordinates {
@@ -229,15 +225,14 @@ body {
 
 /* Mission Overlay */
 .mission-overlay {
-    position: fixed;
+    position: absolute;
     inset: 0;
     background: rgba(0, 0, 0, 0.9);
-    border-radius: 1.5rem;
-    margin: 1.5rem;
-    padding: 1.75rem 0.75rem;
+    border-radius: var(--size-450);
+    padding: var(--size-250) var(--size-150);
     display: flex;
     flex-direction: column;
-    gap: 1.0rem;
+    gap: var(--size-200);
     pointer-events: all;
     background-image: url("/textures/background.png");
     background-size: cover;
@@ -246,7 +241,7 @@ body {
     z-index: 100;
 
     /* Thicker, deeper 3D inset look */
-    border: 0.4rem solid #3b2f26;
+    border: var(--size-100) solid #3b2f26;
     box-shadow: inset 0 6px 12px rgba(0, 0, 0, 0.45), inset 0 -4px 8px rgba(255, 255, 255, 0.06), 0 4px 10px
         rgba(0, 0, 0, 0.6);
     text-shadow: 0px 0px 1px black;
@@ -254,25 +249,25 @@ body {
 
     & .mission-left {
         position: absolute;
-        top: -1rem;
-        right: -1rem;
+        top: calc(var(--size-200) * -1);
+        right: calc(var(--size-200) * -1);
         background-image: url("/textures/background.png");
-        width: 2rem;
-        height: 2rem;
+        width: var(--size-400);
+        height: var(--size-400);
         display: flex;
         justify-content: center;
         align-items: center;
         border-radius: 100%;
         box-shadow: inset 0 6px 12px rgba(0, 0, 0, 0.45), inset 0 -4px 8px rgba(255, 255, 255, 0.06);
         text-shadow: 0px 0px 1px black;
-        border: 6px solid #3b2f26;
+        border: var(--size-100) solid #3b2f26;
         font-size: 8vw;
     }
 
     & .mission-close {
         position: absolute;
-        bottom: -0px;
-        right: -0px;
+        bottom: var(--size-50);
+        right: var(--size-50);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -283,13 +278,13 @@ body {
         margin: 0;
 
         & img {
-            width: 2.5rem;
-            height: 2.5rem;
+            width: var(--size-600);
+            height: var(--size-600);
         }
     }
 
     & .journal-entry {
-        padding-bottom: 1.5rem;
+        padding-bottom: var(--size-300);
         position: relative;
 
         &:after {
@@ -379,20 +374,20 @@ body {
     & .mission-cards {
         display: flex;
         flex-direction: column;
-        gap: 0.75rem;
+        gap: var(--size-200);
     }
 
     & .mission-card {
         background-color: #1e1a16;
-        border: 4px solid #3a3228;
-        border-radius: 1rem;
-        padding: 1rem 1.25rem;
+        border: var(--size-50) solid #3a3228;
+        border-radius: var(--size-100);
+        padding: var(--size-200);
         font: var(--ui-font-body);
         color: #e2dacd;
         text-align: left;
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: var(--size-100);
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6), /* ambient drop shadow */ 0 0 8px rgba(242, 231, 213, 0.08), /* soft glow */
             0 0 16px rgba(242, 231, 213, 0.05); /* outer ethereal aura */
         transition: transform 0.1s ease;

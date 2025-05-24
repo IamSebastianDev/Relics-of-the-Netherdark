@@ -1,14 +1,21 @@
 /* Colors */
 
-html {
-    font-size: clamp(14px, 5vw, 18px);
-}
-
 :root {
-    --color-avatar-bg: white;
-    --color-avatar-active: red;
-
-    --color-context-background: gray;
+    --unit-token: 1vw;
+    --size-50: calc(var(--unit-token) * 1);
+    --size-100: calc(var(--unit-token) * 2);
+    --size-150: calc(var(--unit-token) * 3);
+    --size-200: calc(var(--unit-token) * 4);
+    --size-250: calc(var(--unit-token) * 5);
+    --size-300: calc(var(--unit-token) * 6);
+    --size-350: calc(var(--unit-token) * 7);
+    --size-400: calc(var(--unit-token) * 8);
+    --size-450: calc(var(--unit-token) * 9);
+    --size-500: calc(var(--unit-token) * 10);
+    --size-550: calc(var(--unit-token) * 11);
+    --size-600: calc(var(--unit-token) * 12);
+    --size-650: calc(var(--unit-token) * 13);
+    --size-700: calc(var(--unit-token) * 14);
 }
 
 /* Font Setup */

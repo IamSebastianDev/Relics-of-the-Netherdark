@@ -9,8 +9,13 @@ import { Journal, MissionOverlay } from './mission-overlay';
 
 const PlayerAvatar = ({ playerId, active }: { playerId: PlayerId; active: boolean }) => {
     const data = Rune.getPlayerInfo(playerId);
+    const { color } = usePlayerColor(playerId);
     return (
-        <div className="player-avatar" data-is-active={active}>
+        <div
+            className="player-avatar"
+            data-is-active={active}
+            style={{ '--player-color': color } as React.CSSProperties}
+        >
             <img src={data.avatarUrl} />
         </div>
     );
@@ -56,6 +61,7 @@ const TileOverview = () => {
 import map from '../../assets/icons/map.png';
 import missions from '../../assets/icons/missions.png';
 import settings from '../../assets/icons/settings.png';
+import { usePlayerColor } from '../../hooks/use-player-attributes';
 import { useScene } from '../../providers/scene.provider';
 import { useJournalStore } from '../../stores/journal.store';
 
