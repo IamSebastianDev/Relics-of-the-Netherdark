@@ -161,6 +161,10 @@ body {
         padding: 0;
         display: flex;
         translate: 0 calc(var(--size-400) * -1);
+        & img {
+            width: var(--size-700);
+            height: var(--size-700);
+        }
 
         &[disabled] {
             pointer-events: none;
