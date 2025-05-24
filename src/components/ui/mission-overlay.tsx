@@ -14,6 +14,7 @@ const MissionCard = ({ type }: { type: 'solo' | 'diplomatic' }) => {
 };
 
 export const MissionOverlay = () => {
+    const { translate: t } = useLanguage();
     const { playerState, localPlayerId, diplomaticMissionsLeft } = useGameState();
     if (!localPlayerId) return null;
 
@@ -23,10 +24,8 @@ export const MissionOverlay = () => {
     return (
         <div className="mission-overlay">
             <div className="mission-left">{drawMissions}</div>
-            <div className="title">A whisper in your Ear.</div>
-            <div className="instruction">
-                You laid your hands on a <em>HOLLOW HENGE</em>. Choose a mission, but choose wisely.
-            </div>
+            <div className="title">{t('components.missionOverlay.title')}</div>
+            <div className="instruction">{t('components.missionOverlay.instruction')}</div>
             <div className="stack mission-cards">
                 <MissionCard type="solo" />
                 {diplomaticMissionsLeft > 0 && <MissionCard type="diplomatic" />}

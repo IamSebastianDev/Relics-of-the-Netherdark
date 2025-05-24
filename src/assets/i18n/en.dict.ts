@@ -49,7 +49,12 @@ export default defineDictionary('en', {
             back: 'Back',
         },
     },
-    components: {},
+    components: {
+        missionOverlay: {
+            title: 'A whisper in your Ear.',
+            instruction: 'You laid your hands on a HOLLOW HENGE. Choose a mission, but choose wisely.',
+        },
+    },
     tiles: {
         gemstoneCaverns: {
             title: 'Gemstone Caverns',
