@@ -121,32 +121,62 @@ export default defineDictionary('en', {
             gemstoneCaverns: {
                 collect: {
                     label: 'Greed Runs Deep',
-                    description: 'At the end of the game, hold 5 Gemstone Cavern tiles.',
+                    description: 'At the end of the game, have at least claimed 5 Gemstone Cavern tiles. +5 Points',
                 },
             },
             boneHoard: {
                 collect: {
                     label: 'Master of Bones',
-                    description: 'At the end of the game, hold 6 Bone Hoard tiles.',
+                    description: 'At the end of the game, have at least claimed 5 Bone Hoard tiles. +5 Points',
                 },
             },
             fungalFields: {
                 collect: {
                     label: 'Sporelord',
-                    description: 'At the end of the game, hold 4 Fungal Field tiles.',
+                    description: 'At the end of the game, have at least claimed 5 Fungal Field tiles. +5 Points',
                 },
             },
-            narrowTunnels: {
+            twistedTunnels: {
                 collect: {
                     label: 'Twistwalker',
-                    description: 'At the end of the game, hold 3 Narrow Tunnel tiles.',
+                    description: 'At the end of the game, have at least claimed 5 Twisted Tunnel tiles. +5 Points',
                 },
             },
             minersEnclaves: {
                 collect: {
                     label: 'Claim Jumper',
-                    description: 'At the end of the game, hold 3 Miners Enclave tiles.',
+                    description: 'At the end of the game, have at least claimed 5 Miners Enclaves tiles. +5 Points',
                 },
+            },
+        },
+        uncommon: {
+            bonus: {
+                label: 'Fortunate Discovery',
+                description:
+                    'Some explorers are just luckier than others. Gain points for no reason other than fate. +7 points.',
+            },
+            cluster: {
+                label: 'Rich Veins',
+                description:
+                    'End the game with a connected cluster of 3 Gemstone Caverns or Miners’ Enclaves. +7 points.',
+            },
+        },
+        rare: {
+            henges: {
+                label: 'Whispers in Every Hollow',
+                description: 'Have at least one claimed tile adjacent to every Hollow Henge on the board. +12 points.',
+            },
+            relic: {
+                label: 'Relicmaster',
+                description: 'Control more relics than any other player when the game ends. +12 points.',
+            },
+            claims: {
+                label: 'Dominion',
+                description: 'Claim more tiles than any other player by game end. +12 points.',
+            },
+            fortune: {
+                label: 'Master of Veins',
+                description: 'Control more Gemstone Caverns than any other player at the end of the game. +12 points.',
             },
         },
     },
