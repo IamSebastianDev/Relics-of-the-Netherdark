@@ -1,7 +1,26 @@
 import { defineDictionary } from '@vayjs/vay';
 
 export default defineDictionary('en', {
-    scenes: {},
+    scenes: {
+        settings: {
+            title: 'Settings',
+            controls: {
+                mirror: {
+                    label: 'Mirror Ui',
+                    description: 'Mirror the ui layout, to make reaching the control easier',
+                },
+                language: {
+                    label: 'Select Language',
+                    description: 'Change the language',
+                    options: {
+                        english: 'English 🇬🇧',
+                        german: 'German 🇩🇪',
+                        spanish: 'Spanish 🇪🇸',
+                    },
+                },
+            },
+        },
+    },
     components: {},
     tiles: {
         gemstoneCaverns: {

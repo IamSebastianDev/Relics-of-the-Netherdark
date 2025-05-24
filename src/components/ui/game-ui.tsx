@@ -62,13 +62,14 @@ import map from '../../assets/icons/map.png';
 import missions from '../../assets/icons/missions.png';
 import settings from '../../assets/icons/settings.png';
 import { usePlayerColor } from '../../hooks/use-player-attributes';
-import { useScene } from '../../providers/scene.provider';
 import { useJournalStore } from '../../stores/journal.store';
+import { useSettingsStore } from '../../stores/settings.store';
+import { Settings } from './settings';
 
 const Navigation = () => {
-    const scenes = useScene();
     const { toggle: toggleJournal } = useJournalStore();
     const { localPlayerId, playerState } = useGameState();
+    const { toggle: toggleSettings } = useSettingsStore();
 
     return (
         <nav className="screen-navigation">
@@ -90,7 +91,7 @@ const Navigation = () => {
                     </button>
                 </li>
                 <li>
-                    <button onClick={() => scenes.next('settings')}>
+                    <button onClick={() => toggleSettings(true)}>
                         <img src={settings} />
                     </button>
                 </li>
@@ -100,6 +101,8 @@ const Navigation = () => {
 };
 
 export const GameUi = () => {
+    const { isOpen: settingsOpen } = useSettingsStore();
+
     return (
         <div className="overlay">
             <TileOverview />
@@ -107,6 +110,7 @@ export const GameUi = () => {
             <MissionOverlay />
             <Journal />
             <Navigation />
+            {settingsOpen && <Settings />}
         </div>
     );
 };

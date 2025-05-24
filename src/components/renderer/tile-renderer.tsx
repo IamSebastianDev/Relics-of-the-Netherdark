@@ -7,7 +7,7 @@ import { useHexPoints } from '../../hooks/use-hex-points';
 import { useIsInteractive } from '../../hooks/use-is-interactive';
 import { useModel } from '../../hooks/use-model';
 import { usePulse } from '../../hooks/use-pulse';
-import { useRandomRotation } from '../../scenes/use-random-rotation';
+import { useRandomRotation } from '../../hooks/use-random-rotation';
 import { useTileControllerStore } from '../../stores/tile-controller.store';
 import { useTileOverviewStore } from '../../stores/tile-overview.store';
 import { useTileSelectorStore } from '../../stores/tile-selector.store';
