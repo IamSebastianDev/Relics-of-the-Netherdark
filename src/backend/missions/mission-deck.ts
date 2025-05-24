@@ -187,11 +187,11 @@ export const missionDeck = new Map([
     rareClaimantDominationMission('claims-domination-1'),
     rareClaimantDominationMission('claims-domination-2'),
     rareClaimantDominationMission('claims-domination-3'),
-    rareClaimantDominationMission('claims-domination-4'),
 
     // --
     rareFortuneMission('fortune-1'),
     rareFortuneMission('fortune-2'),
+    rareFortuneMission('fortune-3'),
 ]);
 
 type KeyOfMap<T> = T extends Map<infer K, unknown> ? K : never;

@@ -172,7 +172,7 @@ export default defineDictionary('en', {
             },
             claims: {
                 label: 'Dominion',
-                description: 'Claim more tiles than any other player by game end. +12 points.',
+                description: 'Control more Miner`s Enclaves than any other player at the end of the game. +12 points.',
             },
             fortune: {
                 label: 'Master of Veins',
