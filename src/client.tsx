@@ -15,7 +15,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         <LanguageProvider>
             <SettingsProvider>
                 <GameStateProvider>
-                    <SceneProvider initial="game" />
+                    <SceneProvider initial="main" />
                 </GameStateProvider>
             </SettingsProvider>
         </LanguageProvider>
