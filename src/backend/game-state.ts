@@ -20,9 +20,9 @@ const getTileReward = (tile: { type: TileType }) => {
         {
             'gemstone-caverns': 2,
             'ancient-shrines': 10,
-            'bone-hoards': 0,
+            'bone-hoards': -1,
             'fungal-fields': 1,
-            'twisted-tunnels': 0,
+            'twisted-tunnels': -1,
             'miners-enclaves': 1,
             entrance: 0,
             void: 0,

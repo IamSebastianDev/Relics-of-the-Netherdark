@@ -56,7 +56,7 @@ export const Camera = () => {
                 polarRotateSpeed={0}
                 polarAngle={degToRad(60)}
                 azimuthAngle={degToRad(45)}
-                dampingFactor={0.1}
+                smoothTime={0.26}
                 makeDefault
                 touches={{
                     one: 128,

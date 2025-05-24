@@ -609,6 +609,76 @@ body {
     }
 }
 
+.rules {
+    font-family: var(--ui-font-body);
+    font-size: 5vw;
+    color: #f6ead8;
+    padding: var(--size-200) var(--size-150) var(--size-500);
+    background-size: cover;
+    background-position: center;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-150);
+
+    & button {
+        color: firebrick;
+        font: var(--ui-font-body);
+        background: none;
+        border: none;
+        font-size: 6vw;
+        text-transform: uppercase;
+    }
+
+    & .rules-title {
+        font-family: var(--ui-font-heading);
+        font-size: 8vw;
+        text-align: center;
+        color: #e2dacd;
+        text-shadow: 0 1px 2px #000;
+        margin-bottom: var(--size-100);
+    }
+
+    & .rules-text {
+        & p {
+            line-height: 1.6;
+            margin-bottom: var(--size-100);
+        }
+
+        & strong {
+            color: #f0e6dc;
+            font-weight: bold;
+        }
+
+        & em {
+            color: firebrick;
+            font-style: normal;
+            font-weight: bold;
+        }
+
+        & .tile-values {
+            list-style: none;
+            padding-left: 0;
+            display: flex;
+            flex-direction: column;
+            gap: var(--size-50);
+            margin-bottom: var(--size-150);
+
+            & li {
+                padding-left: var(--size-300);
+                position: relative;
+
+                &::before {
+                    content: "◆";
+                    color: firebrick;
+                    position: absolute;
+                    left: 0;
+                }
+            }
+        }
+    }
+}
+
 /* Animations */
 
 @keyframes fade-in {
