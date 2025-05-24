@@ -68,17 +68,24 @@ import { useJournalStore } from '../../stores/journal.store';
 const Navigation = () => {
     const scenes = useScene();
     const { toggle: toggleJournal } = useJournalStore();
+    const { localPlayerId, playerState } = useGameState();
 
     return (
         <nav className="screen-navigation">
             <ul>
                 <li>
-                    <button>
+                    <button disabled={true}>
                         <img src={map} />
                     </button>
                 </li>
                 <li>
-                    <button onClick={() => toggleJournal(true)}>
+                    <button
+                        disabled={
+                            localPlayerId === undefined ||
+                            !!(localPlayerId && playerState[localPlayerId].missions.length === 0)
+                        }
+                        onClick={() => toggleJournal(true)}
+                    >
                         <img src={missions} />
                     </button>
                 </li>
