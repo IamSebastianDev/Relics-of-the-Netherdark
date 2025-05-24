@@ -62,6 +62,7 @@ import map from '../../assets/icons/map.png';
 import missions from '../../assets/icons/missions.png';
 import settings from '../../assets/icons/settings.png';
 import { usePlayerColor } from '../../hooks/use-player-attributes';
+import { useSettings } from '../../providers/settings.provider';
 import { useJournalStore } from '../../stores/journal.store';
 import { useSettingsStore } from '../../stores/settings.store';
 import { Settings } from './settings';
@@ -102,9 +103,10 @@ const Navigation = () => {
 
 export const GameUi = () => {
     const { isOpen: settingsOpen } = useSettingsStore();
+    const { mirrorUi } = useSettings();
 
     return (
-        <div className="overlay">
+        <div className="overlay" data-mirrored={mirrorUi}>
             <TileOverview />
             <PlayerAvatarGroup />
             <MissionOverlay />

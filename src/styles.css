@@ -69,6 +69,12 @@ body {
     inset: var(--size-100) var(--size-100) var(--size-400) var(--size-100);
     z-index: 10000000000;
     pointer-events: none;
+
+    &[data-mirrored="true"] {
+        & .screen-navigation {
+            left: 0;
+        }
+    }
 }
 
 /* Screen navigation */
