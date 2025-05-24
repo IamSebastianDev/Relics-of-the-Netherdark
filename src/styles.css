@@ -30,14 +30,12 @@ body {
     width: 100dvw;
 
     & .screen-inner {
-        background: rgba(0, 0, 0, 0.25);
+        background: rgba(0, 0, 0, 1);
         display: flex;
         flex-direction: column;
 
         flex-grow: 1;
-        padding-bottom: env(safe-area-inset-bottom, 0);
-        border-bottom-left-radius: env(safe-area-inset-left, 0);
-        border-bottom-right-radius: env(safe-area-inset-right, 0);
+        padding-bottom: 1rem;
     }
 }
 
@@ -98,8 +96,8 @@ body {
     & button {
         pointer-events: all;
         background: none;
-        width: 48px;
-        height: 48px;
+        width: 3rem;
+        height: 3rem;
         padding: 0;
         border: none;
         transition: transform 0.1s ease;
@@ -128,17 +126,17 @@ body {
     width: 0;
 
     & .player-avatar {
-        width: clamp(1.5rem, 10vw, 2.5rem);
-        height: clamp(1.5rem, 10vw, 2.5rem);
+        width: clamp(1.5rem, 10vw, 3.5rem);
+        height: clamp(1.5rem, 10vw, 3.5rem);
         background: var(--color-avatar-bg);
-        border: 2px solid var(--color-avatar-bg);
+        border: 0.125rem solid var(--color-avatar-bg);
         border-radius: 100%;
         transition: 0.25s ease-in-out;
-        border: 2px solid #3a2f26;
+        border: 0.125rem solid #3a2f26;
 
         &[data-is-active="true"] {
-            width: clamp(2.5rem, 15vw, 3.5rem);
-            height: clamp(2.5rem, 15vw, 3.5rem);
+            width: clamp(2.5rem, 15vw, 4.5rem);
+            height: clamp(2.5rem, 15vw, 4.5rem);
             border-color: white;
             box-shadow: 0px 0px 2px 4px rgba(120, 42, 0, 0.5);
         }
@@ -166,7 +164,7 @@ body {
         border: none;
         padding: 0;
         display: flex;
-        translate: 0 -32px;
+        translate: 0 -2rem;
 
         &[disabled] {
             pointer-events: none;
@@ -195,7 +193,7 @@ body {
 
     box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.5), inset 0 -2px 6px rgba(255, 255, 255, 0.05), 0 6px 14px
         rgba(0, 0, 0, 0.6);
-    border: 5px solid #3a2f26;
+    border: 0.4rem solid #3a2f26;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -235,7 +233,7 @@ body {
     inset: 0;
     background: rgba(0, 0, 0, 0.9);
     border-radius: 1.5rem;
-    margin: 0.5rem;
+    margin: 1.5rem;
     padding: 1.75rem 0.75rem;
     display: flex;
     flex-direction: column;
@@ -248,7 +246,7 @@ body {
     z-index: 100;
 
     /* Thicker, deeper 3D inset look */
-    border: 6px solid #3b2f26;
+    border: 0.4rem solid #3b2f26;
     box-shadow: inset 0 6px 12px rgba(0, 0, 0, 0.45), inset 0 -4px 8px rgba(255, 255, 255, 0.06), 0 4px 10px
         rgba(0, 0, 0, 0.6);
     text-shadow: 0px 0px 1px black;
@@ -256,11 +254,11 @@ body {
 
     & .mission-left {
         position: absolute;
-        top: -12px;
-        right: -12px;
+        top: -1rem;
+        right: -1rem;
         background-image: url("/textures/background.png");
-        width: 32px;
-        height: 32px;
+        width: 2rem;
+        height: 2rem;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -285,8 +283,8 @@ body {
         margin: 0;
 
         & img {
-            width: 40px;
-            height: 40px;
+            width: 2.5rem;
+            height: 2.5rem;
         }
     }
 
