@@ -37,7 +37,7 @@ const calculatePlayerPoints = (game: GameState, grid: Grid) => {
         players: Object.fromEntries(
             game.allPlayerIds.map((playerId) => {
                 const missionPoints = game.playerState[playerId].missions.reduce((score, mission) => {
-                    return score + (getMissionReward(game, grid, mission, playerId) ? mission.reward : 0);
+                    return score + getMissionReward(game, grid, mission, playerId);
                 }, 0);
 
                 const tilePoints = [...grid.values()]

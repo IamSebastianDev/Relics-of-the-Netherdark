@@ -46,5 +46,5 @@ export const getMissionReward = (game: GameState, grid: Grid, mission: Mission, 
         throw new ReferenceError(`Unrecoverable Error: No resolver defined for Mission id ${mission.id}`);
     }
 
-    return resolver(game, grid, playerId);
+    return resolver(game, grid, playerId) ? mission.reward : 0;
 };

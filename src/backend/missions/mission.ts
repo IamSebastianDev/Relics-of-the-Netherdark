@@ -21,13 +21,13 @@ export const commonMission = <T extends string>(id: T, input: Omit<MissionInput,
 };
 
 export const uncommonMission = <T extends string>(id: T, input: Omit<MissionInput, 'rarity' | 'reward'>) => {
-    return mission(id, { ...input, rarity: 'uncommon', reward: 8 });
+    return mission(id, { ...input, rarity: 'uncommon', reward: 7 });
 };
 
 export const rareMission = <T extends string>(id: T, input: Omit<MissionInput, 'rarity' | 'reward'>) => {
-    return mission(id, { ...input, rarity: 'rare', reward: 10 });
+    return mission(id, { ...input, rarity: 'rare', reward: 12 });
 };
 
 export const diplomaticMission = <T extends string>(id: T, input: Omit<MissionInput, 'rarity' | 'reward'>) => {
-    return mission(id, { ...input, rarity: 'diplomatic', reward: 10 });
+    return mission(id, { ...input, rarity: 'diplomatic', reward: 15 });
 };
