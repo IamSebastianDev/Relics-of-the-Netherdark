@@ -37,7 +37,7 @@ const calculatePlayerPoints = (game: GameState, grid: Grid) => {
     return {
         players: Object.fromEntries(
             game.allPlayerIds
-                .filter((playerId) => playerId.startsWith('[ai]'))
+                .filter((playerId) => !playerId.startsWith('[ai]'))
                 .map((playerId) => {
                     const missionPoints = game.playerState[playerId].missions.reduce((score, mission) => {
                         return score + getMissionReward(game, grid, mission, playerId);

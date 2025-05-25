@@ -1,14 +1,79 @@
-import { Grid } from 'honeycomb-grid';
+import { Grid, spiral } from 'honeycomb-grid';
 import { useEffect, useRef } from 'react';
 import { Tile } from '../components/renderer/tile';
 import { useGameState } from '../providers/game-state.provider';
 import { useGrid } from './use-grid';
 
+type AiSelectorRule = {
+    condition: (tile: Tile, grid: Grid<Tile>) => boolean;
+    weight: number;
+};
+
+const rules: AiSelectorRule[] = [
+    // Tile is empty. If all other rules fail, this one gives the baseline
+    {
+        condition: (tile) => tile.playerId === null,
+        weight: 1,
+    },
+    // Tile is a bad type
+    {
+        condition: (tile) => ['bone-hoards', 'twisted-tunnels'].includes(tile.type),
+        weight: 0,
+    },
+    // Tile is a miners enclave or fungal forest
+    {
+        condition: (tile) => ['miners-enclaves', 'fungal-fields'].includes(tile.type),
+        weight: 3,
+    },
+    // Tile is a gemstone Cavern
+    {
+        condition: (tile) => tile.type === 'gemstone-caverns',
+        weight: 4,
+    },
+    // Tile is next to a henge
+    {
+        condition: (tile, grid) => {
+            const neighbors = grid.traverse(spiral({ start: tile, radius: 1 }));
+            return neighbors
+                .toArray()
+                .filter((tile) => tile.discovered)
+                .some((tile) => tile.type === 'hollow-henge');
+        },
+        weight: 8,
+    },
+    // Tile is next to a shrine
+    {
+        condition: (tile, grid) => {
+            const neighbors = grid.traverse(spiral({ start: tile, radius: 1 }));
+            return neighbors
+                .toArray()
+                .filter((tile) => tile.discovered && tile.playerId === null)
+                .some((tile) => tile.type === 'ancient-shrines');
+        },
+        weight: 20,
+    },
+];
+
 // We describe a simple rules engine, that based on the board state,
 // deceides whats the best tile for the ai to pick is.
 const getAiTile = (grid: Grid<Tile>): Tile => {
-    // First run. Get a random, free, discovered tile
-    return grid.toArray().find((tile) => tile.discovered && tile.playerId === null) as Tile;
+    const tileScores = grid
+        .toArray()
+        .filter((tile) => tile.discovered && tile.playerId === null)
+        .map((tile) => {
+            let score = 0;
+            for (const rule of rules) {
+                if (rule.condition(tile, grid)) {
+                    score += rule.weight;
+                }
+            }
+            return { tile, score };
+        });
+
+    const maxScore = Math.max(...tileScores.map((t) => t.score));
+    const bestTiles = tileScores.filter((t) => t.score === maxScore);
+    console.log({ bestTiles });
+    return bestTiles[Math.floor(Math.random() * bestTiles.length)].tile;
 };
 
 export const useAiAgents = () => {

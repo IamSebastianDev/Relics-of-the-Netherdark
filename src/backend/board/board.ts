@@ -103,7 +103,7 @@ export const checkShrineTiles = (grid: Grid, start: { q: number; r: number }) =>
     const shrineTiles = neighbors.filter((tile) => tile.type === 'ancient-shrines');
 
     for (const tile of shrineTiles) {
-        const adjacent = getNeighbors(grid, start);
+        const adjacent = getNeighbors(grid, { q: tile.position.q, r: tile.position.r });
         const claims = adjacent.filter((tile) => tile.playerId && tile.type !== 'ancient-shrines');
 
         // get the playerId that has the most controlled tiles around,
