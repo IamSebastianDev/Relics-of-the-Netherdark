@@ -104,7 +104,7 @@ export const checkShrineTiles = (grid: Grid, start: { q: number; r: number }) =>
 
     for (const tile of shrineTiles) {
         const adjacent = getNeighbors(grid, { q: tile.position.q, r: tile.position.r });
-        const claims = adjacent.filter((tile) => tile.playerId && tile.type !== 'ancient-shrines');
+        const claims = adjacent.filter((tile) => !!tile.playerId && tile.type !== 'ancient-shrines');
 
         // get the playerId that has the most controlled tiles around,
         // break tie in favor of the shrines controller
