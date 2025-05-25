@@ -1,3 +1,4 @@
+import { ISO639Code } from '@vayjs/vay';
 import React from 'react';
 import title from '../assets/images/title.jpg';
 import { Screen } from '../components/ui/screen';
@@ -6,7 +7,13 @@ import { useScene } from '../providers/scene.provider';
 
 export const Main = React.memo(() => {
     const scenes = useScene();
-    const { translate: t } = useLanguage();
+    const { translate: t, setLanguage, language } = useLanguage();
+
+    const options: { language: string; value: ISO639Code }[] = [
+        { language: '🇬🇧', value: 'en' },
+        { language: '🇩🇪', value: 'de' },
+        { language: '🇪🇸', value: 'es' },
+    ];
 
     return (
         <Screen>
@@ -31,7 +38,19 @@ export const Main = React.memo(() => {
                     >
                         {t('scenes.main.controls.solo')}
                     </button>
-                    <span className="hint">3 Ai players</span>
+                </div>
+                <div className="languages">
+                    {options.map((option) => {
+                        return (
+                            <button
+                                data-is-active-language={language === option.value}
+                                key={option.value}
+                                onClick={() => setLanguage(option.value)}
+                            >
+                                {option.language}
+                            </button>
+                        );
+                    })}
                 </div>
             </div>
         </Screen>

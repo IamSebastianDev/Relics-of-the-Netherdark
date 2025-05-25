@@ -611,6 +611,28 @@ body {
             }
         }
     }
+
+    & .languages {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: var(--size-200);
+        z-index: 1;
+        padding: 20vw var(--size-600);
+
+        & button {
+            background: none;
+            border: none;
+            font-size: 7vw;
+            filter: brightness(0.7);
+
+            &[data-is-active-language="true"] {
+                filter: unset;
+            }
+        }
+    }
 }
 
 .rules {
