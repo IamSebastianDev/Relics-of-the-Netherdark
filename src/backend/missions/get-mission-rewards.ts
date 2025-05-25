@@ -73,6 +73,175 @@ const dominionMissionResolver = (type: TileType): MissionResolver => {
     };
 };
 
+/**
+ * Resolver for the "Religious Convention" diplomatic mission.
+ *
+ * The mission is fulfilled if there is at least one Hollow Henge tile
+ * that has three or more *different* players with claimed tiles adjacent to it.
+ *
+ * This represents a symbolic gathering of all players near a single sacred site.
+ */
+const religiousConventionResolver = (): MissionResolver => {
+    return (_, grid) => {
+        const henges = [...grid.entries()].filter(([_, tile]) => tile.type === 'hollow-henge');
+
+        return henges.some(([key]) => {
+            const neighbors = getNeighbors(grid, toAxial(key));
+            const players = new Set(neighbors.map((t) => t.playerId).filter(Boolean));
+            return players.size >= 3;
+        });
+    };
+};
+
+/**
+ * Resolver for the "Kingmaker" diplomatic mission.
+ *
+ * The mission is fulfilled if another player controls more Ancient Shrines
+ * than the player attempting the mission. Control is directly encoded in the
+ * `playerId` of each `ancient-shrines` tile.
+ */
+const kingmakerResolver = (): MissionResolver => {
+    return (_, grid, playerId) => {
+        const controllerCounts = new Map<PlayerId, number>();
+
+        for (const tile of grid.values()) {
+            if (tile.type !== 'ancient-shrines' || !tile.playerId) continue;
+            controllerCounts.set(tile.playerId, (controllerCounts.get(tile.playerId) ?? 0) + 1);
+        }
+
+        const ownCount = controllerCounts.get(playerId) ?? 0;
+
+        return [...controllerCounts.entries()].some(([id, count]) => id !== playerId && count > ownCount);
+    };
+};
+
+/**
+ * Resolver for the "Myzeel’s Pact" diplomatic mission.
+ *
+ * The mission is fulfilled if every claimed "fungal-fields" tile owned by the player
+ * has at least one neighbor that is owned by another player.
+ */
+const myzeelsPactResolver = (): MissionResolver => {
+    return (_, grid, playerId) => {
+        return [...grid.entries()]
+            .filter(([_, tile]) => tile.type === 'fungal-fields' && tile.playerId === playerId)
+            .every(([key]) => {
+                const neighbors = getNeighbors(grid, toAxial(key));
+                return neighbors.some((neighbor) => neighbor.playerId && neighbor.playerId !== playerId);
+            });
+    };
+};
+
+/**
+ * Resolver for the "Outsider" diplomatic mission.
+ *
+ * The mission is fulfilled if the player does not have any claimed tile
+ * adjacent to an Entrance tile claimed by another player.
+ */
+const outsiderResolver = (): MissionResolver => {
+    return (_, grid, playerId) => {
+        const entries = [...grid.entries()].filter(([_, tile]) => tile.playerId === playerId);
+
+        return entries.every(([key]) => {
+            const neighbors = getNeighbors(grid, toAxial(key));
+            return neighbors.every(
+                (neighbor) => !(neighbor.type === 'entrance' && neighbor.playerId && neighbor.playerId !== playerId)
+            );
+        });
+    };
+};
+
+/**
+ * Resolver for the "Divine Split" diplomatic mission.
+ *
+ * The mission is fulfilled if every Ancient Shrine has at least
+ * two different players adjacent to it (i.e., claimed neighboring tiles).
+ */
+const divineSplitResolver = (): MissionResolver => {
+    return (_, grid) => {
+        const shrines = [...grid.entries()].filter(([_, tile]) => tile.type === 'ancient-shrines');
+
+        return shrines.every(([key]) => {
+            const neighbors = getNeighbors(grid, toAxial(key));
+            const adjacentPlayers = new Set(neighbors.map((t) => t.playerId).filter((pid): pid is string => !!pid));
+
+            return adjacentPlayers.size >= 2;
+        });
+    };
+};
+
+/**
+ * Resolver for the "Shared Borders" diplomatic mission.
+ *
+ * The mission is fulfilled if the player controls at least 15 tiles
+ * that are directly adjacent to a tile controlled by a different player.
+ */
+const sharedBordersResolver = (): MissionResolver => {
+    return (_, grid, playerId) => {
+        let count = 0;
+
+        for (const [key, tile] of grid.entries()) {
+            if (tile.playerId !== playerId) continue;
+
+            const neighbors = getNeighbors(grid, toAxial(key));
+            const isNextToOpponent = neighbors.some((neighbor) => neighbor.playerId && neighbor.playerId !== playerId);
+
+            if (isNextToOpponent) count++;
+        }
+
+        return count >= 15;
+    };
+};
+
+// Resolver for "Echoes of War"
+// The player must be adjacent to more tiles claimed by others than to their own claimed tiles.
+const echoesOfWarResolver = (): MissionResolver => {
+    return (_, grid, playerId) => {
+        let adjacentToOthers = 0;
+        let adjacentToSelf = 0;
+
+        for (const [key, tile] of grid.entries()) {
+            if (tile.playerId !== playerId) continue;
+
+            const neighbors = getNeighbors(grid, toAxial(key));
+            for (const neighbor of neighbors) {
+                if (!neighbor.playerId || neighbor.playerId === playerId) {
+                    if (neighbor.playerId === playerId) adjacentToSelf++;
+                    continue;
+                }
+                adjacentToOthers++;
+            }
+        }
+
+        return adjacentToOthers > adjacentToSelf;
+    };
+};
+
+// Resolver factory: Check if the player has claimed the same number of tiles
+// of a given type as any other player (not necessarily all).
+const parityClaimResolver = (type: TileType): MissionResolver => {
+    return (_, grid, playerId) => {
+        const counts = new Map<string, number>();
+
+        for (const tile of grid.values()) {
+            if (tile.type === type && tile.playerId) {
+                counts.set(tile.playerId, (counts.get(tile.playerId) ?? 0) + 1);
+            }
+        }
+
+        const playerCount = counts.get(playerId);
+        if (playerCount === undefined) return false;
+
+        for (const [otherId, count] of counts.entries()) {
+            if (otherId !== playerId && count === playerCount) {
+                return true;
+            }
+        }
+
+        return false;
+    };
+};
+
 const missionResolvers = new Map<MissionKey, MissionResolver>([
     // Common
     // --
@@ -155,6 +324,20 @@ const missionResolvers = new Map<MissionKey, MissionResolver>([
     ['fortune-1', dominionMissionResolver('gemstone-caverns')],
     ['fortune-2', dominionMissionResolver('gemstone-caverns')],
     ['fortune-3', dominionMissionResolver('gemstone-caverns')],
+
+    // Diplomatic
+    ['religious-convention', religiousConventionResolver()],
+    ['kingmaker', kingmakerResolver()],
+    ['myzeels-pact', myzeelsPactResolver()],
+    ['outsider', outsiderResolver()],
+    ['divine-split', divineSplitResolver()],
+    ['shared-borders', sharedBordersResolver()],
+    ['echoes-of-war', echoesOfWarResolver()],
+    ['bone-agreement', parityClaimResolver('bone-hoards')],
+    ['twin-claims', parityClaimResolver('gemstone-caverns')],
+    ['sibling-spores', parityClaimResolver('fungal-fields')],
+    ['equal-enclaves', parityClaimResolver('miners-enclaves')],
+    ['twisted-fate', parityClaimResolver('twisted-tunnels')],
 ]);
 
 export const getMissionReward = (game: GameState, grid: Grid, mission: Mission, playerId: PlayerId) => {

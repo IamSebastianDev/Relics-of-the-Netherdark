@@ -182,5 +182,57 @@ export default defineDictionary('en', {
                 description: 'Control more Gemstone Caverns than any other player at the end of the game. +12 points.',
             },
         },
+        diplomatic: {
+            religiousConvention: {
+                label: 'Religious Convention',
+                description: 'Ensure there is a Hollow Henge with a tile claimed by every player. +15 points',
+            },
+            kingmaker: {
+                label: 'Kingmaker',
+                description: 'End the game with another player controlling more relics than you. +15 points',
+            },
+            myzeelsPact: {
+                label: 'Myzeel`s Pact',
+                description:
+                    'Each Fungal Field you claim must have a neighboring tile claimed by another player. +15 points',
+            },
+            outsider: {
+                label: 'Outsider',
+                description: 'You are never adjacent to any player`s Entrance tile. +15 points',
+            },
+            divineSplit: {
+                label: 'Divine Split',
+                description: 'Each Ancient Shrine must have at least two players adjacent to it. +15 points',
+            },
+            sharedBorders: {
+                label: 'Shared Borders',
+                description:
+                    'Have at least fifteen tiles that are directly adjacent to another player`s tile. +15 points',
+            },
+            twinClaims: {
+                label: 'Twin Claims',
+                description: 'Claim the same number of Gemstone Caverns as another player. +15 points',
+            },
+            siblingSpores: {
+                label: 'Sibling Spores',
+                description: 'Claim the same number of Fungal Fields as another player. +15 points',
+            },
+            equalEnclaves: {
+                label: 'Equal Enclaves',
+                description: 'Claim the same number of Miner`s Enclaves as another player. +15 points',
+            },
+            twistedFate: {
+                label: 'Twisted Fate',
+                description: 'Claim the same number of Twisted Tunnels as another player. +15 points',
+            },
+            boneAgreement: {
+                label: 'Bone Agreement',
+                description: 'You and another player have claimed the same number of Bone Hoards. +15 points',
+            },
+            echoesOfWar: {
+                label: 'Echoes of War',
+                description: 'You are adjacent to more tiles claimed by others than your own. +15 points',
+            },
+        },
     },
 });

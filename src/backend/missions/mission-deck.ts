@@ -1,4 +1,4 @@
-import { commonMission, rareMission, uncommonMission } from './mission';
+import { commonMission, diplomaticMission, rareMission, uncommonMission } from './mission';
 
 const commonGemstoneMission = <T extends string>(title: T) => {
     return commonMission(title, {
@@ -201,6 +201,59 @@ export const missionDeck = new Map([
     rareFortuneMission('fortune-1'),
     rareFortuneMission('fortune-2'),
     rareFortuneMission('fortune-3'),
+
+    /**
+     * Diplomatic mission. They're all different, so
+     * no factory functions here necessary.
+     */
+    diplomaticMission('religious-convention', {
+        name: 'missions.diplomatic.religiousConvention.label',
+        description: 'missions.diplomatic.religiousConvention.description',
+    }),
+    diplomaticMission('kingmaker', {
+        name: 'missions.diplomatic.kingmaker.label',
+        description: 'missions.diplomatic.kingmaker.description',
+    }),
+    diplomaticMission('myzeels-pact', {
+        name: 'missions.diplomatic.myzeelsPact.label',
+        description: 'missions.diplomatic.myzeelsPact.description',
+    }),
+    diplomaticMission('outsider', {
+        name: 'missions.diplomatic.outsider.label',
+        description: 'missions.diplomatic.outsider.description',
+    }),
+    diplomaticMission('divine-split', {
+        name: 'missions.diplomatic.divineSplit.label',
+        description: 'missions.diplomatic.divineSplit.description',
+    }),
+    diplomaticMission('shared-borders', {
+        name: 'missions.diplomatic.sharedBorders.label',
+        description: 'missions.diplomatic.sharedBorders.description',
+    }),
+    diplomaticMission('twin-claims', {
+        name: 'missions.diplomatic.twinClaims.label',
+        description: 'missions.diplomatic.twinClaims.description',
+    }),
+    diplomaticMission('sibling-spores', {
+        name: 'missions.diplomatic.siblingSpores.label',
+        description: 'missions.diplomatic.siblingSpores.description',
+    }),
+    diplomaticMission('equal-enclaves', {
+        name: 'missions.diplomatic.equalEnclaves.label',
+        description: 'missions.diplomatic.equalEnclaves.description',
+    }),
+    diplomaticMission('twisted-fate', {
+        name: 'missions.diplomatic.twistedFate.label',
+        description: 'missions.diplomatic.twistedFate.description',
+    }),
+    diplomaticMission('echoes-of-war', {
+        name: 'missions.diplomatic.echoesOfWar.label',
+        description: 'missions.diplomatic.echoesOfWar.description',
+    }),
+    diplomaticMission('bone-agreement', {
+        name: 'missions.diplomatic.boneAgreement.label',
+        description: 'missions.diplomatic.boneAgreement.description',
+    }),
 ]);
 
 type KeyOfMap<T> = T extends Map<infer K, unknown> ? K : never;
