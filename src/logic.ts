@@ -40,6 +40,9 @@ Rune.initLogic({
             // The fn returns the number of missions the player should be getting
             // and mutates the grid directly (because runes proxy.)
             const numberOfMissions = checkMissionTiles(grid, { q, r }, claimantId);
+            if (numberOfMissions > 0) {
+                dispatchNotification(game, createNotification('notifications.foundAHenge', { playerId: claimantId }));
+            }
 
             // We also need to check the board for changed possession of shrines
             checkShrineTiles(game, grid, { q, r });

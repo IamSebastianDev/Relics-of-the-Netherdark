@@ -4,7 +4,7 @@ export default defineDictionary('en', {
     scenes: {
         main: {
             controls: {
-                start: 'Start',
+                start: 'Join',
                 rules: 'How to play',
                 solo: 'Play against AI',
             },
@@ -228,5 +228,6 @@ export default defineDictionary('en', {
     notifications: {
         claimedATile: '{{player}} claimed a {{type}} tile!',
         claimedAShrine: '{{player}} took control of a Shrine!',
+        foundAHenge: '{{player}} found a Hollow Henge!',
     },
 });
