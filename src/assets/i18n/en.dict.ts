@@ -225,4 +225,8 @@ export default defineDictionary('en', {
             },
         },
     },
+    notifications: {
+        claimedATile: '{{player}} claimed a {{type}} tile!',
+        claimedAShrine: '{{player}} took control of a Shrine!',
+    },
 });

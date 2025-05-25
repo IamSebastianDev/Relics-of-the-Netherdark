@@ -4,6 +4,7 @@ import { Grid, getNeighbors } from './board/grid-shim';
 import { TileType } from './board/tile';
 import { getMissionReward } from './missions/get-mission-rewards';
 import { Mission } from './missions/mission';
+import { Notification } from './notifications/notification';
 import { PlayerState } from './player/player-state';
 
 export type GameState = {
@@ -14,6 +15,7 @@ export type GameState = {
     missionDeck: Record<string, Mission>;
     diplomaticMissionsLeft: number;
     board: Board;
+    notifications: Notification[];
 };
 
 const getTileReward = (tile: { type: TileType }) => {

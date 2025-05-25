@@ -1,4 +1,6 @@
 import { PlayerId } from 'rune-sdk';
+import { GameState } from '../game-state';
+import { createNotification, dispatchNotification } from '../notifications/notification';
 import { getCoordinates, getRandomCoordinates, getSource, playerStartPositions, tileSources } from './constants';
 import { Grid, SerializedGrid, fromAxial, getNeighbors } from './grid-shim';
 import { TileData, createTile } from './tile';
@@ -96,7 +98,7 @@ export const checkMissionTiles = (grid: Grid, start: { q: number; r: number }, p
     return missionTiles.length;
 };
 
-export const checkShrineTiles = (grid: Grid, start: { q: number; r: number }) => {
+export const checkShrineTiles = (game: GameState, grid: Grid, start: { q: number; r: number }) => {
     // We want to check the placed tile for neighboring tiles that are shrines. If we find a shrine, we need
     // to update it's possession state, or at least recalculate it.
     const neighbors = getNeighbors(grid, start);
@@ -135,6 +137,14 @@ export const checkShrineTiles = (grid: Grid, start: { q: number; r: number }) =>
         // the tile stays in control of the current controller.
         if (candidates.length === 1) {
             const [winner] = candidates;
+
+            if (winner !== tile.playerId) {
+                dispatchNotification(
+                    game,
+                    createNotification('notifications.claimedAShrine', { playerId: winner, type: tile.type })
+                );
+            }
+
             grid.set(fromAxial({ q: tile.position.q, r: tile.position.r }), { ...tile, playerId: winner });
         }
     }

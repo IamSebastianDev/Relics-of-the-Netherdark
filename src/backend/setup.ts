@@ -39,5 +39,6 @@ export const setup: SetupFn = (allPlayerIds) => {
 
         // Board
         board: gridToJson(board),
+        notifications: [],
     };
 };

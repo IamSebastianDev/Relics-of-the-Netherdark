@@ -66,6 +66,8 @@ const TileOverview = () => {
 import map from '../../assets/icons/map.png';
 import missions from '../../assets/icons/missions.png';
 import settings from '../../assets/icons/settings.png';
+import { Notification } from '../../backend/notifications/notification';
+import { useNotifications } from '../../hooks/use-notifications';
 import { usePlayerColor } from '../../hooks/use-player-attributes';
 import { useSettings } from '../../providers/settings.provider';
 import { useJournalStore } from '../../stores/journal.store';
@@ -106,6 +108,28 @@ const Navigation = () => {
     );
 };
 
+const Message = ({ notification }: { notification: Notification }) => {
+    const { translate: t } = useLanguage();
+    const data = usePlayerProfile((notification.payload['playerId'] as string) ?? null);
+    return (
+        <div className="message">{t(notification.text, { ...notification.payload, player: data?.displayName })}</div>
+    );
+};
+
+const Notifications = () => {
+    const notifications = useNotifications();
+
+    console.log({ notifications });
+
+    return (
+        <div className="stack notification-outlet">
+            {notifications.map((notification) => (
+                <Message key={notification.id} notification={notification} />
+            ))}
+        </div>
+    );
+};
+
 export const GameUi = () => {
     const { isOpen: settingsOpen } = useSettingsStore();
     const { mirrorUi } = useSettings();
@@ -117,6 +141,7 @@ export const GameUi = () => {
             <MissionOverlay />
             <Journal />
             <Navigation />
+            <Notifications />
             {settingsOpen && <Settings />}
         </div>
     );

@@ -4,6 +4,7 @@ import { fromAxial, gridFromJson, gridToJson } from './backend/board/grid-shim';
 import { GameActions } from './backend/game-actions';
 import { GameState, checkGameState } from './backend/game-state';
 import { drawFromDeck } from './backend/missions/draw-from-deck';
+import { createNotification, dispatchNotification } from './backend/notifications/notification';
 import { nextPlayer } from './backend/player/next-player';
 import { initialPlayerState } from './backend/player/player-state';
 import { setup } from './backend/setup';
@@ -26,7 +27,10 @@ Rune.initLogic({
             // current id is null, and discover all the neighbors.
             if (tile?.playerId === null) {
                 grid.set(fromAxial({ q, r }), { ...tile, playerId: claimantId });
-
+                dispatchNotification(
+                    game,
+                    createNotification('notifications.claimedATile', { playerId: claimantId, type: tile.type })
+                );
                 // also discover all neighbors
                 discoverTiles(grid, { q, r });
             }
@@ -38,7 +42,7 @@ Rune.initLogic({
             const numberOfMissions = checkMissionTiles(grid, { q, r }, claimantId);
 
             // We also need to check the board for changed possession of shrines
-            checkShrineTiles(grid, { q, r });
+            checkShrineTiles(game, grid, { q, r });
             // Check for game end
             checkGameState(game, grid);
 
