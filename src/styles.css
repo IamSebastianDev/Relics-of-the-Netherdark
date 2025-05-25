@@ -564,6 +564,7 @@ body {
         & span {
             font-size: 16vw;
             color: indianred;
+            text-shadow: 0px 0px 2px black;
         }
     }
 
