@@ -98,10 +98,10 @@ export default defineDictionary('en', {
     },
     missions: {
         labels: {
-            title: ({ type }: { type: string }) => {
+            title: ({ type }: { type: string }): string => {
                 return type === 'solo' ? 'Fulfill your own Agenda' : 'A chance for Diplomacy';
             },
-            description: ({ type }: { type: string }) => {
+            description: ({ type }: { type: string }): string => {
                 return type === 'solo'
                     ? 'Pursue goals that serve only your own faction. No allies. No witnesses.'
                     : `Forge fleeting alliances or manipulate others to your advantage. Just make sure you'll benefit the most.`;
