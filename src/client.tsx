@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 
 import '@fontsource/im-fell-dw-pica';
@@ -14,9 +14,11 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
         <LanguageProvider>
             <SettingsProvider>
-                <GameStateProvider>
-                    <SceneProvider initial="main" />
-                </GameStateProvider>
+                <Suspense fallback={null}>
+                    <GameStateProvider>
+                        <SceneProvider initial="main" />
+                    </GameStateProvider>
+                </Suspense>
             </SettingsProvider>
         </LanguageProvider>
     </React.StrictMode>

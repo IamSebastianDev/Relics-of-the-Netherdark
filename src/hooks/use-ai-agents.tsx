@@ -47,7 +47,7 @@ const rules: AiSelectorRule[] = [
             const neighbors = grid.traverse(spiral({ start: tile, radius: 1 }));
             return neighbors
                 .toArray()
-                .filter((tile) => tile.discovered && tile.playerId === null)
+                .filter((tile) => tile.discovered)
                 .some((tile) => tile.type === 'ancient-shrines');
         },
         weight: 20,
@@ -55,12 +55,16 @@ const rules: AiSelectorRule[] = [
 ];
 
 // We describe a simple rules engine, that based on the board state,
-// deceides whats the best tile for the ai to pick is.
+// decides whats the best tile for the ai to pick is.
 const getAiTile = (grid: Grid<Tile>): Tile => {
     const tileScores = grid
         .toArray()
         .filter(
-            (tile) => tile.discovered && tile.playerId === null && tile.type !== 'void' && tile.type !== 'hollow-henge'
+            // We filter all tiles that are not claimable (Should've been a boolean on the tile)
+            (tile) =>
+                tile.discovered && // Tile needs to be discovered
+                tile.playerId === null && // Unclaimed
+                !['void', 'hollow-henge', 'ancient-shrines'].includes(tile.type) // And claimable
         )
         .map((tile) => {
             let score = 0;
