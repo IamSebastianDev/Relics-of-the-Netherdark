@@ -59,7 +59,9 @@ const rules: AiSelectorRule[] = [
 const getAiTile = (grid: Grid<Tile>): Tile => {
     const tileScores = grid
         .toArray()
-        .filter((tile) => tile.discovered && tile.playerId === null && tile.type !== 'void')
+        .filter(
+            (tile) => tile.discovered && tile.playerId === null && tile.type !== 'void' && tile.type !== 'hollow-henge'
+        )
         .map((tile) => {
             let score = 0;
             for (const rule of rules) {
