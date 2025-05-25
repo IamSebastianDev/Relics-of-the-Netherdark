@@ -52,6 +52,7 @@ export const usePlayerColor = (playerId: PlayerId) => {
 export const usePlayerAttributes = (playerId: PlayerId) => {
     const { allPlayerIds } = useGameState();
     const idx = allPlayerIds.findIndex((id) => playerId === id);
+    console.log({ playerId, allPlayerIds, idx });
     // @todo -> update fallback texture
     const attributes = playerAttributes[idx] ?? playerAttributes.at(-1);
     const texture = useTexture(attributes.texture);

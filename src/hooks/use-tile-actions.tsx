@@ -50,7 +50,7 @@ export const useTileActions = (tile: TileData | null): TileAction[] => {
                       action: () => {
                           showOverview(false);
                           selectTile(null);
-                          Rune.actions.claimTile([tile.id, tile.position]);
+                          Rune.actions.claimTile([localPlayerId!, tile.position]);
                       },
                       disabled: !tile.discovered || tile.playerId !== null || localPlayerId !== currentActivePlayer,
                       icon: claim,

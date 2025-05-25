@@ -6,7 +6,7 @@ import { PlayerState } from '../backend/player/player-state';
 import { models } from '../hooks/use-model';
 import { useSafeContext } from '../hooks/use-safe-context';
 
-type GameState = RuneState & {
+export type GameState = RuneState & {
     localPlayerId: PlayerId | undefined;
     invalidate: number;
     playerData: PlayerState | undefined;
@@ -39,8 +39,6 @@ export const GameStateProvider = ({ children }: PropsWithChildren) => {
             },
         });
     }, []);
-
-    console.log({ playerData });
 
     // Rune only shows the game after an onChange(), so we return null
     // while the game has not initialized.

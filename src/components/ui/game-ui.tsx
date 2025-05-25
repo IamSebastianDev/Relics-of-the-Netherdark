@@ -8,8 +8,13 @@ import { useTileSelectorStore } from '../../stores/tile-selector.store';
 import { Journal, MissionOverlay } from './mission-overlay';
 
 const PlayerAvatar = ({ playerId, active }: { playerId: PlayerId; active: boolean }) => {
-    const data = Rune.getPlayerInfo(playerId);
+    const data = usePlayerProfile(playerId);
     const { color } = usePlayerColor(playerId);
+
+    if (!data) {
+        return null;
+    }
+
     return (
         <div
             className="player-avatar"

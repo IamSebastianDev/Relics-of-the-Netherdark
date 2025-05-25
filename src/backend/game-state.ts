@@ -8,6 +8,7 @@ import { PlayerState } from './player/player-state';
 
 export type GameState = {
     allPlayerIds: PlayerId[];
+    hostPlayer: PlayerId;
     playerState: Record<PlayerId, PlayerState>;
     currentActivePlayer: PlayerId;
     missionDeck: Record<string, Mission>;
@@ -35,17 +36,19 @@ const getTileReward = (tile: { type: TileType }) => {
 const calculatePlayerPoints = (game: GameState, grid: Grid) => {
     return {
         players: Object.fromEntries(
-            game.allPlayerIds.map((playerId) => {
-                const missionPoints = game.playerState[playerId].missions.reduce((score, mission) => {
-                    return score + getMissionReward(game, grid, mission, playerId);
-                }, 0);
+            game.allPlayerIds
+                .filter((playerId) => playerId.startsWith('[ai]'))
+                .map((playerId) => {
+                    const missionPoints = game.playerState[playerId].missions.reduce((score, mission) => {
+                        return score + getMissionReward(game, grid, mission, playerId);
+                    }, 0);
 
-                const tilePoints = [...grid.values()]
-                    .filter((tile) => tile.playerId === playerId)
-                    .reduce((score, tile) => score + getTileReward(tile), 0);
+                    const tilePoints = [...grid.values()]
+                        .filter((tile) => tile.playerId === playerId)
+                        .reduce((score, tile) => score + getTileReward(tile), 0);
 
-                return [playerId, missionPoints + tilePoints];
-            })
+                    return [playerId, missionPoints + tilePoints];
+                })
         ),
     };
 };

@@ -1,4 +1,5 @@
 export type GameActions = {
-    claimTile: (payload: [tileId: string, position: { q: number; r: number }]) => void;
+    claimTile: (payload: [claimantId: string, position: { q: number; r: number }]) => void;
     drawMission: (type: 'diplomatic' | 'solo') => void;
+    addAiPlayers: () => void;
 };

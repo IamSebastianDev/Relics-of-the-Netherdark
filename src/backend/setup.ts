@@ -24,6 +24,7 @@ export const setup: SetupFn = (allPlayerIds) => {
     return {
         allPlayerIds,
         currentActivePlayer: allPlayerIds[0],
+        hostPlayer: allPlayerIds[0],
 
         // The initial Player State for all Players;
         playerState: Object.fromEntries(

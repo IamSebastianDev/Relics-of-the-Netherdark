@@ -141,6 +141,7 @@ body {
         transition: 0.25s ease-in-out;
         border: var(--size-50) solid var(--player-color);
         opacity: 0.65;
+        overflow: hidden;
 
         &[data-is-active="true"] {
             width: var(--size-600);

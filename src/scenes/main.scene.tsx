@@ -25,7 +25,8 @@ export const Main = React.memo(() => {
                     <button
                         className="menu-button"
                         onClick={() => {
-                            console.log('Not yet implemented');
+                            Rune.actions.addAiPlayers();
+                            scenes.next('game');
                         }}
                     >
                         {t('scenes.main.controls.solo')}
