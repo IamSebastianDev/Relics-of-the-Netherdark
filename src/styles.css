@@ -619,13 +619,14 @@ body {
     font-family: var(--ui-font-body);
     font-size: 5vw;
     color: #f6ead8;
-    padding: var(--size-200) var(--size-150) var(--size-500);
+    padding: var(--size-200) var(--size-200) var(--size-500);
     background-size: cover;
     background-position: center;
 
     display: flex;
     flex-direction: column;
     gap: var(--size-150);
+    overflow: scroll;
 
     & button {
         color: firebrick;

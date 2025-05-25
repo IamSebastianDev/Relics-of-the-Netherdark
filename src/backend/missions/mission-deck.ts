@@ -49,6 +49,13 @@ const uncommonGemstoneClusterMission = <T extends string>(title: T) => {
     });
 };
 
+const uncommonMinersClusterMission = <T extends string>(title: T) => {
+    return uncommonMission(title, {
+        name: 'missions.uncommon.industrious.label',
+        description: 'missions.uncommon.industrious.description',
+    });
+};
+
 const rareHengeMission = <T extends string>(title: T) => {
     return rareMission(title, {
         name: 'missions.rare.henges.label',
@@ -158,10 +165,12 @@ export const missionDeck = new Map([
     uncommonGemstoneClusterMission('gemstone-cluster-2'),
     uncommonGemstoneClusterMission('gemstone-cluster-3'),
     uncommonGemstoneClusterMission('gemstone-cluster-4'),
-    uncommonGemstoneClusterMission('gemstone-cluster-5'),
-    uncommonGemstoneClusterMission('gemstone-cluster-6'),
-    uncommonGemstoneClusterMission('gemstone-cluster-7'),
-    uncommonGemstoneClusterMission('gemstone-cluster-8'),
+
+    // --
+    uncommonMinersClusterMission('miners-cluster-1'),
+    uncommonMinersClusterMission('miners-cluster-2'),
+    uncommonMinersClusterMission('miners-cluster-3'),
+    uncommonMinersClusterMission('miners-cluster-4'),
 
     /**
      * 14 Rare missions

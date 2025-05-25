@@ -157,8 +157,11 @@ export default defineDictionary('en', {
             },
             cluster: {
                 label: 'Rich Veins',
-                description:
-                    'End the game with a connected cluster of 3 Gemstone Caverns or Miners’ Enclaves. +7 points.',
+                description: 'End the game with a connected cluster of 3 Gemstone Caverns. +7 points.',
+            },
+            industrious: {
+                label: 'Industrious Ways.',
+                description: 'End the game with a connected cluster of 3 Miner`s Enclaves. +7 points.',
             },
         },
         rare: {

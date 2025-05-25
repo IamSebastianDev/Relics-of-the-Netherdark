@@ -1,5 +1,5 @@
 import { PlayerId } from 'rune-sdk';
-import { Grid } from '../board/grid-shim';
+import { Grid, getNeighbors, toAxial } from '../board/grid-shim';
 import { TileType } from '../board/tile';
 import { GameState } from '../game-state';
 import { Mission } from './mission';
@@ -27,30 +27,50 @@ const bonusPointsResolver = (): MissionResolver => {
 // Claim a cluster of 3 gemstone mines that are next
 // to each other (Probably the hardest to check)
 
-const gemstoneClusterResolver = (): MissionResolver => {
-    return () => {
-        return false;
+const clusterResolver = (type: TileType): MissionResolver => {
+    return (_, grid, playerId) => {
+        // Step 1: Get all gemstone caverns as root nodes
+        // Step 2: Filter all gemstone nodes that are not belonging to the player
+        // Step 3: Filter all nodes that do not have at least two other gemstones as neighbours
+        // Step 4: Check if there are two gemstone nodes with the correct playerId
+        return !![...grid.entries()]
+            .filter(([_, tile]) => tile.type === type && tile.playerId === playerId)
+            .filter(([key]) => {
+                const neighbors = getNeighbors(grid, toAxial(key));
+                return neighbors.filter((tile) => tile.type === type && tile.playerId === playerId).length >= 2;
+            });
     };
 };
 
 // Resolver for the henge mission
 // Claim a tile next to each henge in the game
 const hengeMissionResolver = (): MissionResolver => {
-    return () => {
-        return false;
+    return (_, grid, playerId) => {
+        return [...grid.entries()]
+            .filter(([_, tile]) => tile.type === 'hollow-henge')
+            .every(([key]) => {
+                const neighbors = getNeighbors(grid, toAxial(key));
+                return neighbors.some((tile) => tile.playerId === playerId);
+            });
     };
 };
 
-// Resolver for the shrine mission
-// Claim more shrines than any other player
-const shrineMissionResolver = (): MissionResolver => {
-    return () => false;
-};
-
 // Resolver for the domination victory
-// Claim more miners encalaves than any other player
-const dominionMissionResolver = (_type: TileType): MissionResolver => {
-    return () => false;
+// Claim more tiles of type than any other player
+const dominionMissionResolver = (type: TileType): MissionResolver => {
+    return (_, grid, playerId) => {
+        const tiles = [...grid.values()].filter((tile) => tile.type === type);
+
+        const counts = new Map<string, number>();
+        for (const tile of tiles) {
+            if (tile.playerId) {
+                counts.set(tile.playerId, (counts.get(tile.playerId) ?? 0) + 1);
+            }
+        }
+
+        const maximumTiles = Math.max(...counts.values());
+        return counts.get(playerId) === maximumTiles;
+    };
 };
 
 const missionResolvers = new Map<MissionKey, MissionResolver>([
@@ -106,14 +126,14 @@ const missionResolvers = new Map<MissionKey, MissionResolver>([
     ['bonus-points-11', bonusPointsResolver()],
     ['bonus-points-12', bonusPointsResolver()],
     // --
-    ['gemstone-cluster-1', gemstoneClusterResolver()],
-    ['gemstone-cluster-2', gemstoneClusterResolver()],
-    ['gemstone-cluster-3', gemstoneClusterResolver()],
-    ['gemstone-cluster-4', gemstoneClusterResolver()],
-    ['gemstone-cluster-5', gemstoneClusterResolver()],
-    ['gemstone-cluster-6', gemstoneClusterResolver()],
-    ['gemstone-cluster-7', gemstoneClusterResolver()],
-    ['gemstone-cluster-8', gemstoneClusterResolver()],
+    ['gemstone-cluster-1', clusterResolver('gemstone-caverns')],
+    ['gemstone-cluster-2', clusterResolver('gemstone-caverns')],
+    ['gemstone-cluster-3', clusterResolver('gemstone-caverns')],
+    ['gemstone-cluster-4', clusterResolver('gemstone-caverns')],
+    ['miners-cluster-1', clusterResolver('miners-enclaves')],
+    ['miners-cluster-2', clusterResolver('miners-enclaves')],
+    ['miners-cluster-3', clusterResolver('miners-enclaves')],
+    ['miners-cluster-4', clusterResolver('miners-enclaves')],
 
     // Rare
     // --
@@ -122,10 +142,10 @@ const missionResolvers = new Map<MissionKey, MissionResolver>([
     ['claim-henge-tiles-3', hengeMissionResolver()],
     ['claim-henge-tiles-4', hengeMissionResolver()],
     // --
-    ['relic-domination-1', shrineMissionResolver()],
-    ['relic-domination-2', shrineMissionResolver()],
-    ['relic-domination-3', shrineMissionResolver()],
-    ['relic-domination-4', shrineMissionResolver()],
+    ['relic-domination-1', dominionMissionResolver('ancient-shrines')],
+    ['relic-domination-2', dominionMissionResolver('ancient-shrines')],
+    ['relic-domination-3', dominionMissionResolver('ancient-shrines')],
+    ['relic-domination-4', dominionMissionResolver('ancient-shrines')],
     // --
     ['claims-domination-1', dominionMissionResolver('miners-enclaves')],
     ['claims-domination-2', dominionMissionResolver('miners-enclaves')],
