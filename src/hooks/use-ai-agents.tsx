@@ -59,7 +59,7 @@ const rules: AiSelectorRule[] = [
 const getAiTile = (grid: Grid<Tile>): Tile => {
     const tileScores = grid
         .toArray()
-        .filter((tile) => tile.discovered && tile.playerId === null)
+        .filter((tile) => tile.discovered && tile.playerId === null && tile.type === 'void')
         .map((tile) => {
             let score = 0;
             for (const rule of rules) {
@@ -72,7 +72,7 @@ const getAiTile = (grid: Grid<Tile>): Tile => {
 
     const maxScore = Math.max(...tileScores.map((t) => t.score));
     const bestTiles = tileScores.filter((t) => t.score === maxScore);
-    console.log({ bestTiles });
+
     return bestTiles[Math.floor(Math.random() * bestTiles.length)].tile;
 };
 

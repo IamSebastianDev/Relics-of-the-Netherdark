@@ -23,8 +23,8 @@ export const HexTopOutline = ({ color = 'white' }) => {
 
     return (
         <group {...pulse} rotation={[0, degToRad(30), 0]} position={[0, 0.275, 0]} scale={0.8}>
-            <Line points={points} transparent depthWrite={false} opacity={0.15} color={color} lineWidth={4} />
-            <Line points={points} transparent depthWrite={false} opacity={0.5} color={color} lineWidth={2} />
+            <Line points={points} transparent depthWrite={false} opacity={0.15} color={'white'} lineWidth={4} />
+            <Line points={points} transparent depthWrite={false} opacity={1} color={color} lineWidth={3} />
         </group>
     );
 };
@@ -77,7 +77,7 @@ const StandardTile = ({ tile, onClick, model, x, y }: TileProps & { x: number; y
         <group onClick={onClick} position={[x, 0, y]}>
             <primitive object={model} rotation={[0, orientation, 0]} />
             {isSelected(selectedTile?.id ?? null, props.id) && <HexTopOutline color={'white'} />}
-            {isInteractive && <HexTopOutline color="green" />}
+            {isInteractive && <HexTopOutline color="indianred" />}
             {tile.playerId && <PlayerMarker playerId={tile.playerId} />}
         </group>
     );

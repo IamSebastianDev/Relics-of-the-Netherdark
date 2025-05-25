@@ -5,8 +5,8 @@ export default defineDictionary('en', {
         main: {
             controls: {
                 start: 'Start',
-                rules: 'Rules',
-                solo: 'Play Solo',
+                rules: 'How to play',
+                solo: 'Play against AI',
             },
         },
         settings: {
@@ -28,24 +28,12 @@ export default defineDictionary('en', {
             },
         },
         rules: {
-            title: 'Relics of the Netherdark',
-            intro: 'Relics of the Netherdark is a competitive board game where players explore a mysterious underground world by revealing and claiming hexagonal tiles. The goal is to earn the most points by the end of the game through strategic tile placement, completing missions, and securing ancient relics.',
+            intro: 'Goal: Explore the depths and outplay your rivals. Claim tiles, complete missions, and control relics to win.',
             claiming:
-                'Each player starts at an entrance tile. On your turn, you place your marker to claim one discovered tile, then reveal all adjacent tiles. While you cannot claim undiscovered tiles, you can claim any revealed one — even those far from your current territory. Use this to block rivals or claim key locations ahead of them.',
-            tileRewardIntro: 'Tiles vary in their rewards:',
-            tiles: {
-                gemstone: 'Gemstone Caverns: +2 points',
-                fungal: 'Fungal Fields: +1 point',
-                miners: "Miners' Enclaves: +1 point",
-                bone: 'Bone Hoards: -1 point',
-                tunnels: 'Twisted Tunnels: -1 point',
-                shrines: 'Ancient Shrines: +10 points (if controlled at game end)',
-            },
+                'Claim tiles: On your turn, claim any revealed tile. You can claim tiles anywhere — use this to block or advance.',
             missions:
-                "Adjacent to some tiles you'll find Hollow Henges. Claiming a tile beside one grants a choice between a Solo mission, which you complete in secret, or a Diplomatic mission, which involves another player but yields greater rewards. Missions are only scored at the end of the game, and while cooperation is possible, betrayal is common — trust no one.",
-            end: "The game ends when all tiles surrounding Ancient Shrines have been claimed. The player with the most influence (claimed tiles) around each shrine gains control of that shrine's relic. Ties go to the current relic holder.",
-            scoring:
-                'At game end, players sum up their points from claimed tiles, controlled relics, and completed missions. The player with the highest total score claims victory and control over the Netherdark.',
+                'Missions: Claiming next to a Hollow Henge grants a solo or diplomatic mission, your choice. All missions score at game end.',
+            end: 'Scoring: The game ends when all tiles around Ancient Shrines are claimed. Shrine control goes to the player with the most adjacent tiles. The player with the highest score wins.',
             back: 'Back',
         },
     },
@@ -59,25 +47,27 @@ export default defineDictionary('en', {
         gemstoneCaverns: {
             title: 'Gemstone Caverns',
             description:
-                'Glittering veins of crystals run through the rock, promising riches to those who dare claim them.',
+                'Glittering veins of crystals run through the rock, promising riches to those who dare claim them. +2 Points',
         },
         boneHoards: {
             title: 'Bone Hoards',
-            description: 'Piles of ancient remains—evidence of battles long past or creatures still lurking nearby.',
+            description:
+                'Piles of ancient remains—evidence of battles long past or creatures still lurking nearby. -1 Point',
         },
         fungalFields: {
             title: 'Fungal Fields',
             description:
-                'Bioluminescent fungi light the damp ground with eerie hues. Life thrives where light barely reaches.',
+                'Bioluminescent fungi light the damp ground with eerie hues. Life thrives where light barely reaches. +1 Point',
         },
         twistedTunnels: {
             title: 'Twisted Tunnels',
-            description: 'Winding paths that defy reason. Sound echoes strangely and shadows twist in impossible ways.',
+            description:
+                'Winding paths that defy reason. Sound echoes strangely and shadows twist in impossible ways. -1 Point',
         },
         minersEnclaves: {
             title: 'Miners Enclaves',
             description:
-                'Forgotten outposts of brave souls who dug too deep. Some walls still echo with picks and whispers.',
+                'Forgotten outposts of brave souls who dug too deep. Some walls still echo with picks and whispers. +1 Point',
         },
         hollowHenge: {
             title: 'Hollow Henge',

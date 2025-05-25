@@ -31,6 +31,7 @@ export const Main = React.memo(() => {
                     >
                         {t('scenes.main.controls.solo')}
                     </button>
+                    <span className="hint">3 Ai players</span>
                 </div>
             </div>
         </Screen>

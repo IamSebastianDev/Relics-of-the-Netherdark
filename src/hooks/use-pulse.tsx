@@ -12,11 +12,13 @@ export const usePulse = ({ speed = 0.5, minY = 0.3, maxY = 0.35 }: UsePulseProps
     const ref = useRef<THREE.Group>(null);
 
     useFrame(({ clock }) => {
-        const t = clock.getElapsedTime();
+        const t = clock.getElapsedTime() * 0.5;
         const range = maxY - minY;
         const y = minY + Math.sin(t * Math.PI * 2 * speed) * (range / 2);
         if (ref.current) {
             ref.current.position.y = y;
+            ref.current.scale.x = y * 2;
+            ref.current.scale.z = y * 2;
         }
     });
 
