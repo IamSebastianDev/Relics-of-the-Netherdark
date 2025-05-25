@@ -59,7 +59,7 @@ const rules: AiSelectorRule[] = [
 const getAiTile = (grid: Grid<Tile>): Tile => {
     const tileScores = grid
         .toArray()
-        .filter((tile) => tile.discovered && tile.playerId === null && tile.type === 'void')
+        .filter((tile) => tile.discovered && tile.playerId === null && tile.type !== 'void')
         .map((tile) => {
             let score = 0;
             for (const rule of rules) {
@@ -109,7 +109,7 @@ export const useAiAgents = () => {
                 }
                 timeoutRef.current = null;
             },
-            Math.random() * 500 + 1000
-        ); // 1500–1000ms delay
+            Math.random() * 1000 + 1500
+        ); // 1500–2500ms delay
     }, [hostPlayer, localPlayerId, currentActivePlayer, grid]);
 };
