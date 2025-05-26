@@ -2,6 +2,7 @@ import claim from '../assets/icons/claim.png';
 import close from '../assets/icons/close.png';
 import details from '../assets/icons/details.png';
 import map from '../assets/icons/map.png';
+import menu from '../assets/icons/menu.png';
 import missions from '../assets/icons/missions.png';
 import settings from '../assets/icons/settings.png';
 import title from '../assets/images/title.jpg';
@@ -50,6 +51,10 @@ export default new Set<AssetManifestEntry>([
     {
         type: 'image',
         src: settings,
+    },
+    {
+        type: 'image',
+        src: menu,
     },
     // Player Insignia
     ...[...playerAttributes.values()].map(({ texture }) => ({ src: texture, type: 'image' as const })),

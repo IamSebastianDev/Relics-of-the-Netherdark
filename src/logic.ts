@@ -73,6 +73,7 @@ Rune.initLogic({
             // Ai Players cannot fulfill missions, but they can still have some.
             // we treat them as standard players, and replace them if actual
             // players join mid game.
+
             const grid = gridFromJson(game.board);
             const ais = [`[ai]-${cuid()}`, `[ai]-${cuid()}`, `[ai]-${cuid()}`];
 

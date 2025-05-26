@@ -64,11 +64,13 @@ const TileOverview = () => {
 };
 
 import map from '../../assets/icons/map.png';
+import menu from '../../assets/icons/menu.png';
 import missions from '../../assets/icons/missions.png';
 import settings from '../../assets/icons/settings.png';
 import { Notification } from '../../backend/notifications/notification';
 import { useNotifications } from '../../hooks/use-notifications';
 import { usePlayerColor } from '../../hooks/use-player-attributes';
+import { useScene } from '../../providers/scene.provider';
 import { useSettings } from '../../providers/settings.provider';
 import { useJournalStore } from '../../stores/journal.store';
 import { useSettingsStore } from '../../stores/settings.store';
@@ -78,6 +80,7 @@ const Navigation = () => {
     const { toggle: toggleJournal } = useJournalStore();
     const { localPlayerId, playerState } = useGameState();
     const { toggle: toggleSettings } = useSettingsStore();
+    const scene = useScene();
 
     return (
         <nav className="screen-navigation">
@@ -101,6 +104,11 @@ const Navigation = () => {
                 <li>
                     <button onClick={() => toggleSettings(true)}>
                         <img src={settings} />
+                    </button>
+                </li>
+                <li>
+                    <button onClick={() => scene.next('main')}>
+                        <img src={menu} />
                     </button>
                 </li>
             </ul>

@@ -2,12 +2,16 @@ import { ISO639Code } from '@vayjs/vay';
 import React from 'react';
 import title from '../assets/images/title.jpg';
 import { Screen } from '../components/ui/screen';
+import { useGameState } from '../providers/game-state.provider';
 import { useLanguage } from '../providers/language.provider';
 import { useScene } from '../providers/scene.provider';
 
 export const Main = React.memo(() => {
     const scenes = useScene();
     const { translate: t, setLanguage, language } = useLanguage();
+    const { allPlayerIds } = useGameState();
+
+    const disableAiPlayers = allPlayerIds.length > 3 || allPlayerIds.some((id) => id.includes('[ai]'));
 
     const options: { language: string; value: ISO639Code }[] = [
         { language: '🇬🇧', value: 'en' },
@@ -31,6 +35,7 @@ export const Main = React.memo(() => {
                     </button>
                     <button
                         className="menu-button"
+                        disabled={disableAiPlayers}
                         onClick={() => {
                             Rune.actions.addAiPlayers();
                             scenes.next('game');
