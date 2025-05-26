@@ -66,7 +66,6 @@ export function AssetLoader({ assets, children }: AssetLoaderProps) {
         };
     }, [assets]);
 
-    console.log({ ready, error, assets });
     if (error) {
         return (
             <div style={{ color: 'red', padding: '1rem' }}>

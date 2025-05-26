@@ -22,7 +22,6 @@ export const GameStateProvider = ({ children }: PropsWithChildren) => {
         Rune.initClient({
             onChange: ({ game, yourPlayerId }) => {
                 setGame(game);
-
                 setInvalidate((v) => v + 1);
                 if (yourPlayerId) {
                     setLocalPlayerId(yourPlayerId);

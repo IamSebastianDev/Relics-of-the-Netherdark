@@ -117,5 +117,13 @@ export const useAiAgents = () => {
             },
             Math.random() * 1000 + 1500
         ); // 1500–2500ms delay
+
+        // Remove any lingering timeouts
+        return () => {
+            if (timeoutRef.current) {
+                window.clearTimeout(timeoutRef.current);
+                timeoutRef.current = null;
+            }
+        };
     }, [hostPlayer, localPlayerId, currentActivePlayer, grid]);
 };
