@@ -1,5 +1,4 @@
 import { PlayerId } from 'rune-sdk';
-import map from '../../assets/icons/map.png';
 import menu from '../../assets/icons/menu.png';
 import missions from '../../assets/icons/missions.png';
 import settings from '../../assets/icons/settings.png';
@@ -89,11 +88,6 @@ const Navigation = () => {
     return (
         <nav className="screen-navigation">
             <ul>
-                <li>
-                    <button disabled={true}>
-                        <img src={map} />
-                    </button>
-                </li>
                 <li>
                     <button
                         disabled={

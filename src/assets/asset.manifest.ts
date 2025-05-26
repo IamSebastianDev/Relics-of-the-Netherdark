@@ -1,7 +1,6 @@
 import claim from '../assets/icons/claim.png';
 import close from '../assets/icons/close.png';
 import details from '../assets/icons/details.png';
-import map from '../assets/icons/map.png';
 import menu from '../assets/icons/menu.png';
 import missions from '../assets/icons/missions.png';
 import settings from '../assets/icons/settings.png';
@@ -39,10 +38,6 @@ export default new Set<AssetManifestEntry>([
     {
         type: 'image',
         src: details,
-    },
-    {
-        type: 'image',
-        src: map,
     },
     {
         type: 'image',
