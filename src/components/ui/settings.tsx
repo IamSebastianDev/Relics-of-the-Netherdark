@@ -43,6 +43,14 @@ export const Settings = React.memo(() => {
                         </select>
                     </label>
                 </div>
+                <div className="control-group">
+                    <label className="settings-inline">
+                        <span>{t('scenes.settings.controls.tutorial.description')}</span>
+                        <button type="button" onClick={() => Rune.actions.acknowledgeTutorial(null)}>
+                            {t('scenes.settings.controls.tutorial.label')}
+                        </button>
+                    </label>
+                </div>
             </form>
         </div>
     );

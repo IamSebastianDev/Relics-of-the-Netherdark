@@ -25,14 +25,18 @@ export default defineDictionary('en', {
                         spanish: 'Spanish 🇪🇸',
                     },
                 },
+                tutorial: {
+                    label: 'Reset tutorial',
+                    description: 'Will show all tips again',
+                },
             },
         },
         rules: {
             intro: 'Goal: Explore the depths and outplay your rivals. Claim tiles, complete missions, and control relics to win.',
             claiming:
-                'Claim tiles: On your turn, claim any revealed tile. You can claim tiles anywhere — use this to block or advance.',
+                'Claim tiles: On your turn, claim any revealed tile. You can claim tiles anywhere — use this to block or advance. After selecting a tile, use the `Crown` icon to claim.',
             missions:
-                'Missions: Claiming next to a Hollow Henge grants a solo or diplomatic mission, your choice. All missions score at game end.',
+                'Missions: Claiming a tile next to a `Hollow Henge` for the first time grants a solo or diplomatic mission, your choice. All missions score at game end.',
             end: 'Scoring: The game ends when all tiles around Ancient Shrines are claimed. Shrine control goes to the player with the most adjacent tiles. The player with the highest score wins.',
             back: 'Back',
         },
@@ -229,5 +233,15 @@ export default defineDictionary('en', {
         claimedATile: '{{player}} claimed a {{type}} tile!',
         claimedAShrine: '{{player}} took control of a Shrine!',
         foundAHenge: '{{player}} found a Hollow Henge!',
+    },
+    tutorial: {
+        selectTile:
+            'Interact with the Hex board by tapping any `Discovered` Hex. Use the details icon to learn more about a tile. Tap this message to continue.',
+        claimTile:
+            'Some hexes have a red pulse on top. Use the `Crown` icon to claim one such tile. This will reveal all neighboring tiles. Tap to dismiss.',
+        shrines:
+            'A `Ancient Shrine` was just revealed! The player having the most claimed tiles around it, will claim control of the Shrine and gain it`s relic.',
+        henges: 'A `Hollow Henge` was just discovered. Claiming a tile next to it will grant you a mission, which will give you additional points when completed.',
+        final: 'You now know everything you need to claim the Netherdark for yourself! But beware, you`re not the only one to strive for power!',
     },
 });

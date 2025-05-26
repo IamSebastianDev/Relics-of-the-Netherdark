@@ -8,7 +8,7 @@ import { initialPlayerState } from './player/player-state';
 // setup fn, we can just go ahead and infer it.
 type SetupFn = Parameters<typeof Rune.initLogic>[0]['setup'];
 
-export const setup: SetupFn = (allPlayerIds) => {
+export const setup: SetupFn = (allPlayerIds, { game }) => {
     if (allPlayerIds.length === 0) {
         throw new RangeError(`Not enough players.`);
     }
@@ -29,7 +29,7 @@ export const setup: SetupFn = (allPlayerIds) => {
         // The initial Player State for all Players;
         playerState: Object.fromEntries(
             allPlayerIds.map((id) => {
-                return [id, initialPlayerState()];
+                return [id, initialPlayerState(structuredClone(game.persisted[id].tutorials))];
             })
         ),
 

@@ -6,17 +6,19 @@ import { GameState, checkGameState } from './backend/game-state';
 import { drawFromDeck } from './backend/missions/draw-from-deck';
 import { createNotification, dispatchNotification } from './backend/notifications/notification';
 import { nextPlayer } from './backend/player/next-player';
-import { initialPlayerState } from './backend/player/player-state';
+import { PersistedPlayerState, initialPlayerState } from './backend/player/player-state';
+import { initialTutorialState } from './backend/player/tutorial';
 import { setup } from './backend/setup';
 import { cuid } from './backend/utils/cuid';
 
 declare global {
-    const Rune: RuneClient<GameState, GameActions>;
+    const Rune: RuneClient<GameState, GameActions, PersistedPlayerState>;
 }
 
 Rune.initLogic({
     minPlayers: 1,
     maxPlayers: 6,
+    persistPlayerData: true,
     setup: setup,
     actions: {
         claimTile: ([claimantId, { q, r }], { game }) => {
@@ -79,7 +81,7 @@ Rune.initLogic({
 
             for (const ai of ais) {
                 game.allPlayerIds.push(ai);
-                game.playerState[ai] = initialPlayerState();
+                game.playerState[ai] = initialPlayerState(null);
 
                 for (const [position, tile] of createPlayerTiles(ai, game.allPlayerIds.length)) {
                     grid.set(position, tile);
@@ -88,10 +90,25 @@ Rune.initLogic({
 
             game.board = gridToJson(grid);
         },
+        // Method to set and acknowledge a tutorial tip,
+        // Allowing to save the tutorial state for a user.
+        // can have null as payload, which is used to reset tutorial state
+        acknowledgeTutorial: (key, { playerId, game }) => {
+            // If the key is not provided, reset all tutorial data
+            if (!key) {
+                game.persisted[playerId].tutorials = initialTutorialState();
+                return;
+            }
+
+            game.playerState[playerId].tutorials = { ...game.playerState[playerId].tutorials, [key]: true };
+            game.persisted[playerId].tutorials = game.playerState[playerId].tutorials;
+
+            return;
+        },
     },
     events: {
         playerJoined: (playerId, { game }) => {
-            game.playerState[playerId] = initialPlayerState();
+            game.playerState[playerId] = initialPlayerState(game.persisted[playerId].tutorials);
             game.allPlayerIds.push(playerId);
 
             const grid = gridFromJson(game.board);

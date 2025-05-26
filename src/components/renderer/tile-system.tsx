@@ -4,6 +4,7 @@ import { useGrid } from '../../hooks/use-grid';
 import { useGameState } from '../../providers/game-state.provider';
 import { useTileControllerStore } from '../../stores/tile-controller.store';
 import { ContextMenu } from '../ui/context-menu';
+import { Tutorial } from '../ui/tutorial';
 import { TileRenderer } from './tile-renderer';
 
 export const Grid = () => {
@@ -19,6 +20,7 @@ export const Grid = () => {
 
     return (
         <>
+            <Tutorial />
             <ContextMenu />
             {tiles.map((tile) => (
                 <TileRenderer
