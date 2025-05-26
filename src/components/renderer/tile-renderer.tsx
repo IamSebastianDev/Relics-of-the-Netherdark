@@ -38,7 +38,7 @@ type TileProps = {
 };
 
 const MissionGiverTile = ({ tile, onClick, x, y }: TileProps & { x: number; y: number }) => {
-    const { selectedTile } = useTileSelectorStore();
+    const { selectedTileId } = useTileSelectorStore();
     const { type, discovered, ...props } = tile;
     const model = useModel(tile.discovered ? tile.type : 'undiscovered');
     const orientation = useRandomRotation(props.id);
@@ -46,14 +46,14 @@ const MissionGiverTile = ({ tile, onClick, x, y }: TileProps & { x: number; y: n
     return (
         <group onClick={onClick} position={[x, 0, y]}>
             <primitive object={model} rotation={[0, orientation, 0]} />
-            {isSelected(selectedTile?.id ?? null, props.id) && <HexTopOutline color={'white'} />}
+            {isSelected(selectedTileId, props.id) && <HexTopOutline color={'white'} />}
             {tile.shared.length > 0 && <HengeStones tile={tile} />}
         </group>
     );
 };
 
 const AncientShrineTile = ({ tile, onClick, x, y }: TileProps & { x: number; y: number }) => {
-    const { selectedTile } = useTileSelectorStore();
+    const { selectedTileId } = useTileSelectorStore();
     const { type, discovered, ...props } = tile;
     const model = useModel(tile.discovered ? tile.type : 'undiscovered');
     const orientation = useRandomRotation(props.id);
@@ -61,7 +61,7 @@ const AncientShrineTile = ({ tile, onClick, x, y }: TileProps & { x: number; y: 
     return (
         <group onClick={onClick} position={[x, 0, y]}>
             <primitive object={model} rotation={[0, orientation, 0]} />
-            {isSelected(selectedTile?.id ?? null, props.id) && <HexTopOutline color={'white'} />}
+            {isSelected(selectedTileId, props.id) && <HexTopOutline color={'white'} />}
             {tile.playerId && <Shrine playerId={tile.playerId} />}
         </group>
     );
@@ -69,7 +69,7 @@ const AncientShrineTile = ({ tile, onClick, x, y }: TileProps & { x: number; y: 
 
 const StandardTile = ({ tile, onClick, x, y }: TileProps & { x: number; y: number }) => {
     const isInteractive = useIsInteractive(tile);
-    const { selectedTile } = useTileSelectorStore();
+    const { selectedTileId } = useTileSelectorStore();
     const model = useModel(tile.discovered ? tile.type : 'undiscovered');
     const { type, discovered, ...props } = tile;
     const orientation = useRandomRotation(props.id);
@@ -77,7 +77,7 @@ const StandardTile = ({ tile, onClick, x, y }: TileProps & { x: number; y: numbe
     return (
         <group onClick={onClick} position={[x, 0, y]}>
             <primitive object={model} rotation={[0, orientation, 0]} />
-            {isSelected(selectedTile?.id ?? null, props.id) && <HexTopOutline color={'white'} />}
+            {isSelected(selectedTileId, props.id) && <HexTopOutline color={'white'} />}
             {isInteractive && <HexTopOutline color="indianred" />}
             {tile.playerId && <PlayerMarker playerId={tile.playerId} />}
         </group>

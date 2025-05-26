@@ -1,4 +1,5 @@
 import { Html } from '@react-three/drei';
+import { useGrid } from '../../hooks/use-grid';
 import { TileAction, useTileActions } from '../../hooks/use-tile-actions';
 import { useTileSelectorStore } from '../../stores/tile-selector.store';
 
@@ -18,7 +19,9 @@ export const ContextQuickAction = ({ action, disabled, icon }: TileAction) => {
 };
 
 export const ContextMenu = () => {
-    const { selectedTile } = useTileSelectorStore();
+    const { selectedTileId } = useTileSelectorStore();
+    const grid = useGrid();
+    const selectedTile = grid.toArray().find((tile) => tile.id === selectedTileId) ?? null;
 
     const actions = useTileActions(selectedTile);
 

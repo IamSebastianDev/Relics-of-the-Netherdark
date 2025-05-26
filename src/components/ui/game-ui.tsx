@@ -42,12 +42,16 @@ const formatPosition = (position: TileData['position']) => {
 };
 
 const TileOverview = () => {
-    const { selectedTile } = useTileSelectorStore();
+    const { selectedTileId } = useTileSelectorStore();
     const { overviewEnabled } = useTileOverviewStore();
     const { translate: t } = useLanguage();
+    const selectedTile =
+        useGrid()
+            .toArray()
+            .find((tile) => tile.id === selectedTileId) ?? null;
     const playerData = usePlayerProfile(selectedTile?.playerId ?? null);
 
-    if (!selectedTile || !overviewEnabled) {
+    if (!selectedTileId || !overviewEnabled || !selectedTile) {
         return null;
     }
 
@@ -68,6 +72,7 @@ import menu from '../../assets/icons/menu.png';
 import missions from '../../assets/icons/missions.png';
 import settings from '../../assets/icons/settings.png';
 import { Notification } from '../../backend/notifications/notification';
+import { useGrid } from '../../hooks/use-grid';
 import { useNotifications } from '../../hooks/use-notifications';
 import { usePlayerColor } from '../../hooks/use-player-attributes';
 import { useScene } from '../../providers/scene.provider';

@@ -2,13 +2,13 @@ import { create } from 'zustand';
 import { TileCtor } from '../components/renderer/tile';
 
 type TileSelectorState = {
-    selectedTile: TileCtor | null;
+    selectedTileId: string | null;
     selectTile: (tile: TileCtor | null) => void;
 };
 
 export const useTileSelectorStore = create<TileSelectorState>()((set) => {
     return {
-        selectedTile: null,
-        selectTile: (tile: TileCtor | null) => set({ selectedTile: tile }),
+        selectedTileId: null,
+        selectTile: (tile: TileCtor | null) => set({ selectedTileId: tile?.id ?? null }),
     };
 });
