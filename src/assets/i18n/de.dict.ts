@@ -229,6 +229,32 @@ export default defineDictionary('de', {
         claimedATile: '{{player}} hat ein {{type}}-Feld beansprucht!',
         claimedAShrine: '{{player}} hat die Kontrolle über einen Schrein übernommen!',
         foundAHenge: '{{player}} hat einen Verfallenen Steinkreis entdeckt!',
+        type: ({ type }: { type: string | undefined }): string => {
+            switch (type) {
+                case 'gemstone-caverns':
+                    return 'Edelstein-Kaverne';
+                case 'bone-hoards':
+                    return 'Knochenhort';
+                case 'fungal-fields':
+                    return 'Pilzfeld';
+                case 'twisted-tunnels':
+                    return 'Verdrehter Tunnel';
+                case 'miners-enclaves':
+                    return 'Bergarbeiter-Enklave';
+                case 'hollow-henge':
+                    return 'Verfallener Steinkreis';
+                case 'ancient-shrines':
+                    return 'Alter Schrein';
+                case 'entrance':
+                    return 'Eingang';
+                case 'undiscovered':
+                    return 'Unentdeckt';
+                case 'void':
+                    return 'Leere';
+                default:
+                    return 'undefined';
+            }
+        },
     },
     tutorial: {
         selectTile:

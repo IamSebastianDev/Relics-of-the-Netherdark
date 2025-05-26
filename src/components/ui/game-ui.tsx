@@ -117,8 +117,13 @@ const Navigation = () => {
 const Message = ({ notification }: { notification: Notification }) => {
     const { translate: t } = useLanguage();
     const data = usePlayerProfile((notification.payload['playerId'] as string) ?? null);
+
+    const type = t('notifications.(type)', { ctx: { type: notification.payload['type'] } });
+
     return (
-        <div className="message">{t(notification.text, { ...notification.payload, player: data?.displayName })}</div>
+        <div className="message">
+            {t(notification.text, { ...notification.payload, player: data?.displayName, type })}
+        </div>
     );
 };
 

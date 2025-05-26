@@ -236,6 +236,32 @@ export default defineDictionary('es', {
         claimedATile: '¡{{player}} ha reclamado una loseta de tipo {{type}}!',
         claimedAShrine: '¡{{player}} ha tomado el control de un Santuario!',
         foundAHenge: '¡{{player}} ha descubierto un Círculo Hueco!',
+        type: ({ type }: { type: string | undefined }): string => {
+            switch (type) {
+                case 'gemstone-caverns':
+                    return 'Cavernas de Gemas';
+                case 'bone-hoards':
+                    return 'Montones de Huesos';
+                case 'fungal-fields':
+                    return 'Campos de Hongos';
+                case 'twisted-tunnels':
+                    return 'Túneles Retorcidos';
+                case 'miners-enclaves':
+                    return 'Enclaves Mineros';
+                case 'hollow-henge':
+                    return 'Círculo Hueco';
+                case 'ancient-shrines':
+                    return 'Santuarios Antiguos';
+                case 'entrance':
+                    return 'Entrada';
+                case 'undiscovered':
+                    return 'No Descubierto';
+                case 'void':
+                    return 'Vacío';
+                default:
+                    return 'undefined';
+            }
+        },
     },
     tutorial: {
         selectTile:

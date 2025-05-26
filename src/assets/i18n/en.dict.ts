@@ -233,6 +233,32 @@ export default defineDictionary('en', {
         claimedATile: '{{player}} claimed a {{type}} tile!',
         claimedAShrine: '{{player}} took control of a Shrine!',
         foundAHenge: '{{player}} found a Hollow Henge!',
+        type: ({ type }: { type: string | undefined }): string => {
+            switch (type) {
+                case 'gemstone-caverns':
+                    return 'Gemstone Caverns';
+                case 'bone-hoards':
+                    return 'Bone Hoards';
+                case 'fungal-fields':
+                    return 'Fungal Fields';
+                case 'twisted-tunnels':
+                    return 'Twisted Tunnels';
+                case 'miners-enclaves':
+                    return 'Miners Enclaves';
+                case 'hollow-henge':
+                    return 'Hollow Henge';
+                case 'ancient-shrines':
+                    return 'Ancient Shrines';
+                case 'entrance':
+                    return 'Entrance';
+                case 'undiscovered':
+                    return 'Undiscovered';
+                case 'void':
+                    return 'Void';
+                default:
+                    return 'undefined';
+            }
+        },
     },
     tutorial: {
         selectTile:
