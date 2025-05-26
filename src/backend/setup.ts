@@ -8,6 +8,15 @@ import { initialPlayerState } from './player/player-state';
 // setup fn, we can just go ahead and infer it.
 type SetupFn = Parameters<typeof Rune.initLogic>[0]['setup'];
 
+const primitiveClone = <T extends Record<PropertyKey, unknown>>(record: T): T => {
+    const obj = {};
+    for (const key of Object.keys(record)) {
+        Object.assign(obj, { [key]: record[key] });
+    }
+
+    return obj as T;
+};
+
 export const setup: SetupFn = (allPlayerIds, { game }) => {
     if (allPlayerIds.length === 0) {
         throw new RangeError(`Not enough players.`);
@@ -29,7 +38,7 @@ export const setup: SetupFn = (allPlayerIds, { game }) => {
         // The initial Player State for all Players;
         playerState: Object.fromEntries(
             allPlayerIds.map((id) => {
-                return [id, initialPlayerState(structuredClone(game.persisted[id].tutorials))];
+                return [id, initialPlayerState(primitiveClone(game.persisted[id].tutorials))];
             })
         ),
 
