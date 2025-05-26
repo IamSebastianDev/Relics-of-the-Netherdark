@@ -119,8 +119,6 @@ const Message = ({ notification }: { notification: Notification }) => {
 const Notifications = () => {
     const notifications = useNotifications();
 
-    console.log({ notifications });
-
     return (
         <div className="stack notification-outlet">
             {notifications.map((notification) => (

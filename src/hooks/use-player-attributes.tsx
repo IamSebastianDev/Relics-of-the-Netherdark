@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { PlayerId } from 'rune-sdk';
 import { useGameState } from '../providers/game-state.provider';
 
-const playerAttributes = [
+export const playerAttributes = [
     {
         texture: './textures/fire-dwarves.png',
         color: 'steelblue',

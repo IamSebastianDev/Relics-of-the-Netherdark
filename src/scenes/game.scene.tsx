@@ -6,6 +6,7 @@ import { Grid } from '../components/renderer/tile-system';
 import { GameUi } from '../components/ui/game-ui';
 import { Screen } from '../components/ui/screen';
 import { useAiAgents } from '../hooks/use-ai-agents';
+
 import { useTileSelectorStore } from '../stores/tile-selector.store';
 
 /** @todo -> refactor, maybe integrate actual background texture */

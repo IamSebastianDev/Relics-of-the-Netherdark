@@ -1,7 +1,6 @@
 import { Line } from '@react-three/drei';
 import { ThreeEvent } from '@react-three/fiber';
 import React from 'react';
-import * as THREE from 'three';
 import { degToRad } from 'three/src/math/MathUtils.js';
 import { useHexPoints } from '../../hooks/use-hex-points';
 import { useIsInteractive } from '../../hooks/use-is-interactive';
@@ -36,12 +35,12 @@ const isSelected = (key: string | null, id: string) => {
 type TileProps = {
     tile: TileCtor;
     onClick: (ev: ThreeEvent<MouseEvent>) => void;
-    model: THREE.Group<THREE.Object3DEventMap>;
 };
 
-const MissionGiverTile = ({ tile, onClick, model, x, y }: TileProps & { x: number; y: number }) => {
+const MissionGiverTile = ({ tile, onClick, x, y }: TileProps & { x: number; y: number }) => {
     const { selectedTile } = useTileSelectorStore();
     const { type, discovered, ...props } = tile;
+    const model = useModel(tile.discovered ? tile.type : 'undiscovered');
     const orientation = useRandomRotation(props.id);
 
     return (
@@ -53,9 +52,10 @@ const MissionGiverTile = ({ tile, onClick, model, x, y }: TileProps & { x: numbe
     );
 };
 
-const AncientShrineTile = ({ tile, onClick, model, x, y }: TileProps & { x: number; y: number }) => {
+const AncientShrineTile = ({ tile, onClick, x, y }: TileProps & { x: number; y: number }) => {
     const { selectedTile } = useTileSelectorStore();
     const { type, discovered, ...props } = tile;
+    const model = useModel(tile.discovered ? tile.type : 'undiscovered');
     const orientation = useRandomRotation(props.id);
 
     return (
@@ -67,9 +67,10 @@ const AncientShrineTile = ({ tile, onClick, model, x, y }: TileProps & { x: numb
     );
 };
 
-const StandardTile = ({ tile, onClick, model, x, y }: TileProps & { x: number; y: number }) => {
+const StandardTile = ({ tile, onClick, x, y }: TileProps & { x: number; y: number }) => {
     const isInteractive = useIsInteractive(tile);
     const { selectedTile } = useTileSelectorStore();
+    const model = useModel(tile.discovered ? tile.type : 'undiscovered');
     const { type, discovered, ...props } = tile;
     const orientation = useRandomRotation(props.id);
 
@@ -84,8 +85,7 @@ const StandardTile = ({ tile, onClick, model, x, y }: TileProps & { x: number; y
 };
 
 export const TileRenderer = React.memo((tile: TileCtor & { x: number; y: number }) => {
-    const { type, discovered, x, y } = tile;
-    const model = useModel(discovered ? type : 'undiscovered');
+    const { x, y } = tile;
 
     const { selectTile } = useTileSelectorStore();
     const { focusTile } = useTileControllerStore();
@@ -109,10 +109,10 @@ export const TileRenderer = React.memo((tile: TileCtor & { x: number; y: number 
         case 'void':
             return null;
         case 'hollow-henge':
-            return <MissionGiverTile tile={tile} onClick={handleClick} model={model} x={x} y={y} />;
+            return <MissionGiverTile tile={tile} onClick={handleClick} x={x} y={y} />;
         case 'ancient-shrines':
-            return <AncientShrineTile tile={tile} onClick={handleClick} model={model} x={x} y={y} />;
+            return <AncientShrineTile tile={tile} onClick={handleClick} x={x} y={y} />;
         default:
-            return <StandardTile tile={tile} onClick={handleClick} model={model} x={x} y={y} />;
+            return <StandardTile tile={tile} onClick={handleClick} x={x} y={y} />;
     }
 });
