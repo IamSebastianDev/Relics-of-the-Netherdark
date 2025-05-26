@@ -21,7 +21,7 @@ export const useTileActions = (tile: TileData | null): TileAction[] => {
     if (!tile) {
         return [];
     }
-    console.log({ tile, playerId: tile.playerId });
+
     return [
         // We will always enable the player to open the details
         // panel of a (discovered) tile. While we render the tile name
